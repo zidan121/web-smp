@@ -704,52 +704,56 @@
                 <p>Mendukung pertumbuhan siswa melalui pembelajaran Al-Qur'an, teknologi, dan wawasan internasional.</p>
             </div>
 
-            <div class="program-icon">
-                <?php
-                $cmsIcon = null;
+            <div class="program-grid">
+                <?php if (! empty($programs)): ?>
+                    <?php foreach ($programs as $program): ?>
+                        <article class="program-card program-<?= esc(strtolower($program['slug'])) ?> reveal">
+                            <div class="program-icon">
+                                <?php
+                                $cmsIcon = null;
 
-                if (! empty($program['program_icon_id'])) {
-                    $cmsIcon = $programIconsById[$program['program_icon_id']] ?? null;
-                }
+                                if (! empty($program['program_icon_id'])) {
+                                    $cmsIcon = $programIconsById[$program['program_icon_id']] ?? null;
+                                }
 
-                if ($cmsIcon && $cmsIcon['icon_type'] === 'image') :
-                ?>
-                    <img
-                        src="<?= base_url('assets/images/program-icons/' . rawurlencode($cmsIcon['icon_value'])) ?>"
-                        alt="<?= esc($cmsIcon['name']) ?>"
-                        style="width:48px;height:48px;object-fit:contain;"
-                    >
-                <?php elseif ($cmsIcon && $cmsIcon['icon_type'] === 'builtin') : ?>
-                    <?php
-                    $builtinEmoji = [
-                        'book-open'      => '📖',
-                        'globe'          => '🌐',
-                        'laptop'         => '💻',
-                        'graduation-cap' => '🎓',
-                        'microscope'     => '🔬',
-                        'code'           => '💻',
-                        'heart'          => '❤️',
-                        'star'           => '⭐',
-                    ];
+                                if ($cmsIcon && $cmsIcon['icon_type'] === 'image') :
+                                ?>
+                                    <img
+                                        src="<?= base_url('assets/images/program-icons/' . rawurlencode($cmsIcon['icon_value'])) ?>"
+                                        alt="<?= esc($cmsIcon['name']) ?>"
+                                        style="width:48px;height:48px;object-fit:contain;"
+                                    >
+                                <?php elseif ($cmsIcon && $cmsIcon['icon_type'] === 'builtin') : ?>
+                                    <?php
+                                    $builtinEmoji = [
+                                        'book-open'      => '📖',
+                                        'globe'          => '🌐',
+                                        'laptop'         => '💻',
+                                        'graduation-cap' => '🎓',
+                                        'microscope'     => '🔬',
+                                        'code'           => '💻',
+                                        'heart'          => '❤️',
+                                        'star'           => '⭐',
+                                    ];
 
-                    echo esc($builtinEmoji[$cmsIcon['icon_value']] ?? '🎓');
-                    ?>
-                <?php else : ?>
-                    <?php
-                    $programName = strtoupper($program['name']);
+                                    echo esc($builtinEmoji[$cmsIcon['icon_value']] ?? '🎓');
+                                    ?>
+                                <?php else : ?>
+                                    <?php
+                                    $programName = strtoupper($program['name']);
 
-                    if (str_contains($programName, 'TCP')) {
-                        echo '📖';
-                    } elseif (str_contains($programName, 'ICT')) {
-                        echo '💻';
-                    } elseif (str_contains($programName, 'ICP')) {
-                        echo '🌐';
-                    } else {
-                        echo '🎓';
-                    }
-                    ?>
-                <?php endif; ?>
-            </div>
+                                    if (str_contains($programName, 'TCP')) {
+                                        echo '📖';
+                                    } elseif (str_contains($programName, 'ICT')) {
+                                        echo '💻';
+                                    } elseif (str_contains($programName, 'ICP')) {
+                                        echo '🌐';
+                                    } else {
+                                        echo '🎓';
+                                    }
+                                    ?>
+                                <?php endif; ?>
+                            </div>
 
                             <h3><?= esc($program['name']) ?></h3>
 
