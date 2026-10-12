@@ -24,6 +24,8 @@ class Home extends BaseController
             $iconsById[$programIcon['id']] = $programIcon;
         }
 
+        $profile = (new \\App\\Models\\SchoolProfileModel())->first() ?? [];
+
         return view('home', [
             'programs' => $programs,
             'profile' => $profile,
