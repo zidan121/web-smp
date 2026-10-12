@@ -4,6 +4,9 @@ use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
 $routes->get('/', 'Home::index');
+$routes->get('admin', static function () {
+    return redirect()->to('/admin/dashboard');
+});
 $routes->get('admin/login', 'Admin::login');
 $routes->post('admin/login', 'Admin::authenticate');
 $routes->get('admin/dashboard', 'Admin::dashboard');
