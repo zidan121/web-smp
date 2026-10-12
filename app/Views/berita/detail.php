@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title><?= esc($post['title']) ?> | SMPIT Al Firdaus</title>
+<style>*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#203653}.top{background:#142d52;color:white;padding:20px}.wrap{max-width:850px;margin:auto}.top a{color:white;text-decoration:none}.content{background:white;margin:34px auto;padding:clamp(20px,5vw,48px);border:1px solid #e2e8f0;border-radius:14px}.tag{color:#3268a3;text-transform:uppercase;font-weight:bold;font-size:12px}h1{font-size:clamp(28px,5vw,42px);line-height:1.2;margin:12px 0}.meta{color:#7b8799;font-size:13px;margin-bottom:24px}.cover{width:100%;max-height:450px;object-fit:cover;border-radius:10px;margin-bottom:25px}.article{font-size:16px;line-height:1.9;white-space:pre-line;overflow-wrap:anywhere}.back{display:inline-block;margin-top:28px;color:#1c4f88;text-decoration:none;font-weight:bold}</style></head><body>
+<header class="top"><div class="wrap"><a href="<?= site_url('berita') ?>">← Semua berita</a></div></header><main class="wrap content">
+<div class="tag"><?= esc($post['category']) ?></div><h1><?= esc($post['title']) ?></h1><div class="meta"><?= esc($post['published_at'] ?: $post['created_at']) ?><?= !empty($post['author']) ? ' · ' . esc($post['author']) : '' ?></div>
+<?php if (!empty($post['image'])): ?><img class="cover" src="<?= base_url('assets/images/posts/' . rawurlencode($post['image'])) ?>" alt="<?= esc($post['title']) ?>"><?php endif; ?>
+<?php if (!empty($post['excerpt'])): ?><p><strong><?= esc($post['excerpt']) ?></strong></p><?php endif; ?>
+<div class="article"><?= esc($post['content']) ?></div><a class="back" href="<?= site_url('berita') ?>">← Kembali ke berita</a>
+</main></body></html>
