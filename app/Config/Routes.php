@@ -10,6 +10,8 @@ $routes->get('admin', static function () {
 $routes->get('admin/login', 'Admin::login');
 $routes->post('admin/login', 'Admin::authenticate');
 $routes->get('admin/dashboard', 'Admin::dashboard');
+$routes->get('admin/settings', 'AdminSettings::index');
+$routes->post('admin/settings/simpan', 'AdminSettings::save');
 $routes->get('admin/logout', 'Admin::logout');
 $routes->get('admin/profil', 'AdminProfile::index');
 $routes->post('admin/profil/simpan', 'AdminProfile::save');
