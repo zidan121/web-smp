@@ -356,6 +356,89 @@
         </button>
         </form>
         </section>
+
+<section class="panel" id="data-program">
+    <h2>Data Program Unggulan</h2>
+    <p>Daftar program yang sudah tersimpan.</p>
+    <?php if (empty($programs)): ?>
+        <p>Belum ada data program.</p>
+    <?php else: ?>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th><th>Nama Program</th><th>Ikon</th>
+                    <th>Deskripsi</th><th>Urutan</th><th>Status</th><th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($programs as $index => $program): ?>
+                <?php
+                $cmsIconRow = null;
+                foreach (($programIcons ?? []) as $availableIcon) {
+                    if ((int) ($availableIcon['id'] ?? 0) === (int) ($program['program_icon_id'] ?? 0)) {
+                        $cmsIconRow = $availableIcon;
+                        break;
+                    }
+                }
+                $programJson = json_encode($program, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
+                $iconMapRow = [
+                    'book-open' => '📖', 'globe' => '🌐', 'laptop' => '💻',
+                    'graduation-cap' => '🎓', 'microscope' => '🔬', 'code' => '👨‍💻',
+                    'heart' => '❤️', 'star' => '⭐'
+                ];
+                ?>
+                <tr>
+                    <td><?= $index + 1 ?></td>
+                    <td>
+                        <strong><?= esc($program['name']) ?></strong><br>
+                        <small><?= esc($program['slug']) ?></small>
+                        <?php if (!empty($program['image'])): ?>
+                            <br><img class="table-image"
+                                src="<?= base_url('assets/images/programs/' . rawurlencode($program['image'])) ?>"
+                                alt="<?= esc($program['name']) ?>" loading="lazy">
+                        <?php endif; ?>
+                    </td>
+                    <td class="table-icon">
+                        <?php if ($cmsIconRow && $cmsIconRow['icon_type'] === 'image'): ?>
+                            <img src="<?= base_url('assets/images/program-icons/' . rawurlencode($cmsIconRow['icon_value'])) ?>"
+                                alt="<?= esc($cmsIconRow['name']) ?>"
+                                style="width:34px;height:34px;object-fit:contain">
+                        <?php elseif ($cmsIconRow): ?>
+                            <?= esc($cmsIconRow['icon_value']) ?>
+                        <?php else: ?>
+                            <?= esc($iconMapRow[$program['icon'] ?? 'book-open'] ?? '🎓') ?>
+                        <?php endif; ?>
+                    </td>
+                    <td><?= esc(mb_strimwidth((string) ($program['description'] ?? ''), 0, 90, '…')) ?></td>
+                    <td><?= (int) $program['sort_order'] ?></td>
+                    <td>
+                        <?php if ((int) $program['is_active'] === 1): ?>
+                            <span class="status" style="color:#16803d">Aktif</span>
+                        <?php else: ?>
+                            <span class="status" style="color:#a11">Nonaktif</span>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <button type="button" class="edit"
+                                data-program="<?= esc($programJson, 'attr') ?>"
+                                onclick="editProgram(this)">Edit</button>
+                            <form action="<?= site_url('admin/programs/hapus/' . (int) $program['id']) ?>"
+                                method="post" onsubmit="return confirm('Yakin ingin menghapus program ini?')">
+                                <?= csrf_field() ?>
+                                <button type="submit" class="delete">Hapus</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php endif; ?>
+</section>
+
 <script>
 const imageInput = document.getElementById('image');
 const imagePreview = document.getElementById('image-preview');
