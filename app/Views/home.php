@@ -829,7 +829,7 @@
             <div class="profile-visual profile-photo reveal">
                 <img
                     class="profile-photo-image"
-                    src="<?= base_url('assets/images/profil-sekolah.jpg') ?>"
+                    src="<?= base_url('assets/images/' . (! empty($profile['profile_image']) ? $profile['profile_image'] : 'profil-sekolah.jpg')) ?>"
                     alt="Foto kegiatan SMPIT Al Firdaus Purwodadi"
                     loading="lazy"
                 >
