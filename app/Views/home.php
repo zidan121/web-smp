@@ -648,6 +648,17 @@
         @media(max-width:900px){.profile-grid{grid-template-columns:1fr;gap:32px}.profile-visual{min-height:300px}.profile-copy{max-width:none}.profile-copy h2{max-width:760px}}
         @media(max-width:600px){.profile{padding:54px 0}.profile-visual{min-height:260px;border-radius:23px}.profile-copy>p{font-size:14px}.vision-item{font-size:13px;padding:10px 11px}}
 
+
+        /* Foto profil sekolah: letakkan file di public/assets/images/profil-sekolah.jpg */
+        .profile-photo{position:relative;display:flex;align-items:flex-end;isolation:isolate;overflow:hidden;padding:0;background:#17395f}
+        .profile-photo-image{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:center}
+        .profile-photo:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,24,45,.02) 20%,rgba(8,24,45,.18) 48%,rgba(8,24,45,.91) 100%)}
+        .profile-photo:after{display:none}
+        .profile-photo .profile-photo-caption{width:100%;max-width:none;padding:clamp(24px,3vw,38px);color:#fff}
+        .profile-photo-tag{display:inline-block;margin-bottom:12px;padding:7px 10px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(255,255,255,.14);color:#fff;font-size:10px;font-weight:800;letter-spacing:.12em}
+        .profile-photo h3{color:#fff}
+        .profile-photo p{max-width:420px;color:#e5eef9}
+
 </style>
 </head>
 <body>
@@ -815,8 +826,15 @@
 
     <section class="profile" id="profil">
         <div class="container profile-grid">
-            <div class="profile-visual reveal">
-                <div>
+            <div class="profile-visual profile-photo reveal">
+                <img
+                    class="profile-photo-image"
+                    src="<?= base_url('assets/images/profil-sekolah.jpg') ?>"
+                    alt="Foto kegiatan SMPIT Al Firdaus Purwodadi"
+                    loading="lazy"
+                >
+                <div class="profile-photo-caption">
+                    <span class="profile-photo-tag">SMPIT AL FIRDAUS PURWODADI</span>
                     <h3>Iman. Ilmu. Amal.</h3>
                     <p>Mendidik dengan keteladanan, mengembangkan potensi, dan menumbuhkan semangat belajar sepanjang hayat.</p>
                 </div>
