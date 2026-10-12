@@ -26,6 +26,7 @@ class Home extends BaseController
 
         return view('home', [
             'programs' => $programs,
+            'profile' => $profile,
             'programIconsById' => $iconsById,
         ]);
     }
