@@ -1,0 +1,18 @@
+<?php
+
+use CodeIgniter\Router\RouteCollection;
+
+/** @var RouteCollection $routes */
+$routes->get('/', 'Home::index');
+$routes->get('admin/login', 'Admin::login');
+$routes->post('admin/login', 'Admin::authenticate');
+$routes->get('admin/dashboard', 'Admin::dashboard');
+$routes->get('admin/logout', 'Admin::logout');
+$routes->get('admin/profil', 'AdminProfile::index');
+$routes->post('admin/profil/simpan', 'AdminProfile::save');
+$routes->get('admin/programs', 'AdminPrograms::index');
+$routes->post('admin/programs/simpan', 'AdminPrograms::save');
+$routes->post('admin/programs/hapus/(:num)', 'AdminPrograms::delete/$1');
+$routes->get('admin/program-icons', 'AdminProgramIcons::index');
+$routes->post('admin/program-icons/simpan', 'AdminProgramIcons::save');
+$routes->post('admin/program-icons/hapus/(:num)', 'AdminProgramIcons::delete/$1');
