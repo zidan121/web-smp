@@ -4,6 +4,8 @@ use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
 $routes->get('/', 'Home::index');
+$routes->get('berita', 'Berita::index');
+$routes->get('berita/(:segment)', 'Berita::detail/$1');
 $routes->get('admin', static function () {
     return redirect()->to('/admin/dashboard');
 });
