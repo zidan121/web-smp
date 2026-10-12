@@ -26,3 +26,4 @@ $routes->post('admin/programs/hapus/(:num)', 'AdminPrograms::delete/$1');
 $routes->get('admin/program-icons', 'AdminProgramIcons::index');
 $routes->post('admin/program-icons/simpan', 'AdminProgramIcons::save');
 $routes->post('admin/program-icons/hapus/(:num)', 'AdminProgramIcons::delete/$1');
+$routes->get('prestasi', 'Prestasi::index');
