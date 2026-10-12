@@ -23,8 +23,16 @@
 <?php foreach ($galleries as $gallery): ?>
 <article class="card">
 <div class="photo">
-<?php if (!empty($gallery['image']) && is_file(FCPATH . 'assets/images/galleries/' . basename($gallery['image']))): ?>
-<img src="<?= base_url('assets/images/galleries/' . rawurlencode(basename($gallery['image']))) ?>" alt="<?= esc($gallery['title']) ?>" loading="lazy">
+<?php
+$imageValue = trim((string) ($gallery['image'] ?? ''));
+$isRemoteImage = preg_match('#^https://images\\.unsplash\\.com/[a-zA-Z0-9?&=._%-]+$#', $imageValue) === 1;
+$localImage = basename($imageValue);
+$localImagePath = FCPATH . 'assets/images/galleries/' . $localImage;
+?>
+<?php if ($isRemoteImage): ?>
+<img src="<?= esc($imageValue) ?>" alt="<?= esc($gallery['title']) ?>" loading="lazy" referrerpolicy="no-referrer">
+<?php elseif ($localImage !== '' && is_file($localImagePath)): ?>
+<img src="<?= base_url('assets/images/galleries/' . rawurlencode($localImage)) ?>" alt="<?= esc($gallery['title']) ?>" loading="lazy">
 <?php else: ?><div class="photo-placeholder" aria-label="Foto belum tersedia">▧</div><?php endif; ?>
 </div>
 <div class="card-body">
