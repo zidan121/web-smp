@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Berita & Pengumuman | SMPIT Al Firdaus</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#203653}.hero{background:linear-gradient(120deg,#101d3b,#244f7d);color:white;padding:64px 20px}.wrap{max-width:1120px;margin:auto}.hero h1{font-size:clamp(30px,5vw,48px);margin:0 0 12px}.hero p{margin:0;color:#dce8f8}.back{display:inline-block;color:#fff;margin-bottom:24px;text-decoration:none}.content{padding:38px 20px 70px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.card{overflow:hidden;background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 8px 24px #142d520c}.thumb{width:100%;height:190px;object-fit:cover;background:#e8eef6}.body{padding:20px}.tag{font-size:12px;color:#3268a3;font-weight:bold;text-transform:uppercase}.body h2{font-size:20px;line-height:1.4;margin:10px 0}.body p{color:#687890;font-size:14px;line-height:1.7}.meta{font-size:12px;color:#7b8799}.read{display:inline-block;margin-top:10px;color:#1c4f88;font-weight:bold;text-decoration:none}.empty{background:white;padding:28px;border-radius:12px;color:#64748b}@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:550px){.grid{grid-template-columns:1fr}.hero{padding:44px 18px}}
+</style></head><body>
+<header class="hero"><div class="wrap"><a class="back" href="<?= site_url('/') ?>">← Beranda</a><h1>Berita & Pengumuman</h1><p>Informasi terbaru, kegiatan, dan kabar dari SMPIT Al Firdaus Purwodadi.</p></div></header>
+<main class="wrap content">
+<?php if (empty($posts)): ?><div class="empty">Belum ada berita yang dipublikasikan. Silakan kunjungi kembali nanti.</div><?php else: ?>
+<div class="grid"><?php foreach ($posts as $post): ?>
+<article class="card">
+<?php if (!empty($post['image'])): ?><img class="thumb" src="<?= base_url('assets/images/posts/' . rawurlencode($post['image'])) ?>" alt="<?= esc($post['title']) ?>" loading="lazy"><?php else: ?><div class="thumb"></div><?php endif; ?>
+<div class="body"><div class="tag"><?= esc($post['category']) ?></div><h2><?= esc($post['title']) ?></h2><p><?= esc($post['excerpt'] ?: mb_substr(strip_tags($post['content']), 0, 150) . '…') ?></p><div class="meta"><?= esc($post['published_at'] ?: $post['created_at']) ?><?= !empty($post['author']) ? ' · ' . esc($post['author']) : '' ?></div><a class="read" href="<?= site_url('berita/' . rawurlencode($post['slug'])) ?>">Baca selengkapnya →</a></div>
+</article><?php endforeach; ?></div><?php endif; ?>
+</main></body></html>
