@@ -21,10 +21,45 @@ main{padding:24px 0 65px}.controls{display:flex;align-items:center;justify-conte
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.card{min-width:0;background:#fff;border:1px solid #e7edf5;border-radius:17px;overflow:hidden;box-shadow:0 9px 25px #193a610a;transition:transform .22s,box-shadow .22s}.card:hover{transform:translateY(-5px);box-shadow:0 18px 38px #193a6117}.photo{height:225px;position:relative;overflow:hidden;background:linear-gradient(135deg,#e2eaf5,#f7f9fc)}.photo img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .4s}.card:hover .photo img{transform:scale(1.045)}.photo:after{content:"";position:absolute;inset:50% 0 0;background:linear-gradient(transparent,rgba(8,24,48,.2));pointer-events:none}.badge{position:absolute;z-index:1;top:13px;left:13px;background:#fff;color:#234b7c;border-radius:30px;padding:7px 11px;font-size:11px;font-weight:800;box-shadow:0 4px 12px #102b5015}.photo-placeholder{height:100%;display:grid;place-items:center;color:#8ea5c0;font-size:40px}.body{padding:17px 19px 18px}.card h3{font-size:16px;line-height:1.45;margin:0 0 7px;color:var(--navy)}.card p{font-size:13px;line-height:1.65;color:var(--muted);margin:0 0 15px}.card-foot{display:flex;align-items:center;justify-content:space-between;color:var(--blue);font-size:12px;font-weight:800}.arrow{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#e8f0fb;font-size:18px}.empty{grid-column:1/-1;background:#fff;border:1px dashed #ccd8e8;border-radius:18px;text-align:center;padding:55px 20px;color:var(--muted)}.empty strong{display:block;color:var(--navy);font-size:18px;margin-bottom:8px}.footer{padding:24px 0;text-align:center;color:#7b8da5;border-top:1px solid var(--line);font-size:12px}
 @media(max-width:960px){.hero-layout{grid-template-columns:1fr .8fr;gap:15px}.hero-art{min-height:230px}.hero-frame{height:220px}.float-frame{height:110px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.controls{align-items:stretch}.search{max-width:100%}}
 @media(max-width:650px){.wrap{width:calc(100% - 30px)}.hero{padding:22px 0 32px}.breadcrumb{margin-bottom:22px}.hero-layout{grid-template-columns:1fr}.hero-art{min-height:205px;margin-top:6px}.hero-frame{width:75%;height:200px}.float-frame{height:105px}.stats{gap:8px}.stat{flex:1;min-width:135px;padding:9px}.controls{margin-bottom:22px}.filters{gap:7px}.filter{padding:10px 12px}.search{width:100%}.grid{grid-template-columns:1fr;gap:16px}.photo{height:230px}.section-heading h2{font-size:20px}}
+
+/* Header utama seragam di semua halaman publik */
+.shared-site-header{position:sticky;top:0;z-index:1000;width:100%;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid #e4ebf4;box-shadow:0 4px 20px rgba(16,43,78,.035)}
+.shared-header-inner{width:min(1440px,90%);min-height:88px;margin:0 auto;display:grid;grid-template-columns:minmax(300px,1fr) auto minmax(170px,1fr);align-items:center;gap:28px}
+.shared-brand{display:flex;align-items:center;gap:16px;min-width:0;text-decoration:none;color:#102b4e}
+.shared-brand-mark{width:72px;height:72px;flex:0 0 72px;display:grid;place-items:center;border-radius:22px;color:#fff;background:linear-gradient(145deg,#2d639e,#102b4e);box-shadow:5px 7px 16px rgba(16,43,78,.2),inset 1px 1px 2px #ffffff70;font:800 34px/1 Inter,system-ui,sans-serif}
+.shared-brand-copy{display:flex;flex-direction:column;gap:7px;white-space:nowrap}
+.shared-brand-copy strong{font:800 23px/1.1 Poppins,Inter,system-ui,sans-serif;letter-spacing:-.45px;color:#102b4e}
+.shared-brand-copy small{font:500 14px/1.3 Inter,system-ui,sans-serif;letter-spacing:1.7px;color:#71839d}
+.shared-nav-links{display:flex;align-items:center;justify-content:center;gap:clamp(20px,2.2vw,38px);white-space:nowrap}
+.shared-nav-links a{font:650 18px/1.2 Inter,system-ui,sans-serif;color:#253953;text-decoration:none;transition:color .2s}
+.shared-nav-links a:hover{color:#2b6098}
+.shared-ppdb-button{justify-self:end;display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:21px 28px;border-radius:18px;background:linear-gradient(135deg,#2b6098,#102b4e);box-shadow:0 10px 24px rgba(16,43,78,.17);color:#fff!important;text-decoration:none;font:750 18px/1 Inter,system-ui,sans-serif;white-space:nowrap;transition:transform .2s,box-shadow .2s}
+.shared-ppdb-button:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(16,43,78,.23)}
+.shared-menu-toggle{display:none;border:1px solid #dce6f2;background:#fff;color:#102b4e;border-radius:12px;padding:10px 12px;font-size:22px;cursor:pointer}
+@media(max-width:1050px){.shared-header-inner{width:94%;grid-template-columns:minmax(0,1fr) auto auto;gap:16px}.shared-brand-mark{width:58px;height:58px;flex-basis:58px;border-radius:17px;font-size:28px}.shared-brand-copy strong{font-size:18px}.shared-brand-copy small{font-size:10px;letter-spacing:1px}.shared-nav-links{gap:16px}.shared-nav-links a{font-size:14px}.shared-ppdb-button{padding:16px 18px;font-size:14px;border-radius:13px}}
+@media(max-width:760px){.shared-header-inner{min-height:76px;grid-template-columns:minmax(0,1fr) auto auto;gap:10px}.shared-brand{gap:10px}.shared-brand-mark{width:48px;height:48px;flex-basis:48px;border-radius:14px;font-size:24px}.shared-brand-copy{gap:4px}.shared-brand-copy strong{font-size:14px}.shared-brand-copy small{font-size:8px;letter-spacing:.5px;white-space:normal}.shared-menu-toggle{display:block}.shared-nav-links{display:none;position:absolute;top:100%;left:0;right:0;padding:18px 5% 22px;background:#fff;border-bottom:1px solid #e4ebf4;box-shadow:0 12px 18px rgba(16,43,78,.08);flex-direction:column;align-items:stretch;gap:0}.shared-nav-links.is-open{display:flex}.shared-nav-links a{padding:13px 4px;font-size:15px}.shared-ppdb-button{padding:13px 12px;border-radius:12px;font-size:12px;gap:5px}}
+@media(max-width:420px){.shared-header-inner{width:96%;gap:7px}.shared-brand-copy strong{font-size:12px}.shared-brand-copy small{max-width:125px;font-size:7px}.shared-brand-mark{width:42px;height:42px;flex-basis:42px}.shared-ppdb-button{font-size:11px;padding:12px 9px}}
+
 </style>
 </head>
 <body>
-<header class="hero"><div class="wrap">
+<header class="shared-site-header">
+  <div class="shared-header-inner">
+    <a href="<?= site_url('/') ?>" class="shared-brand" aria-label="SMPIT Al Firdaus Purwodadi">
+      <span class="shared-brand-mark">AF</span>
+      <span class="shared-brand-copy"><strong>SMPIT AL FIRDAUS</strong><small>PURWODADI · SEKOLAH ISLAM TERPADU</small></span>
+    </a>
+    <button class="shared-menu-toggle" type="button" aria-label="Buka menu" aria-expanded="false" onclick="const nav=this.nextElementSibling;nav.classList.toggle('is-open');this.setAttribute('aria-expanded',nav.classList.contains('is-open'))">☰</button>
+    <nav class="shared-nav-links" aria-label="Navigasi utama">
+      <a href="<?= site_url('/') ?>#profil">Profil</a>
+      <a href="<?= site_url('/') ?>#program">Program</a>
+      <a href="<?= site_url('/') ?>#keunggulan">Keunggulan</a>
+      <a href="<?= site_url('/') ?>#kontak">Kontak</a>
+    </nav>
+    <a class="shared-ppdb-button" href="https://smpit.alfirdauspurwodadi.sch.id/" target="_blank" rel="noopener noreferrer">Daftar PPS <span aria-hidden="true">↗</span></a>
+  </div>
+</header>
+<section class="hero"><div class="wrap">
 <nav class="breadcrumb"><a href="<?= site_url('/') ?>">⌂ &nbsp;Beranda</a><span>›</span><span>Galeri</span></nav>
 <div class="hero-layout">
 <div class="hero-copy">
@@ -42,7 +77,7 @@ main{padding:24px 0 65px}.controls{display:flex;align-items:center;justify-conte
 <div class="hero-frame"><img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&q=85" alt="Suasana lingkungan sekolah" loading="lazy"></div>
 <div class="float-frame"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=80" alt="Kegiatan pembelajaran siswa" loading="lazy"></div>
 </div>
-</div></div></header>
+</div></div></section>
 <main><div class="wrap">
 <div class="controls">
 <div class="filters" aria-label="Filter kategori">
