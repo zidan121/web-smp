@@ -1,8 +1,8 @@
 <?php
 
-namespace App\\Controllers;
+namespace App\Controllers;
 
-use App\\Models\\GalleryModel;
+use App\Models\GalleryModel;
 
 class AdminGalleries extends BaseController
 {
@@ -102,7 +102,7 @@ class AdminGalleries extends BaseController
 
         try {
             $saved = $id > 0 ? $model->update($id, $data) : $model->insert($data);
-        } catch (\\Throwable $e) {
+        } catch (\Throwable $e) {
             if ($newFileName && is_file($directory . $newFileName)) {
                 unlink($directory . $newFileName);
             }
