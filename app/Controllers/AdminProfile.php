@@ -63,6 +63,18 @@ class AdminProfile extends BaseController
             'email'       => trim((string) $this->request->getPost('email')),
         ];
 
+        $image = $this->request->getFile('profile_image');
+        if ($image && $image->isValid() && ! $image->hasMoved()) {
+            if (! in_array($image->getMimeType(), ['image/jpeg', 'image/png', 'image/webp'], true) || $image->getSizeByUnit('mb') > 3) {
+                return redirect()->back()->withInput()->with('error', 'Foto harus JPG, PNG, atau WebP maksimal 3 MB.');
+            }
+            $uploadPath = FCPATH . 'assets/images/';
+            if (! is_dir($uploadPath)) mkdir($uploadPath, 0755, true);
+            $newName = $image->getRandomName();
+            if (! $image->move($uploadPath, $newName)) return redirect()->back()->withInput()->with('error', 'Foto gagal diunggah.');
+            $data['profile_image'] = $newName;
+        }
+
         if ($profile) {
             $model->update($profile['id'], $data);
         } else {
