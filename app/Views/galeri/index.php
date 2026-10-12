@@ -39,6 +39,8 @@ main{padding:24px 0 65px}.controls{display:flex;align-items:center;justify-conte
 @media(max-width:900px){.shared-header-inner{width:92%;gap:14px}.shared-nav-links{gap:13px}.shared-nav-links a{font-size:12px}.shared-brand-copy strong{font-size:14px}.shared-brand-copy small{font-size:9px;letter-spacing:.7px}.shared-ppdb-button{padding:12px 14px;font-size:12px}}
 @media(max-width:650px){.shared-header-inner{width:92%;min-height:70px;gap:10px}.shared-brand{gap:9px}.shared-brand-mark{width:42px;height:42px;flex-basis:42px;border-radius:13px;font-size:21px}.shared-brand-copy strong{font-size:13px}.shared-brand-copy small{font-size:8px;letter-spacing:.3px;white-space:normal}.shared-menu-toggle{display:block}.shared-nav-links{display:none;position:absolute;top:100%;left:0;right:0;padding:12px 5% 18px;background:#fff;border-bottom:1px solid #e6edf5;box-shadow:0 12px 18px rgba(16,43,78,.08);flex-direction:column;align-items:stretch;gap:0}.shared-nav-links.is-open{display:flex}.shared-nav-links a{padding:12px 4px;font-size:14px}.shared-ppdb-button{padding:11px 12px;border-radius:10px;font-size:11px;gap:5px}}
 @media(max-width:380px){.shared-header-inner{width:96%;gap:6px}.shared-brand-copy strong{font-size:11px}.shared-brand-copy small{max-width:115px;font-size:7px}.shared-brand-mark{width:38px;height:38px;flex-basis:38px}.shared-ppdb-button{font-size:10px;padding:10px 8px}}
+/* Shared responsive footer */
+.site-footer{background:#0b1d35!important;color:#d8e5f5!important;padding:58px 24px 0!important;margin-top:52px;border:0!important;text-align:left!important;font-size:15px!important;line-height:1.8}.site-footer *{box-sizing:border-box}.site-footer-inner{max-width:1320px;margin:0 auto}.site-footer-grid{display:grid;grid-template-columns:1.25fr .75fr 1fr;gap:clamp(28px,5vw,86px);padding:0 0 42px}.site-footer h2{margin:0 0 20px;color:#fff;font-size:21px;line-height:1.35;font-weight:800;letter-spacing:-.02em}.site-footer p{margin:0 0 12px;color:#b9cce3;font-size:15px;line-height:1.9}.site-footer-nav{display:flex;flex-direction:column;align-items:flex-start;gap:8px}.site-footer-nav h2{margin-bottom:10px}.site-footer a{color:#c5d8ef;text-decoration:none;transition:color .2s ease,transform .2s ease}.site-footer a:hover{color:#fff}.site-footer-nav a:hover{transform:translateX(3px)}.site-footer-cta{display:inline-flex;align-items:center;gap:10px;margin-top:8px;padding:9px 15px;border:1px solid #456487;border-radius:10px;color:#fff!important;font-weight:700;font-size:13px}.site-footer-cta:hover{background:#17395e}.site-footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:18px;min-height:68px;border-top:1px solid rgba(203,221,243,.18);color:#8eafd4;font-size:13px}@media(max-width:760px){.site-footer{padding:38px 20px 0!important;margin-top:36px}.site-footer-grid{grid-template-columns:1fr;gap:28px;padding-bottom:28px}.site-footer h2{font-size:19px;margin-bottom:12px}.site-footer-bottom{align-items:flex-start;flex-direction:column;justify-content:center;gap:3px;padding:15px 0;line-height:1.7}}
 </style>
 </head>
 <body>
@@ -120,7 +122,18 @@ $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['descriptio
 <div class="empty" id="no-results" hidden><strong>Belum ada kegiatan yang cocok</strong>Coba kata kunci atau kategori yang berbeda.</div>
 </div>
 </div></main>
-<footer class="footer"><div class="wrap">© <?= date('Y') ?> SMPIT Al Firdaus Purwodadi · Berakhlak, Berilmu, Berprestasi</div></footer>
+<footer class="site-footer" id="kontak">
+  <div class="site-footer-inner">
+    <div class="site-footer-grid">
+      <section class="site-footer-about"><h2>SMPIT Al Firdaus Purwodadi</h2><p>Pendidikan Islam terpadu untuk generasi yang bertakwa, berprestasi, dan berwawasan global.</p></section>
+      <nav class="site-footer-nav" aria-label="Navigasi footer"><h2>Navigasi</h2>
+        <a href="<?= site_url('profil') ?>">Profil sekolah</a><a href="<?= site_url('program') ?>">Program unggulan</a><a href="<?= site_url('berita') ?>">Berita &amp; pengumuman</a><a href="<?= site_url('galeri') ?>">Galeri kegiatan</a><a href="<?= site_url('prestasi') ?>">Prestasi siswa</a><a href="<?= site_url('pps') ?>">PPS 2027/2028</a>
+      </nav>
+      <section class="site-footer-contact"><h2>Kontak Sekolah</h2><p>Jl. Soponyono V, Jetis Barat, Purwodadi, Grobogan, Jawa Tengah.</p><p>Informasi pendaftaran dan kontak resmi sekolah dapat diperoleh melalui halaman PPS.</p><a class="site-footer-cta" href="<?= site_url('pps') ?>">Informasi PPS <span aria-hidden="true">↗</span></a></section>
+    </div>
+    <div class="site-footer-bottom"><span>© <?= date('Y') ?> SMPIT Al Firdaus Purwodadi. Hak cipta dilindungi.</span><span>Ilmu · Akhlak · Prestasi</span></div>
+  </div>
+</footer>
 <script>
 (function(){
  const cards=[...document.querySelectorAll('.gallery-card')];
