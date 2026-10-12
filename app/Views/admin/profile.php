@@ -43,6 +43,8 @@
         .message { padding: 12px; border-radius: 8px; margin: 14px 0; }
         .error { background: #fff0f0; color: #a11; }
         .success { background: #eaf8ee; color: #176534; }
+        .photo-preview{display:block;width:min(100%,420px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;border:1px solid #d6e0ee;background:#eef3f9;margin:8px 0 12px}
+        .hint{font-size:13px;color:#64748b;line-height:1.6}
     </style>
 </head>
 <body>
@@ -63,9 +65,17 @@
 
         <?php $p = $profile ?? []; ?>
 
-        <form action="<?= site_url('admin/profil/simpan') ?>" method="post">
+        <form action="<?= site_url('admin/profil/simpan') ?>" method="post" enctype="multipart/form-data">
             <?= csrf_field() ?>
 
+            <label for="profile_image">Foto bagian Profil Sekolah</label>
+            <?php if (! empty($p['profile_image'])): ?>
+                <img class="photo-preview" id="profileImagePreview" src="<?= base_url('assets/images/' . $p['profile_image']) ?>" alt="Foto profil sekolah saat ini">
+            <?php else: ?>
+                <img class="photo-preview" id="profileImagePreview" src="" alt="Pratinjau foto profil" hidden>
+            <?php endif; ?>
+            <input id="profile_image" name="profile_image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+            <p class="hint">JPG, PNG, atau WebP maksimal 3 MB. Kosongkan jika tidak ingin mengganti foto.</p>
             <label for="school_name">Nama sekolah *</label>
             <input id="school_name" name="school_name" required maxlength="200"
                    value="<?= esc(old('school_name', $p['school_name'] ?? 'SMPIT Al Firdaus Purwodadi')) ?>">
@@ -98,5 +108,12 @@
         </form>
     </section>
 </main>
+<script>
+document.getElementById('profile_image')?.addEventListener('change', function () {
+ const file=this.files&&this.files[0]; if(!file)return;
+ const preview=document.getElementById('profileImagePreview');
+ preview.src=URL.createObjectURL(file); preview.hidden=false;
+});
+</script>
 </body>
 </html>
