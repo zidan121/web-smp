@@ -43,27 +43,7 @@
         <form action="<?= site_url('admin/settings/simpan') ?>" method="post">
             <?= csrf_field() ?>
             <div class="grid">
-                <div class="field wide">
-                    <label for="site_name">Nama Website / Sekolah *</label>
-                    <input id="site_name" name="site_name" required maxlength="150"
-                        value="<?= esc(old('site_name', $settings['site_name'] ?? 'SMPIT Al Firdaus Purwodadi')) ?>">
-                </div>
-                <div class="field wide">
-                    <label for="tagline">Slogan / Tagline</label>
-                    <input id="tagline" name="tagline" maxlength="255"
-                        value="<?= esc(old('tagline', $settings['tagline'] ?? '')) ?>"
-                        placeholder="Slogan sekolah">
-                </div>
-                <div class="field">
-                    <label for="email">Email</label>
-                    <input id="email" type="email" name="email" maxlength="150"
-                        value="<?= esc(old('email', $settings['email'] ?? '')) ?>" placeholder="info@sekolah.sch.id">
-                </div>
-                <div class="field">
-                    <label for="phone">Nomor Telepon</label>
-                    <input id="phone" name="phone" maxlength="50"
-                        value="<?= esc(old('phone', $settings['phone'] ?? '')) ?>" placeholder="Nomor telepon sekolah">
-                </div>
+                <p class="hint wide">Nama sekolah, tagline, deskripsi, visi, misi, alamat, telepon, dan email dikelola dari menu <strong>Profil Sekolah</strong> agar tidak ada data ganda. Halaman ini khusus WhatsApp PPDB dan media sosial.</p>
                 <div class="field">
                     <label for="whatsapp">WhatsApp PPDB</label>
                     <input id="whatsapp" name="whatsapp" maxlength="50"
@@ -83,10 +63,6 @@
                     <label for="youtube">Tautan YouTube</label>
                     <input id="youtube" name="youtube" maxlength="255"
                         value="<?= esc(old('youtube', $settings['youtube'] ?? '')) ?>" placeholder="https://youtube.com/...">
-                </div>
-                <div class="field wide">
-                    <label for="address">Alamat Sekolah</label>
-                    <textarea id="address" name="address" maxlength="1000" placeholder="Alamat lengkap sekolah"><?= esc(old('address', $settings['address'] ?? '')) ?></textarea>
                 </div>
             </div>
             <button type="submit">Simpan Pengaturan</button>
