@@ -955,10 +955,10 @@
 <?php $schoolPhone = preg_replace('/[^0-9+]/', '', (string) ($profile['phone'] ?? '')); ?>
 <?php $schoolEmail = trim((string) ($profile['email'] ?? '')); ?>
 <?php if ($schoolAddress !== ''): ?>
-<p><a href="https://www.google.com/maps/search/?api=1&amp;query=<?= rawurlencode($schoolAddress) ?>" target="_blank" rel="noopener noreferrer"><?= nl2br(esc($schoolAddress)) ?> <span aria-hidden="true">↗</span></a></p>
+<p><a href="https://www.google.com/maps/search/?api=1&amp;query=<?= rawurlencode($schoolAddress) ?>" target="_blank" rel="noopener noreferrer"><?= nl2br(esc($schoolAddress)) ?></a></p>
 <?php endif; ?>
 <?php if ($schoolPhone !== ''): ?>
-<p><a href="https://wa.me/<?= esc(ltrim($schoolPhone, '+'), 'attr') ?>" target="_blank" rel="noopener noreferrer">WhatsApp: <?= esc((string) ($profile['phone'] ?? '')) ?> <span aria-hidden="true">↗</span></a></p>
+<p><a href="https://wa.me/<?= esc(ltrim($schoolPhone, '+'), 'attr') ?>" target="_blank" rel="noopener noreferrer">WhatsApp: <?= esc((string) ($profile['phone'] ?? '')) ?></a></p>
 <?php endif; ?>
 <?php if ($schoolEmail !== ''): ?>
 <p><a href="mailto:<?= esc($schoolEmail, 'attr') ?>">Email: <?= esc($schoolEmail) ?></a></p>
