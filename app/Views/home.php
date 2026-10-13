@@ -59,7 +59,7 @@
             gap: 12px;
         }
 
-        .brand-mark {
+        .brand-logo {\n            width: 48px;\n            height: 48px;\n            object-fit: contain;\n            border-radius: 12px;\n            flex: 0 0 48px;\n        }\n\n        .brand-mark {
             width: 48px;
             height: 48px;
             border-radius: 15px;
@@ -679,7 +679,11 @@
 <header>
     <div class="container navbar">
         <a href="/" class="brand">
-            <div class="brand-mark">AF</div>
+            <?php if (! empty($settings['site_logo'])): ?>
+                <img class="brand-logo" src="<?= base_url('assets/images/' . $settings['site_logo']) ?>" alt="Logo SMPIT Al Firdaus">
+            <?php else: ?>
+                <div class="brand-mark">AF</div>
+            <?php endif; ?>
             <div>
                 <h2>SMPIT AL FIRDAUS</h2>
                 <p>PURWODADI · SEKOLAH ISLAM TERPADU</p>
