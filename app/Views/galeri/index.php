@@ -49,6 +49,19 @@ main{padding:24px 0 65px}.controls{display:flex;align-items:center;justify-conte
 .site-footer-nav{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;gap:8px!important}
 .site-footer-nav a{display:block;line-height:1.8}
 
+
+/* Toolbar galeri selaras dengan halaman Berita dan tidak memecah tombol di desktop */
+.controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(290px,360px);align-items:center;gap:18px;margin-bottom:24px}
+.controls .filters{display:flex;align-items:center;gap:9px;flex-wrap:nowrap;min-width:0}
+.controls .filter{flex:0 0 auto;padding:12px 15px;font-size:13px;line-height:1.1}
+.controls .filter.gallery-current{background:#fff;color:#415673}
+.controls .filter.gallery-current:hover{background:#edf4ff;color:#0c4b9b}
+.controls .search{width:100%;min-width:0;max-width:none;flex:initial}
+.controls .search input{min-width:0}
+.controls .filter.active{background:#0c4b9b;color:#fff}
+@media(max-width:1180px){.controls{grid-template-columns:1fr;align-items:stretch}.controls .filters{flex-wrap:wrap}.controls .search{width:100%;max-width:520px}}
+@media(max-width:650px){.controls .filters{gap:7px}.controls .filter{padding:10px 12px;font-size:12px}.controls .search{max-width:100%}}
+
 </style>
 </head>
 <body>
@@ -89,13 +102,13 @@ main{padding:24px 0 65px}.controls{display:flex;align-items:center;justify-conte
 </div></div></section>
 <main><div class="wrap">
 <div class="controls">
-<div class="filters" aria-label="Filter kategori">
-<button class="filter active" type="button" data-category="all">▦ &nbsp;Semua</button>
-<button class="filter" type="button" data-category="berita">▤ &nbsp;Berita</button>
-<button class="filter" type="button" data-category="kegiatan">▦ &nbsp;Kegiatan</button>
-<button class="filter" type="button" data-category="pengumuman">⚑ &nbsp;Pengumuman</button>
-<button class="filter" type="button" data-category="prestasi">🏆 &nbsp;Prestasi</button>
-<a class="filter active" href="<?= site_url('galeri') ?>" aria-current="page">▧ &nbsp;Galeri Kegiatan</a>
+<div class="filters" role="group" aria-label="Filter kategori galeri">
+<button class="filter active" type="button" data-category="all" aria-pressed="true">▦ &nbsp;Semua</button>
+<button class="filter" type="button" data-category="berita" aria-pressed="false">▤ &nbsp;Berita</button>
+<button class="filter" type="button" data-category="kegiatan" aria-pressed="false">▦ &nbsp;Kegiatan</button>
+<button class="filter" type="button" data-category="pengumuman" aria-pressed="false">⚑ &nbsp;Pengumuman</button>
+<button class="filter" type="button" data-category="prestasi" aria-pressed="false">🏆 &nbsp;Prestasi</button>
+<a class="filter gallery-current" href="<?= site_url('galeri') ?>" aria-current="page">▧ &nbsp;Galeri Kegiatan</a>
 </div>
 <form class="search" id="gallery-search" role="search"><input id="gallery-query" type="search" placeholder="Cari kegiatan..." aria-label="Cari kegiatan"><button type="submit">Cari</button></form>
 </div>
@@ -144,38 +157,50 @@ $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['descriptio
 <script>
 (function(){
  const cards=[...document.querySelectorAll('.gallery-card')];
- const filters=[...document.querySelectorAll('button.filter')];
+ const filters=[...document.querySelectorAll('button.filter[data-category]')];
  const query=document.getElementById('gallery-query');
  const form=document.getElementById('gallery-search');
  const count=document.getElementById('result-count');
  const noResults=document.getElementById('no-results');
  let active='all';
+
+ function categoryMatches(card, selected){
+  const category=(card.dataset.category||'').trim().toLocaleLowerCase('id');
+  const text=(card.dataset.search||'').toLocaleLowerCase('id');
+  if(selected==='all') return true;
+  if(selected==='berita') return category.includes('berita') || /berita|artikel|kabar/.test(text);
+  if(selected==='kegiatan') return !/prestasi|pengumuman/.test(category) && !/pengumuman resmi|jadwal pendaftaran/.test(text);
+  if(selected==='pengumuman') return category.includes('pengumuman') || /pengumuman|jadwal pendaftaran|informasi resmi/.test(text);
+  if(selected==='prestasi') return category.includes('prestasi') || text.includes('prestasi');
+  return true;
+ }
+
  function render(){
-  const term=query.value.trim().toLowerCase(); let visible=0;
+  const term=query.value.trim().toLocaleLowerCase('id');
+  let visible=0;
   cards.forEach(card=>{
-   const category=(card.dataset.category||'').toLowerCase();
-   const text=(card.dataset.search||'').toLowerCase();
-   // Filter diselaraskan dengan tombol di halaman Berita, tetapi tetap
-   // mencari berdasarkan kategori dan isi kartu galeri yang tersedia.
-   const categoryMatch = active==='all'
-    || (active==='berita' && (category.includes('berita') || /informasi|artikel|kabar/.test(text)))
-    || (active==='kegiatan' && !category.includes('prestasi') && !category.includes('pengumuman'))
-    || (active==='pengumuman' && (category.includes('pengumuman') || /pengumuman|jadwal|pendaftaran|informasi resmi/.test(text)))
-    || (active==='prestasi' && (category.includes('prestasi') || text.includes('prestasi')));
-   const searchMatch=!term||text.includes(term);
-   const show=categoryMatch&&searchMatch;
-   card.hidden=!show;if(show)visible++;
+   const text=(card.dataset.search||'').toLocaleLowerCase('id');
+   const show=categoryMatches(card,active)&&(!term||text.includes(term));
+   card.hidden=!show;
+   if(show) visible++;
   });
   count.textContent=visible+' dokumentasi';
   noResults.hidden=visible!==0;
  }
+
  filters.forEach(button=>button.addEventListener('click',()=>{
-  active=button.dataset.category;
-  filters.forEach(item=>item.classList.toggle('active',item===button));
+  active=button.dataset.category||'all';
+  filters.forEach(item=>{
+   const selected=item===button;
+   item.classList.toggle('active',selected);
+   item.setAttribute('aria-pressed',selected?'true':'false');
+  });
+  document.querySelector('.gallery-current')?.classList.remove('active');
   render();
  }));
  form.addEventListener('submit',event=>{event.preventDefault();render()});
  query.addEventListener('input',render);
+ render();
 })();
 </script>
 </body></html>
