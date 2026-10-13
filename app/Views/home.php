@@ -642,7 +642,7 @@
         .profile-copy>.section-heading{margin-bottom:0!important}
         .profile-copy>p{margin-top:22px;font-size:16px;line-height:1.95;color:#60748d}
         .vision-list{margin:27px 0 30px;gap:13px}
-        .vision-item{padding:12px 14px;border:1px solid #e0e9f5;border-radius:13px;background:rgba(255,255,255,.7);font-size:14px;line-height:1.75;gap:12px}
+        .vision-item{padding:12px 14px;border:1px solid #e0e9f5;border-radius:13px;background:rgba(255,255,255,.7);font-size:14px;line-height:1.75;gap:12px;align-items:flex-start}.vision-item>div{flex:1;min-width:0}.vision-item strong{display:block;margin-bottom:4px}.vision-item>div br{display:block;content:"";margin-top:4px}
         .vision-item span{flex:0 0 24px;width:24px;height:24px;display:grid;place-items:center;border-radius:8px;background:#e7f0ff;color:#24558b}
         .profile-copy>.button{margin-top:0;box-shadow:0 12px 26px rgba(25,66,111,.16)}
         @media(max-width:900px){.profile-grid{grid-template-columns:1fr;gap:32px}.profile-visual{min-height:300px}.profile-copy{max-width:none}.profile-copy h2{max-width:760px}}
