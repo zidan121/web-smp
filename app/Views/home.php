@@ -655,6 +655,10 @@
         .profile-photo:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,24,45,.02) 20%,rgba(8,24,45,.18) 48%,rgba(8,24,45,.91) 100%)}
         .profile-photo:after{display:none}
         .profile-photo .profile-photo-caption{width:100%;max-width:none;padding:clamp(24px,3vw,38px);color:#fff}
+        .profile-video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;border-radius:28px;background:#102b4e}
+        .profile-video-wrap{position:absolute;inset:0;overflow:hidden;border-radius:28px;background:#102b4e}
+        .profile-video-wrap:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,24,45,.02) 20%,rgba(8,24,45,.16) 48%,rgba(8,24,45,.88) 100%);pointer-events:none}
+        .profile-video-wrap .profile-photo-caption{position:absolute;z-index:2;bottom:0;left:0}
         .profile-photo-tag{display:inline-block;margin-bottom:12px;padding:7px 10px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(255,255,255,.14);color:#fff;font-size:10px;font-weight:800;letter-spacing:.12em}
         .profile-photo h3{color:#fff}
         .profile-photo p{max-width:420px;color:#e5eef9}
@@ -827,17 +831,43 @@
     <section class="profile" id="profil">
         <div class="container profile-grid">
             <div class="profile-visual profile-photo reveal">
-                <img
-                    class="profile-photo-image"
-                    src="<?= base_url('assets/images/' . (! empty($profile['profile_image']) ? $profile['profile_image'] : 'profil-sekolah.jpg')) ?>"
-                    alt="Foto kegiatan SMPIT Al Firdaus Purwodadi"
-                    loading="lazy"
-                >
-                <div class="profile-photo-caption">
-                    <span class="profile-photo-tag">SMPIT AL FIRDAUS PURWODADI</span>
-                    <h3>Iman. Ilmu. Amal.</h3>
-                    <p>Mendidik dengan keteladanan, mengembangkan potensi, dan menumbuhkan semangat belajar sepanjang hayat.</p>
-                </div>
+                <?php
+                $videoUrl = trim((string) ($profile['profile_video_url'] ?? ''));
+                $videoId = '';
+                if ($videoUrl !== '') {
+                    $videoParts = parse_url($videoUrl);
+                    $videoHost = strtolower($videoParts['host'] ?? '');
+                    $videoPath = trim($videoParts['path'] ?? '', '/');
+                    if (in_array($videoHost, ['youtu.be', 'www.youtu.be'], true)) {
+                        $videoId = explode('/', $videoPath)[0] ?? '';
+                    } elseif (in_array($videoHost, ['youtube.com', 'www.youtube.com', 'm.youtube.com', 'youtube-nocookie.com', 'www.youtube-nocookie.com'], true)) {
+                        parse_str($videoParts['query'] ?? '', $videoQuery);
+                        if (($videoParts['path'] ?? '') === '/watch') {
+                            $videoId = $videoQuery['v'] ?? '';
+                        } elseif (preg_match('~^(embed|shorts)/([A-Za-z0-9_-]+)~', $videoPath, $videoMatch)) {
+                            $videoId = $videoMatch[2];
+                        }
+                    }
+                }
+                $videoId = preg_match('/^[A-Za-z0-9_-]{11}$/', $videoId) ? $videoId : '';
+                ?>
+                <?php if ($videoId !== ''): ?>
+                    <div class="profile-video-wrap">
+                        <iframe class="profile-video" src="https://www.youtube-nocookie.com/embed/<?= esc($videoId, 'attr') ?>?rel=0" title="Video profil SMPIT Al Firdaus Purwodadi" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <div class="profile-photo-caption">
+                            <span class="profile-photo-tag">SMPIT AL FIRDAUS PURWODADI</span>
+                            <h3>Iman. Ilmu. Amal.</h3>
+                            <p>Mendidik dengan keteladanan, mengembangkan potensi, dan menumbuhkan semangat belajar sepanjang hayat.</p>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <img class="profile-photo-image" src="<?= base_url('assets/images/' . (! empty($profile['profile_image']) ? $profile['profile_image'] : 'profil-sekolah.jpg')) ?>" alt="Foto kegiatan SMPIT Al Firdaus Purwodadi" loading="lazy">
+                    <div class="profile-photo-caption">
+                        <span class="profile-photo-tag">SMPIT AL FIRDAUS PURWODADI</span>
+                        <h3>Iman. Ilmu. Amal.</h3>
+                        <p>Mendidik dengan keteladanan, mengembangkan potensi, dan menumbuhkan semangat belajar sepanjang hayat.</p>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div class="profile-copy reveal">
