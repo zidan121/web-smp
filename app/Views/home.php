@@ -676,40 +676,45 @@
         .profile-photo h3{color:#fff}
         .profile-photo p{max-width:420px;color:#e5eef9}
 
+/* Shared public navbar: final override to keep every page identical */
+.shared-site-header{height:78px!important;min-height:78px!important;width:100%;position:sticky!important;top:0;z-index:1000!important;display:flex;align-items:center;background:rgba(255,255,255,.97)!important;backdrop-filter:blur(16px);border-bottom:1px solid #e4ebf4!important;box-shadow:none!important}
+.shared-header-inner{width:min(1240px,92%)!important;min-height:78px!important;margin:0 auto!important;padding:0!important;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:space-between!important;gap:24px!important}
+.shared-brand{display:flex!important;align-items:center!important;gap:12px!important;min-width:290px!important;flex:0 1 auto!important;color:#102b50!important;text-decoration:none!important;font-weight:800!important;line-height:1.15!important}
+.shared-brand-logo,.shared-brand-mark{width:48px!important;height:48px!important;min-width:48px!important;flex:0 0 48px!important;box-sizing:border-box!important;border-radius:14px!important}
+.shared-brand-logo{display:block!important;object-fit:contain!important;object-position:center!important;padding:4px!important;background:#fff!important}
+.shared-brand-mark{display:grid!important;place-items:center!important;background:linear-gradient(145deg,#0d4d9e,#15315e)!important;color:#fff!important;font-size:25px!important;box-shadow:0 6px 14px #0b3e8324!important}
+.shared-brand-copy{display:block!important}.shared-brand-copy strong{display:block!important;margin:0!important;font-size:16px!important;font-weight:800!important;color:#102b50!important;white-space:nowrap!important}.shared-brand-copy small{display:block!important;margin-top:5px!important;font-size:10px!important;letter-spacing:1.2px!important;color:#718198!important;white-space:nowrap!important}
+.shared-nav-links{display:flex!important;flex:1 1 auto!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:clamp(16px,2.2vw,32px)!important;margin:0!important;padding:0!important;font-size:14px!important;font-weight:650!important}
+.shared-nav-links a{display:block!important;margin:0!important;padding:28px 0!important;border:0!important;background:transparent!important;color:#344965!important;text-decoration:none!important;white-space:nowrap!important;font-size:14px!important;font-weight:650!important}
+.shared-nav-links a:hover{color:#0c4b9b!important}
+.shared-menu-toggle{display:none!important}
+.shared-ppdb-button{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;margin:0!important;padding:14px 20px!important;border:0!important;border-radius:13px!important;background:linear-gradient(120deg,#2b6098,#102b50)!important;color:#fff!important;text-decoration:none!important;font-size:13px!important;font-weight:750!important;white-space:nowrap!important;box-shadow:0 8px 20px #0b4b9b20!important}
+@media(max-width:850px){.shared-header-inner{width:94%!important;gap:14px!important}.shared-brand{min-width:0!important;gap:9px!important}.shared-brand-copy strong{font-size:13px!important}.shared-brand-copy small{font-size:8px!important;letter-spacing:.6px!important}.shared-nav-links{gap:13px!important}.shared-nav-links a{font-size:12px!important}.shared-ppdb-button{padding:12px 14px!important;font-size:12px!important}}
+@media(max-width:650px){.shared-site-header{height:auto!important;min-height:70px!important}.shared-header-inner{width:92%!important;min-height:70px!important;flex-wrap:wrap!important;gap:10px!important;padding:10px 0!important}.shared-brand{flex:1 1 auto!important;min-width:0!important}.shared-brand-logo,.shared-brand-mark{width:42px!important;height:42px!important;min-width:42px!important;flex-basis:42px!important;border-radius:12px!important}.shared-brand-copy strong{font-size:12px!important}.shared-brand-copy small{font-size:7px!important;letter-spacing:.25px!important;white-space:normal!important}.shared-menu-toggle{display:block!important;order:2!important;border:0!important;border-radius:9px!important;padding:8px 11px!important;background:#edf3fb!important;color:#102b50!important;font-size:20px!important}.shared-ppdb-button{padding:10px 11px!important;font-size:11px!important;border-radius:10px!important}.shared-nav-links{display:none!important;position:absolute!important;top:100%!important;left:0!important;right:0!important;order:3!important;width:100%!important;flex:0 0 100%!important;padding:10px 4% 16px!important;background:#fff!important;border-bottom:1px solid #e4ebf4!important;box-shadow:0 12px 18px rgba(16,43,78,.08)!important;flex-direction:column!important;align-items:stretch!important;gap:0!important}.shared-nav-links.is-open{display:flex!important}.shared-nav-links a{padding:12px 4px!important;border-top:1px solid #edf1f7!important;font-size:14px!important}}
+
 </style>
 </head>
 <body>
 
-<header>
-    <div class="container navbar">
-        <a href="/" class="brand">
-            <?php if (! empty($settings['site_logo'])): ?>
-                <img class="brand-logo" src="<?= base_url('assets/images/' . $settings['site_logo']) ?>" alt="Logo SMPIT Al Firdaus">
-            <?php else: ?>
-                <div class="brand-mark">AF</div>
-            <?php endif; ?>
-            <div>
-                <h2>SMPIT AL FIRDAUS</h2>
-                <p>PURWODADI · SEKOLAH ISLAM TERPADU</p>
-            </div>
-        </a>
-
-        <nav class="nav-links" aria-label="Navigasi utama">
-            <a href="#profil">Profil</a>
-            <a href="#program">Program</a>
-            <a href="#keunggulan">Keunggulan</a>
-            <a href="#kontak">Kontak</a>
-        </nav>
-
-        <a
-            class="button button-primary"
-            href="<?= site_url('pps') ?>"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            Daftar PPS
-        </a>
-    </div>
+<header class="shared-site-header">
+  <div class="shared-header-inner">
+    <a href="<?= site_url('/') ?>" class="shared-brand" aria-label="SMPIT Al Firdaus Purwodadi">
+      <?php if (! empty($settings['site_logo'])): ?>
+        <img class="shared-brand-logo" src="<?= base_url('assets/images/' . esc($settings['site_logo'], 'attr')) ?>" alt="Logo SMPIT Al Firdaus">
+      <?php else: ?>
+        <span class="shared-brand-mark">AF</span>
+      <?php endif; ?>
+      <span class="shared-brand-copy"><strong><?= esc($settings['site_name'] ?? 'SMPIT AL FIRDAUS') ?></strong><small>PURWODADI · SEKOLAH ISLAM TERPADU</small></span>
+    </a>
+    <button class="shared-menu-toggle" type="button" aria-label="Buka menu" aria-expanded="false" onclick="const nav=this.nextElementSibling;nav.classList.toggle('is-open');this.setAttribute('aria-expanded',nav.classList.contains('is-open'))">☰</button>
+    <nav class="shared-nav-links" aria-label="Navigasi utama">
+      <a href="<?= site_url('/') ?>#profil">Profil</a>
+      <a href="<?= site_url('/') ?>#program">Program</a>
+      <a href="<?= site_url('/') ?>#keunggulan">Keunggulan</a>
+      <a href="<?= site_url('/') ?>#kontak">Kontak</a>
+    </nav>
+    <a class="shared-ppdb-button" href="https://smpit.alfirdauspurwodadi.sch.id/" target="_blank" rel="noopener noreferrer">Daftar PPS</a>
+  </div>
 </header>
 
 <main>
