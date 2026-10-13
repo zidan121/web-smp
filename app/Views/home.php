@@ -950,7 +950,20 @@
 <footer class="site-footer" id="kontak"><div class="site-footer-inner"><div class="site-footer-grid">
 <section class="site-footer-about"><h2><?= esc($profile['school_name'] ?? 'SMPIT Al Firdaus Purwodadi') ?></h2><p><?= esc(($profile['tagline'] ?? '') ?: 'Pendidikan Islam terpadu untuk generasi yang bertakwa, berprestasi, dan berwawasan global.') ?></p></section>
 <nav class="site-footer-nav" aria-label="Navigasi footer"><h2>Navigasi</h2><a href="<?= site_url('profil') ?>">Profil sekolah</a><a href="<?= site_url('program') ?>">Program unggulan</a><a href="<?= site_url('berita') ?>">Berita &amp; pengumuman</a><a href="<?= site_url('galeri') ?>">Galeri kegiatan</a><a href="<?= site_url('prestasi') ?>">Prestasi siswa</a><a href="<?= site_url('pps') ?>">PPS 2027/2028</a></nav>
-<section class="site-footer-contact"><h2>Kontak Sekolah</h2><p><?= nl2br(esc(($profile['address'] ?? '') ?: 'Alamat sekolah belum diatur.')) ?></p><?php if (! empty($profile['phone'])): ?><p>WhatsApp/Telepon: <?= esc($profile['phone']) ?></p><?php endif; ?><?php if (! empty($profile['email'])): ?><p>Email: <?= esc($profile['email']) ?></p><?php endif; ?><a class="site-footer-cta" href="<?= site_url('pps') ?>">Informasi PPS <span aria-hidden="true">↗</span></a></section>
+<section class="site-footer-contact"><h2>Kontak Sekolah</h2>
+<?php $schoolAddress = trim((string) ($profile['address'] ?? '')); ?>
+<?php $schoolPhone = preg_replace('/[^0-9+]/', '', (string) ($profile['phone'] ?? '')); ?>
+<?php $schoolEmail = trim((string) ($profile['email'] ?? '')); ?>
+<?php if ($schoolAddress !== ''): ?>
+<p><a href="https://www.google.com/maps/search/?api=1&amp;query=<?= rawurlencode($schoolAddress) ?>" target="_blank" rel="noopener noreferrer"><?= nl2br(esc($schoolAddress)) ?> <span aria-hidden="true">↗</span></a></p>
+<?php endif; ?>
+<?php if ($schoolPhone !== ''): ?>
+<p><a href="https://wa.me/<?= esc(ltrim($schoolPhone, '+'), 'attr') ?>" target="_blank" rel="noopener noreferrer">WhatsApp: <?= esc((string) ($profile['phone'] ?? '')) ?> <span aria-hidden="true">↗</span></a></p>
+<?php endif; ?>
+<?php if ($schoolEmail !== ''): ?>
+<p><a href="mailto:<?= esc($schoolEmail, 'attr') ?>">Email: <?= esc($schoolEmail) ?></a></p>
+<?php endif; ?>
+<a class="site-footer-cta" href="<?= site_url('pps') ?>">Informasi PPS <span aria-hidden="true">↗</span></a></section>
 </div><div class="site-footer-bottom"><span>© <?= date('Y') ?> SMPIT Al Firdaus Purwodadi. Hak cipta dilindungi.</span><span>Ilmu · Akhlak · Prestasi</span></div></div></footer>
 
 <script>
