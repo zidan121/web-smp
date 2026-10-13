@@ -87,15 +87,15 @@ class AdminSettings extends BaseController
             $logoFile = $this->request->getFile('site_logo');
             if ($logoFile && $logoFile->isValid() && ! $logoFile->hasMoved()) {
                 if (! in_array($logoFile->getMimeType(), ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'], true) || $logoFile->getSizeByUnit('mb') > 3) {
-                    throw new \\RuntimeException('Logo harus JPG, PNG, WebP, atau SVG maksimal 3 MB.');
+                    throw new \RuntimeException('Logo harus JPG, PNG, WebP, atau SVG maksimal 3 MB.');
                 }
                 $uploadPath = FCPATH . 'assets/images/';
                 if (! is_dir($uploadPath) && ! mkdir($uploadPath, 0755, true) && ! is_dir($uploadPath)) {
-                    throw new \\RuntimeException('Folder gambar tidak dapat dibuat.');
+                    throw new \RuntimeException('Folder gambar tidak dapat dibuat.');
                 }
                 $newName = 'logo-' . $logoFile->getRandomName();
                 if (! $logoFile->move($uploadPath, $newName)) {
-                    throw new \\RuntimeException('Logo gagal diunggah.');
+                    throw new \RuntimeException('Logo gagal diunggah.');
                 }
                 $logoSetting = $model->where('setting_key', 'site_logo')->first();
                 if ($logoSetting) {
