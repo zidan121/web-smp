@@ -655,12 +655,15 @@
         .profile-photo:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,24,45,.02) 20%,rgba(8,24,45,.18) 48%,rgba(8,24,45,.91) 100%)}
         .profile-photo:after{display:none}
         .profile-photo .profile-photo-caption{width:100%;max-width:none;padding:clamp(24px,3vw,38px);color:#fff}
-        .profile-video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;border-radius:28px;background:#102b4e}
-        .profile-video-wrap{position:absolute;inset:0;overflow:hidden;border-radius:28px;background:#102b4e}
+        /* Make the YouTube player fill the entire profile frame with no inner letterboxing */
+        .profile-photo:has(.profile-video-wrap){padding:0!important;min-height:0!important;aspect-ratio:16/9;display:block;background:#102b4e}
+        .profile-video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;border-radius:0;background:#102b4e}
+        .profile-video-wrap{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;border-radius:inherit;background:#102b4e}
         /* Video YouTube tampil bersih tanpa overlay teks agar kontrol player terlihat */
         .profile-video-wrap:after{display:none}
         .profile-video-wrap .profile-photo-caption{display:none!important}
         .profile-video-wrap .profile-video{z-index:1}
+        .profile-photo:has(.profile-video-wrap):before,.profile-photo:has(.profile-video-wrap):after{display:none}
         .profile-video-wrap:fullscreen{width:100vw;height:100vh;border-radius:0}
         .profile-video-wrap:fullscreen .profile-video{border-radius:0}
         .profile-photo-tag{display:inline-block;margin-bottom:12px;padding:7px 10px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(255,255,255,.14);color:#fff;font-size:10px;font-weight:800;letter-spacing:.12em}
