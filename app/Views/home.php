@@ -682,7 +682,7 @@
 
         <a
             class="button button-primary"
-            href="https://smpit.alfirdauspurwodadi.sch.id/"
+            href="<?= site_url('pps') ?>"
             target="_blank"
             rel="noopener noreferrer"
         >
@@ -703,7 +703,7 @@
                 </p>
                 <div class="hero-actions">
                     <a
-                        href="https://smpit.alfirdauspurwodadi.sch.id/"
+                        href="<?= site_url('pps') ?>"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="button button-primary"
@@ -899,7 +899,7 @@
                     <p>Kenali program, persyaratan, dan proses Penerimaan Peserta Didik Baru (PPS) tahun ajaran 2027/2028.</p>
                 </div>
                 <a
-                href="https://smpit.alfirdauspurwodadi.sch.id/"
+                href="<?= site_url('pps') ?>"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="button button-gold"
