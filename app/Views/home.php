@@ -59,7 +59,20 @@
             gap: 12px;
         }
 
-        .brand-logo {\n            width: 48px;\n            height: 48px;\n            object-fit: contain;\n            border-radius: 12px;\n            flex: 0 0 48px;\n        }\n\n        .brand-mark {
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            flex: 0 0 48px;
+            display: block;
+            object-fit: contain;
+            object-position: center;
+            padding: 4px;
+            box-sizing: border-box;
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        .brand-mark {
             width: 48px;
             height: 48px;
             border-radius: 15px;
