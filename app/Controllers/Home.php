@@ -26,6 +26,10 @@ class Home extends BaseController
         }
 
         $profile = (new \App\Models\SchoolProfileModel())->first() ?? [];
+        $settings = [];
+        foreach ((new SiteSettingModel())->findAll() as $setting) {
+            $settings[$setting['setting_key']] = $setting['setting_value'] ?? '';
+        }
 
         return view('home', [
             'programs' => $programs,
