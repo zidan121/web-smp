@@ -40,10 +40,32 @@
             <div class="alert error"><?= esc(session()->getFlashdata('error')) ?></div>
         <?php endif; ?>
 
-        <form action="<?= site_url('admin/settings/simpan') ?>" method="post">
+        <form action="<?= site_url('admin/settings/simpan') ?>" method="post" enctype="multipart/form-data">
             <?= csrf_field() ?>
             <div class="grid">
-                <p class="hint wide">Nama sekolah, tagline, deskripsi, visi, misi, alamat, telepon, dan email dikelola dari menu <strong>Profil Sekolah</strong> agar tidak ada data ganda. Halaman ini khusus WhatsApp PPDB dan media sosial.</p>
+                <p class="hint wide">Kelola gambar utama, alamat, WhatsApp, email, dan kontak media sosial di halaman ini. Deskripsi, visi, dan misi tetap ada di menu Profil Sekolah.</p>
+                <div class="field wide">
+                    <label for="hero_image">Gambar utama halaman depan</label>
+                    <?php if (! empty($profile['hero_image'])): ?>
+                        <img id="heroImagePreview" src="<?= base_url('assets/images/' . $profile['hero_image']) ?>" alt="Gambar utama saat ini" style="display:block;width:min(100%,520px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:8px 0;border:1px solid #d6e0ee">
+                    <?php else: ?>
+                        <img id="heroImagePreview" src="<?= base_url('assets/images/hero-sekolah.jpg') ?>" alt="Gambar utama halaman depan" onerror="this.hidden=true" style="display:block;width:min(100%,520px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:8px 0;border:1px solid #d6e0ee">
+                    <?php endif; ?>
+                    <input id="hero_image" name="hero_image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                    <span class="hint">JPG, PNG, atau WebP maksimal 5 MB.</span>
+                </div>
+                <div class="field wide">
+                    <label for="address">Alamat sekolah</label>
+                    <textarea id="address" name="address"><?= esc(old('address', $profile['address'] ?? $settings['address'] ?? '')) ?></textarea>
+                </div>
+                <div class="field">
+                    <label for="phone">WhatsApp / nomor sekolah</label>
+                    <input id="phone" name="phone" maxlength="50" value="<?= esc(old('phone', $profile['phone'] ?? $settings['phone'] ?? '')) ?>" placeholder="Contoh: 6281234567890">
+                </div>
+                <div class="field">
+                    <label for="email">Email sekolah</label>
+                    <input id="email" name="email" type="email" maxlength="150" value="<?= esc(old('email', $profile['email'] ?? $settings['email'] ?? '')) ?>" placeholder="nama@sekolah.sch.id">
+                </div>
                 <div class="field">
                     <label for="whatsapp">WhatsApp PPDB</label>
                     <input id="whatsapp" name="whatsapp" maxlength="50"
@@ -69,5 +91,14 @@
         </form>
     </section>
 </main>
+<script>
+document.getElementById('hero_image')?.addEventListener('change', function () {
+    const file = this.files && this.files[0];
+    if (!file) return;
+    const preview = document.getElementById('heroImagePreview');
+    preview.src = URL.createObjectURL(file);
+    preview.hidden = false;
+});
+</script>
 </body>
 </html>
