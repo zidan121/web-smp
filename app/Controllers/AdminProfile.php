@@ -59,23 +59,8 @@ class AdminProfile extends BaseController
             'about'       => trim((string) $this->request->getPost('about')),
             'vision'      => trim((string) $this->request->getPost('vision')),
             'mission'     => trim((string) $this->request->getPost('mission')),
-            'address'     => trim((string) $this->request->getPost('address')),
-            'phone'       => trim((string) $this->request->getPost('phone')),
-            'email'       => trim((string) $this->request->getPost('email')),
             'profile_video_url' => trim((string) $this->request->getPost('profile_video_url')),
         ];
-
-        $heroImage = $this->request->getFile('hero_image');
-        if ($heroImage && $heroImage->isValid() && ! $heroImage->hasMoved()) {
-            if (! in_array($heroImage->getMimeType(), ['image/jpeg', 'image/png', 'image/webp'], true) || $heroImage->getSizeByUnit('mb') > 5) {
-                return redirect()->back()->withInput()->with('error', 'Gambar utama harus JPG, PNG, atau WebP maksimal 5 MB.');
-            }
-            $uploadPath = FCPATH . 'assets/images/';
-            if (! is_dir($uploadPath)) mkdir($uploadPath, 0755, true);
-            $newName = $heroImage->getRandomName();
-            if (! $heroImage->move($uploadPath, $newName)) return redirect()->back()->withInput()->with('error', 'Gambar utama gagal diunggah.');
-            $data['hero_image'] = $newName;
-        }
 
         $image = $this->request->getFile('profile_image');
         if ($image && $image->isValid() && ! $image->hasMoved()) {
