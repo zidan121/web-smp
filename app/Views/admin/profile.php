@@ -76,6 +76,9 @@
             <?php endif; ?>
             <input id="profile_image" name="profile_image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
             <p class="hint">JPG, PNG, atau WebP maksimal 3 MB. Kosongkan jika tidak ingin mengganti foto.</p>
+            <label for="profile_video_url">URL video YouTube bagian Profil Sekolah</label>
+            <input id="profile_video_url" name="profile_video_url" type="url" maxlength="500" placeholder="https://www.youtube.com/watch?v=..." value="<?= esc(old('profile_video_url', $p['profile_video_url'] ?? '')) ?>">
+            <p class="hint">Tempel tautan video YouTube biasa atau tautan youtu.be. Kosongkan untuk menampilkan foto profil.</p>
             <label for="school_name">Nama sekolah *</label>
             <input id="school_name" name="school_name" required maxlength="200"
                    value="<?= esc(old('school_name', $p['school_name'] ?? 'SMPIT Al Firdaus Purwodadi')) ?>">
