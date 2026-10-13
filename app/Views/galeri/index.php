@@ -153,8 +153,14 @@ $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['descriptio
   const term=query.value.trim().toLowerCase(); let visible=0;
   cards.forEach(card=>{
    const category=(card.dataset.category||'').toLowerCase();
-   const text=card.dataset.search||'';
-   const categoryMatch=active==='all'||category.includes(active)||(active==='ict'&&category.includes('sains'));
+   const text=(card.dataset.search||'').toLowerCase();
+   // Filter diselaraskan dengan tombol di halaman Berita, tetapi tetap
+   // mencari berdasarkan kategori dan isi kartu galeri yang tersedia.
+   const categoryMatch = active==='all'
+    || (active==='berita' && (category.includes('berita') || /informasi|artikel|kabar/.test(text)))
+    || (active==='kegiatan' && !category.includes('prestasi') && !category.includes('pengumuman'))
+    || (active==='pengumuman' && (category.includes('pengumuman') || /pengumuman|jadwal|pendaftaran|informasi resmi/.test(text)))
+    || (active==='prestasi' && (category.includes('prestasi') || text.includes('prestasi')));
    const searchMatch=!term||text.includes(term);
    const show=categoryMatch&&searchMatch;
    card.hidden=!show;if(show)visible++;
