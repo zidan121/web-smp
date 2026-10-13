@@ -60,16 +60,7 @@
         }
 
         .brand-logo {
-            width: 48px;
-            height: 48px;
-            flex: 0 0 48px;
-            display: block;
-            object-fit: contain;
-            object-position: center;
-            padding: 4px;
-            box-sizing: border-box;
-            border-radius: 12px;
-            background: #ffffff;
+            width: 48px;height: 48px;flex:0 0 48px;display:block;object-fit:contain;object-position:center;padding:4px;box-sizing:border-box;border-radius:12px;background:#fff;
         }
 
         .brand-mark {
