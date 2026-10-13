@@ -45,6 +45,17 @@
             <div class="grid">
                 <p class="hint wide">Kelola gambar utama, alamat, WhatsApp, email, dan kontak media sosial di halaman ini. Deskripsi, visi, dan misi tetap ada di menu Profil Sekolah.</p>
                 <div class="field wide">
+                    <label for="site_logo">Logo sekolah untuk website publik</label>
+                    <?php if (! empty($settings['site_logo'])): ?>
+                        <img id="siteLogoPreview" src="<?= base_url('assets/images/' . $settings['site_logo']) ?>" alt="Logo sekolah saat ini" style="display:block;width:120px;height:120px;object-fit:contain;background:#f3f7fc;padding:10px;border:1px solid #d6e0ee;border-radius:12px;margin:8px 0" onerror="this.style.display='none'">
+                    <?php else: ?>
+                        <div id="siteLogoPlaceholder" class="hint" style="padding:18px;border:1px dashed #cbd6e5;border-radius:10px;margin:8px 0">Belum ada logo. Logo akan tampil di sebelah nama sekolah pada header publik.</div>
+                        <img id="siteLogoPreview" alt="Pratinjau logo" hidden style="width:120px;height:120px;object-fit:contain;background:#f3f7fc;padding:10px;border:1px solid #d6e0ee;border-radius:12px;margin:8px 0">
+                    <?php endif; ?>
+                    <input id="site_logo" name="site_logo" type="file" accept=".jpg,.jpeg,.png,.webp,.svg,image/jpeg,image/png,image/webp,image/svg+xml">
+                    <span class="hint">Format JPG, PNG, WebP, atau SVG maksimal 3 MB. Logo akan menggantikan kotak huruf AF di website publik.</span>
+                </div>
+                <div class="field wide">
                     <label for="hero_image">Gambar utama halaman depan</label>
                     <?php if (! empty($profile['hero_image'])): ?>
                         <img id="heroImagePreview" src="<?= base_url('assets/images/' . $profile['hero_image']) ?>" alt="Gambar utama saat ini" style="display:block;width:min(100%,520px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:8px 0;border:1px solid #d6e0ee" onerror="this.style.display='none'">
@@ -93,6 +104,16 @@
     </section>
 </main>
 <script>
+document.getElementById('site_logo')?.addEventListener('change', function () {
+    const file = this.files && this.files[0];
+    if (!file) return;
+    const preview = document.getElementById('siteLogoPreview');
+    preview.src = URL.createObjectURL(file);
+    preview.hidden = false;
+    preview.style.display = 'block';
+    const placeholder = document.getElementById('siteLogoPlaceholder');
+    if (placeholder) placeholder.style.display = 'none';
+});
 document.getElementById('hero_image')?.addEventListener('change', function () {
     const file = this.files && this.files[0];
     if (!file) return;
