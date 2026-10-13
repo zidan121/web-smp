@@ -50,17 +50,17 @@ main{padding:24px 0 65px}.controls{display:flex;align-items:center;justify-conte
 .site-footer-nav a{display:block;line-height:1.8}
 
 
-/* Toolbar galeri selaras dengan halaman Berita dan tidak memecah tombol di desktop */
-.controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(290px,360px);align-items:center;gap:18px;margin-bottom:24px}
-.controls .filters{display:flex;align-items:center;gap:9px;flex-wrap:nowrap;min-width:0}
-.controls .filter{flex:0 0 auto;padding:12px 15px;font-size:13px;line-height:1.1}
-.controls .filter.gallery-current{background:#fff;color:#415673}
-.controls .filter.gallery-current:hover{background:#edf4ff;color:#0c4b9b}
-.controls .search{width:100%;min-width:0;max-width:none;flex:initial}
-.controls .search input{min-width:0}
-.controls .filter.active{background:#0c4b9b;color:#fff}
-@media(max-width:1180px){.controls{grid-template-columns:1fr;align-items:stretch}.controls .filters{flex-wrap:wrap}.controls .search{width:100%;max-width:520px}}
-@media(max-width:650px){.controls .filters{gap:7px}.controls .filter{padding:10px 12px;font-size:12px}.controls .search{max-width:100%}}
+/* Filter toolbar disamakan dengan halaman Berita */ 
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+.filters{display:flex;gap:10px;flex-wrap:wrap}
+.filter{border:1px solid transparent;background:#fff;border-radius:30px;padding:12px 17px;font-weight:700;color:#415673;font-size:13px;cursor:pointer;box-shadow:0 4px 14px #19375b08;transition:.2s;text-decoration:none;white-space:nowrap}
+.filter:hover,.filter.active{background:var(--blue);color:#fff;box-shadow:0 8px 18px #0b4b9b25}
+.search{display:flex;gap:8px;min-width:300px;flex:0 1 360px}
+.search input{width:100%;min-width:0;border:1px solid #e7edf5;border-radius:13px;padding:13px 16px;background:#fff;font:inherit;font-size:13px;outline:none}
+.search input:focus{border-color:#79a7e2;box-shadow:0 0 0 3px #0b4b9b12}
+.search button{min-height:44px;border:0;border-radius:12px;padding:0 20px;background:var(--blue);color:#fff;font-weight:750;cursor:pointer}
+@media(max-width:960px){.toolbar{align-items:stretch;flex-direction:column}.search{max-width:100%;min-width:0;width:100%}}
+@media(max-width:650px){.filters{gap:7px}.filter{padding:10px 12px;font-size:12px}}
 
 </style>
 </head>
@@ -101,17 +101,20 @@ main{padding:24px 0 65px}.controls{display:flex;align-items:center;justify-conte
 </div>
 </div></div></section>
 <main><div class="wrap">
-<div class="controls">
-<div class="filters" role="group" aria-label="Filter kategori galeri">
-<button class="filter active" type="button" data-category="all" aria-pressed="true">▦ &nbsp;Semua</button>
-<button class="filter" type="button" data-category="berita" aria-pressed="false">▤ &nbsp;Berita</button>
-<button class="filter" type="button" data-category="kegiatan" aria-pressed="false">▦ &nbsp;Kegiatan</button>
-<button class="filter" type="button" data-category="pengumuman" aria-pressed="false">⚑ &nbsp;Pengumuman</button>
-<button class="filter" type="button" data-category="prestasi" aria-pressed="false">🏆 &nbsp;Prestasi</button>
-<a class="filter gallery-current" href="<?= site_url('galeri') ?>" aria-current="page">▧ &nbsp;Galeri Kegiatan</a>
-</div>
-<form class="search" id="gallery-search" role="search"><input id="gallery-query" type="search" placeholder="Cari kegiatan..." aria-label="Cari kegiatan"><button type="submit">Cari</button></form>
-</div>
+<div class="toolbar">
+    <div class="filters" role="group" aria-label="Navigasi kategori galeri">
+      <button class="filter active" type="button" data-category="all" aria-pressed="true">▦ &nbsp; Semua</button>
+      <button class="filter" type="button" data-category="berita" aria-pressed="false">▤ &nbsp; Berita</button>
+      <button class="filter" type="button" data-category="kegiatan" aria-pressed="false">▦ &nbsp; Kegiatan</button>
+      <button class="filter" type="button" data-category="pengumuman" aria-pressed="false">⚑ &nbsp; Pengumuman</button>
+      <button class="filter" type="button" data-category="prestasi" aria-pressed="false">🏆 &nbsp; Prestasi</button>
+      <a class="filter" href="<?= site_url('galeri') ?>">▧ &nbsp; Galeri Kegiatan</a>
+    </div>
+    <form class="search" id="gallery-search" role="search">
+      <input id="gallery-query" type="search" placeholder="⌕  Cari kegiatan..." aria-label="Cari kegiatan">
+      <button type="submit">Cari</button>
+    </form>
+  </div>
 <div class="section-heading"><div><h2>Momen dari Sekolah</h2><p>Kenangan dan cerita dari kegiatan siswa</p></div><span id="result-count" class="count"><?= count($galleries ?? []) ?> dokumentasi</span></div>
 <div class="grid" id="gallery-grid">
 <?php if (!empty($galleries)): ?>
