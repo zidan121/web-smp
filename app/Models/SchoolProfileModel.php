@@ -25,5 +25,6 @@ class SchoolProfileModel extends Model
         'email',
         'logo',
         'profile_image',
+        'profile_video_url',
     ];
 }
