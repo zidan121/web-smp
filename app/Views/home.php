@@ -725,7 +725,6 @@
                     </a>
                     <a href="#profil" class="button button-outline">Kenali Sekolah</a>
                 </div>
-                <p class="hero-note">SMPIT Al Firdaus Purwodadi</p>
                 
             </div>
 
@@ -835,7 +834,6 @@
                     <p>Informasi program unggulan akan segera tersedia.</p>
                 <?php endif; ?>
             </div>
-        <p class="hero-note">SMPIT Al Firdaus Purwodadi</p>
         </div>
     </section>
 
@@ -886,7 +884,7 @@
             <div class="profile-copy reveal">
                 <div class="section-heading" style="text-align:left;margin:0">
                     <div class="label">Profil Sekolah</div>
-                    <h2><?= esc($schoolTagline) ?></h2>
+                    <h2><?= esc($schoolName) ?></h2>
                 </div>
                 <p><?= nl2br(esc($schoolAbout)) ?></p>
                 <div class="vision-list" id="keunggulan">
