@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ProgramModel;
+use App\Models\SiteSettingModel;
 
 class Home extends BaseController
 {
@@ -29,6 +30,7 @@ class Home extends BaseController
         return view('home', [
             'programs' => $programs,
             'profile' => $profile,
+            'settings' => $settings,
             'programIconsById' => $iconsById,
         ]);
     }
