@@ -6,6 +6,8 @@
     <title><?= esc($post['title']) ?> | SMPIT Al Firdaus Purwodadi</title>
     <meta name="description" content="<?= esc($post['excerpt'] ?? $post['title']) ?>">
     <style>
+.shared-site-header{height:76px;background:#fff;border-bottom:1px solid #e4ebf4;display:flex;align-items:center;position:relative;z-index:20}.shared-header-inner{width:min(1440px,94%);margin:auto;display:flex;align-items:center;gap:28px}.shared-brand{display:flex;align-items:center;gap:12px;min-width:290px;font-weight:800;color:#102b50;line-height:1.15}.shared-brand-logo,.shared-brand-mark{width:48px;height:48px;flex:0 0 48px;box-sizing:border-box;border-radius:14px}.shared-brand-logo{display:block;object-fit:contain;object-position:center;padding:4px;background:#fff}.shared-brand-mark{background:linear-gradient(145deg,#0d4d9e,#15315e);display:grid;place-items:center;color:#fff;font-size:25px;box-shadow:0 6px 14px #0b3e8324}.shared-brand-copy strong{display:block;font-size:16px}.shared-brand-copy small{display:block;font-size:10px;letter-spacing:1.2px;color:#718198;margin-top:5px;white-space:nowrap}.shared-nav-links{display:flex;align-items:center;justify-content:center;gap:clamp(15px,2.2vw,34px);flex:1;font-size:14px;font-weight:650}.shared-nav-links a{padding:27px 0;color:#344965;white-space:nowrap}.shared-nav-links a:hover{color:#0c4b9b}.shared-ppdb-button{background:linear-gradient(120deg,#2b6098,#102b50);color:#fff;padding:14px 20px;border-radius:13px;font-weight:750;font-size:13px;white-space:nowrap;box-shadow:0 8px 20px #0b4b9b20}.shared-menu-toggle{display:none;border:0;background:#edf3fb;border-radius:9px;padding:9px 12px;color:#102b50;font-size:20px}@media(max-width:760px){.shared-header-inner{gap:12px;flex-wrap:wrap;padding:10px 0}.shared-site-header{height:auto;min-height:70px}.shared-brand{min-width:0;flex:1}.shared-brand-logo,.shared-brand-mark{width:42px;height:42px;flex-basis:42px}.shared-brand-copy strong{font-size:13px}.shared-brand-copy small{font-size:8px;letter-spacing:.6px}.shared-menu-toggle{display:block}.shared-nav-links{display:none;order:3;flex-basis:100%;width:100%;padding:8px 0 12px;align-items:stretch;gap:0;flex-direction:column}.shared-nav-links.is-open{display:flex}.shared-nav-links a{padding:12px 8px;border-top:1px solid #edf1f7}.shared-ppdb-button{padding:11px 12px;font-size:12px}}
+
         :root{--navy:#102e56;--blue:#1559a6;--sky:#eaf3ff;--ink:#183657;--muted:#6d7e93;--line:#e3ebf5;--page:#f4f8fd}
         *{box-sizing:border-box}
         html{scroll-behavior:smooth}
@@ -99,8 +101,12 @@
 <header class="shared-site-header">
   <div class="shared-header-inner">
     <a href="<?= site_url('/') ?>" class="shared-brand" aria-label="SMPIT Al Firdaus Purwodadi">
-      <span class="shared-brand-mark">AF</span>
-      <span class="shared-brand-copy"><strong>SMPIT AL FIRDAUS</strong><small>PURWODADI · SEKOLAH ISLAM TERPADU</small></span>
+      <?php if (! empty($settings['site_logo'])): ?>
+        <img class="shared-brand-logo" src="<?= base_url('assets/images/' . $settings['site_logo']) ?>" alt="Logo SMPIT Al Firdaus">
+      <?php else: ?>
+        <span class="shared-brand-mark">AF</span>
+      <?php endif; ?>
+      <span class="shared-brand-copy"><strong><?= esc($settings['site_name'] ?? 'SMPIT AL FIRDAUS') ?></strong><small>PURWODADI · SEKOLAH ISLAM TERPADU</small></span>
     </a>
     <button class="shared-menu-toggle" type="button" aria-label="Buka menu" aria-expanded="false" onclick="const nav=this.nextElementSibling;nav.classList.toggle('is-open');this.setAttribute('aria-expanded',nav.classList.contains('is-open'))">☰</button>
     <nav class="shared-nav-links" aria-label="Navigasi utama">
@@ -109,7 +115,7 @@
       <a href="<?= site_url('/') ?>#keunggulan">Keunggulan</a>
       <a href="<?= site_url('/') ?>#kontak">Kontak</a>
     </nav>
-    <a class="shared-ppdb-button" href="https://smpit.alfirdauspurwodadi.sch.id/" target="_blank" rel="noopener noreferrer">Daftar PPS <span aria-hidden="true">↗</span></a>
+    <a class="shared-ppdb-button" href="https://smpit.alfirdauspurwodadi.sch.id/" target="_blank" rel="noopener noreferrer">Daftar PPS</a>
   </div>
 </header>
 
@@ -187,7 +193,7 @@
       <nav class="site-footer-nav" aria-label="Navigasi footer"><h2>Navigasi</h2>
         <a href="<?= site_url('profil') ?>">Profil sekolah</a><a href="<?= site_url('program') ?>">Program unggulan</a><a href="<?= site_url('berita') ?>">Berita &amp; pengumuman</a><a href="<?= site_url('galeri') ?>">Galeri kegiatan</a><a href="<?= site_url('prestasi') ?>">Prestasi siswa</a><a href="<?= site_url('pps') ?>">PPS 2027/2028</a>
       </nav>
-      <section class="site-footer-contact"><h2>Kontak Sekolah</h2><p>Jl. Soponyono V, Jetis Barat, Purwodadi, Grobogan, Jawa Tengah.</p><p>Informasi pendaftaran dan kontak resmi sekolah dapat diperoleh melalui halaman PPS.</p><a class="site-footer-cta" href="<?= site_url('pps') ?>">Informasi PPS <span aria-hidden="true">↗</span></a></section>
+      <section class="site-footer-contact"><h2>Kontak Sekolah</h2><p>Jl. Soponyono V, Jetis Barat, Purwodadi, Grobogan, Jawa Tengah.</p><p>Informasi pendaftaran dan kontak resmi sekolah dapat diperoleh melalui halaman PPS.</p><a class="site-footer-cta" href="<?= site_url('pps') ?>">Informasi PPS </a></section>
     </div>
     <div class="site-footer-bottom"><span>© <?= date('Y') ?> SMPIT Al Firdaus Purwodadi. Hak cipta dilindungi.</span><span>Ilmu · Akhlak · Prestasi</span></div>
   </div>
