@@ -42,8 +42,6 @@ class AdminSettings extends BaseController
         }
 
         $rules = [
-            'site_name' => 'required|max_length[150]',
-            'tagline' => 'permit_empty|max_length[255]',
             'email' => 'permit_empty|valid_email|max_length[150]',
             'phone' => 'permit_empty|max_length[50]',
             'whatsapp' => 'permit_empty|max_length[50]',
