@@ -732,7 +732,7 @@
                 <div class="photo-frame">
                     <img
                         class="hero-photo"
-                        src="<?= base_url('assets/images/hero-sekolah.jpg') ?>"
+                        src="<?= base_url('assets/images/' . (! empty($profile['hero_image']) ? $profile['hero_image'] : 'hero-sekolah.jpg')) ?>"
                         alt="Kegiatan siswa SMPIT Al Firdaus Purwodadi"
                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1100&q=85'">
                 </div>
