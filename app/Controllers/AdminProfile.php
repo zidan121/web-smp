@@ -65,6 +65,18 @@ class AdminProfile extends BaseController
             'profile_video_url' => trim((string) $this->request->getPost('profile_video_url')),
         ];
 
+        $heroImage = $this->request->getFile('hero_image');
+        if ($heroImage && $heroImage->isValid() && ! $heroImage->hasMoved()) {
+            if (! in_array($heroImage->getMimeType(), ['image/jpeg', 'image/png', 'image/webp'], true) || $heroImage->getSizeByUnit('mb') > 5) {
+                return redirect()->back()->withInput()->with('error', 'Gambar utama harus JPG, PNG, atau WebP maksimal 5 MB.');
+            }
+            $uploadPath = FCPATH . 'assets/images/';
+            if (! is_dir($uploadPath)) mkdir($uploadPath, 0755, true);
+            $newName = $heroImage->getRandomName();
+            if (! $heroImage->move($uploadPath, $newName)) return redirect()->back()->withInput()->with('error', 'Gambar utama gagal diunggah.');
+            $data['hero_image'] = $newName;
+        }
+
         $image = $this->request->getFile('profile_image');
         if ($image && $image->isValid() && ! $image->hasMoved()) {
             if (! in_array($image->getMimeType(), ['image/jpeg', 'image/png', 'image/webp'], true) || $image->getSizeByUnit('mb') > 3) {
