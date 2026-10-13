@@ -874,21 +874,23 @@
                 <?php endif; ?>
             </div>
 
+            <?php
+            $schoolName = trim((string) ($profile['school_name'] ?? '')) ?: 'SMPIT Al Firdaus Purwodadi';
+            $schoolTagline = trim((string) ($profile['tagline'] ?? '')) ?: 'Pendidikan yang Membentuk Karakter dan Masa Depan';
+            $schoolAbout = trim((string) ($profile['about'] ?? '')) ?: 'SMPIT Al Firdaus Purwodadi berkomitmen mengembangkan potensi siswa melalui pendidikan Islam terpadu, pembelajaran akademik, dan keterampilan yang relevan dengan perkembangan zaman.';
+            $schoolVision = trim((string) ($profile['vision'] ?? '')) ?: 'Generasi bertakwa, berprestasi, dan berwawasan global.';
+            $schoolMission = trim((string) ($profile['mission'] ?? '')) ?: 'Pembiasaan ibadah, adab, tanggung jawab, dan kepedulian.';
+            ?>
             <div class="profile-copy reveal">
                 <div class="section-heading" style="text-align:left;margin:0">
                     <div class="label">Profil Sekolah</div>
-                    <h2>Pendidikan yang Membentuk Karakter dan Masa Depan</h2>
+                    <h2><?= esc($schoolTagline) ?></h2>
                 </div>
-                <p>
-                    SMPIT Al Firdaus Purwodadi berkomitmen mengembangkan potensi
-                    siswa melalui pendidikan Islam terpadu, pembelajaran akademik,
-                    dan keterampilan yang relevan dengan perkembangan zaman.
-                </p>
-
+                <p><?= nl2br(esc($schoolAbout)) ?></p>
                 <div class="vision-list" id="keunggulan">
-                    <div class="vision-item"><span>✦</span><div><strong>Visi pendidikan:</strong> generasi bertakwa, berprestasi, dan berwawasan global.</div></div>
-                    <div class="vision-item"><span>✦</span><div><strong>Karakter Islami:</strong> pembiasaan ibadah, adab, tanggung jawab, dan kepedulian.</div></div>
-                    <div class="vision-item"><span>✦</span><div><strong>Pembelajaran berkembang:</strong> akademik, teknologi, kreativitas, dan komunikasi.</div></div>
+                    <div class="vision-item"><span>✦</span><div><strong>Visi pendidikan:</strong> <?= nl2br(esc($schoolVision)) ?></div></div>
+                    <div class="vision-item"><span>✦</span><div><strong>Misi sekolah:</strong> <?= nl2br(esc($schoolMission)) ?></div></div>
+                    <div class="vision-item"><span>✦</span><div><strong><?= esc($schoolName) ?>:</strong> Informasi profil dan program sekolah.</div></div>
                 </div>
                 <a href="<?= site_url('profil') ?>" class="button button-primary">Selengkapnya tentang sekolah →</a>
             </div>
@@ -946,9 +948,9 @@
 </main>
 
 <footer class="site-footer" id="kontak"><div class="site-footer-inner"><div class="site-footer-grid">
-<section class="site-footer-about"><h2>SMPIT Al Firdaus Purwodadi</h2><p>Pendidikan Islam terpadu untuk generasi yang bertakwa, berprestasi, dan berwawasan global.</p></section>
+<section class="site-footer-about"><h2><?= esc($profile['school_name'] ?? 'SMPIT Al Firdaus Purwodadi') ?></h2><p><?= esc(($profile['tagline'] ?? '') ?: 'Pendidikan Islam terpadu untuk generasi yang bertakwa, berprestasi, dan berwawasan global.') ?></p></section>
 <nav class="site-footer-nav" aria-label="Navigasi footer"><h2>Navigasi</h2><a href="<?= site_url('profil') ?>">Profil sekolah</a><a href="<?= site_url('program') ?>">Program unggulan</a><a href="<?= site_url('berita') ?>">Berita &amp; pengumuman</a><a href="<?= site_url('galeri') ?>">Galeri kegiatan</a><a href="<?= site_url('prestasi') ?>">Prestasi siswa</a><a href="<?= site_url('pps') ?>">PPS 2027/2028</a></nav>
-<section class="site-footer-contact"><h2>Kontak Sekolah</h2><p>Jl. Soponyono V, Jetis Barat, Purwodadi, Grobogan, Jawa Tengah.</p><p>Informasi pendaftaran dan kontak resmi sekolah dapat diperoleh melalui halaman PPS.</p><a class="site-footer-cta" href="<?= site_url('pps') ?>">Informasi PPS <span aria-hidden="true">↗</span></a></section>
+<section class="site-footer-contact"><h2>Kontak Sekolah</h2><p><?= nl2br(esc(($profile['address'] ?? '') ?: 'Alamat sekolah belum diatur.')) ?></p><?php if (! empty($profile['phone'])): ?><p>WhatsApp/Telepon: <?= esc($profile['phone']) ?></p><?php endif; ?><?php if (! empty($profile['email'])): ?><p>Email: <?= esc($profile['email']) ?></p><?php endif; ?><a class="site-footer-cta" href="<?= site_url('pps') ?>">Informasi PPS <span aria-hidden="true">↗</span></a></section>
 </div><div class="site-footer-bottom"><span>© <?= date('Y') ?> SMPIT Al Firdaus Purwodadi. Hak cipta dilindungi.</span><span>Ilmu · Akhlak · Prestasi</span></div></div></footer>
 
 <script>
