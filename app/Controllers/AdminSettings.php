@@ -84,6 +84,27 @@ class AdminSettings extends BaseController
                 'phone' => trim((string) $this->request->getPost('phone')),
                 'email' => trim((string) $this->request->getPost('email')),
             ];
+            $logoFile = $this->request->getFile('site_logo');
+            if ($logoFile && $logoFile->isValid() && ! $logoFile->hasMoved()) {
+                if (! in_array($logoFile->getMimeType(), ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'], true) || $logoFile->getSizeByUnit('mb') > 3) {
+                    throw new \\RuntimeException('Logo harus JPG, PNG, WebP, atau SVG maksimal 3 MB.');
+                }
+                $uploadPath = FCPATH . 'assets/images/';
+                if (! is_dir($uploadPath) && ! mkdir($uploadPath, 0755, true) && ! is_dir($uploadPath)) {
+                    throw new \\RuntimeException('Folder gambar tidak dapat dibuat.');
+                }
+                $newName = 'logo-' . $logoFile->getRandomName();
+                if (! $logoFile->move($uploadPath, $newName)) {
+                    throw new \\RuntimeException('Logo gagal diunggah.');
+                }
+                $logoSetting = $model->where('setting_key', 'site_logo')->first();
+                if ($logoSetting) {
+                    $model->update($logoSetting['id'], ['setting_value' => $newName]);
+                } else {
+                    $model->insert(['setting_key' => 'site_logo', 'setting_value' => $newName]);
+                }
+            }
+
             $heroImage = $this->request->getFile('hero_image');
             if ($heroImage && $heroImage->isValid() && ! $heroImage->hasMoved()) {
                 if (! in_array($heroImage->getMimeType(), ['image/jpeg', 'image/png', 'image/webp'], true) || $heroImage->getSizeByUnit('mb') > 5) {
