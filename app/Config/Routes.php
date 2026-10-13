@@ -4,6 +4,11 @@ use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
 $routes->get('/', 'Home::index');
+$routes->get('program', 'Program::index');
+$routes->get('program/(:segment)', 'Program::detail/$1');
+$routes->get('pps', static function () {
+    return view('pps/index');
+});
 $routes->get('profil', static function () {
     return redirect()->to(site_url('/#profil'));
 });
