@@ -76,6 +76,15 @@
             <?php endif; ?>
             <input id="profile_image" name="profile_image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
             <p class="hint">JPG, PNG, atau WebP maksimal 3 MB. Kosongkan jika tidak ingin mengganti foto.</p>
+            <label for="hero_image">Gambar utama halaman depan</label>
+            <?php if (! empty($p['hero_image'])): ?>
+                <img class="photo-preview" id="heroImagePreview" src="<?= base_url('assets/images/' . $p['hero_image']) ?>" alt="Gambar utama halaman depan saat ini">
+            <?php else: ?>
+                <img class="photo-preview" id="heroImagePreview" src="<?= base_url('assets/images/hero-sekolah.jpg') ?>" alt="Gambar utama halaman depan" onerror="this.hidden=true">
+            <?php endif; ?>
+            <input id="hero_image" name="hero_image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+            <p class="hint">Gambar yang tampil di sebelah kanan judul halaman utama. JPG, PNG, atau WebP maksimal 5 MB. Kosongkan jika tidak ingin mengganti gambar.</p>
+
             <label for="profile_video_url">URL video YouTube bagian Profil Sekolah</label>
             <input id="profile_video_url" name="profile_video_url" type="url" maxlength="500" placeholder="https://www.youtube.com/watch?v=..." value="<?= esc(old('profile_video_url', $p['profile_video_url'] ?? '')) ?>">
             <p class="hint">Tempel tautan video YouTube biasa atau tautan youtu.be. Kosongkan untuk menampilkan foto profil.</p>
@@ -112,7 +121,7 @@
     </section>
 </main>
 <script>
-document.getElementById('profile_image')?.addEventListener('change', function () {
+document.getElementById('hero_image')?.addEventListener('change', function () {\n const file=this.files&&this.files[0]; if(!file)return;\n const preview=document.getElementById('heroImagePreview');\n preview.src=URL.createObjectURL(file); preview.hidden=false;\n});\ndocument.getElementById('profile_image')?.addEventListener('change', function () {
  const file=this.files&&this.files[0]; if(!file)return;
  const preview=document.getElementById('profileImagePreview');
  preview.src=URL.createObjectURL(file); preview.hidden=false;
