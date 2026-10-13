@@ -95,8 +95,9 @@ main{padding:24px 0 65px}.controls{display:flex;align-items:center;justify-conte
 <button class="filter" type="button" data-category="kegiatan">▦ &nbsp;Kegiatan</button>
 <button class="filter" type="button" data-category="pengumuman">⚑ &nbsp;Pengumuman</button>
 <button class="filter" type="button" data-category="prestasi">🏆 &nbsp;Prestasi</button>
+<a class="filter active" href="<?= site_url('galeri') ?>" aria-current="page">▧ &nbsp;Galeri Kegiatan</a>
 </div>
-<form class="search" id="gallery-search" role="search"><input id="gallery-query" type="search" placeholder="Cari berita..." aria-label="Cari berita"><button type="submit">Cari</button></form>
+<form class="search" id="gallery-search" role="search"><input id="gallery-query" type="search" placeholder="Cari kegiatan..." aria-label="Cari kegiatan"><button type="submit">Cari</button></form>
 </div>
 <div class="section-heading"><div><h2>Momen dari Sekolah</h2><p>Kenangan dan cerita dari kegiatan siswa</p></div><span id="result-count" class="count"><?= count($galleries ?? []) ?> dokumentasi</span></div>
 <div class="grid" id="gallery-grid">
@@ -143,7 +144,7 @@ $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['descriptio
 <script>
 (function(){
  const cards=[...document.querySelectorAll('.gallery-card')];
- const filters=[...document.querySelectorAll('.filter')];
+ const filters=[...document.querySelectorAll('button.filter')];
  const query=document.getElementById('gallery-query');
  const form=document.getElementById('gallery-search');
  const count=document.getElementById('result-count');
