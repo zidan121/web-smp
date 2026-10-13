@@ -699,7 +699,7 @@
             target="_blank"
             rel="noopener noreferrer"
         >
-            Daftar PPS ↗
+            Daftar PPS
         </a>
     </div>
 </header>
@@ -721,7 +721,7 @@
                         rel="noopener noreferrer"
                         class="button button-primary"
                     >
-                        Daftar PPS 2027/2028 ↗
+                        Daftar PPS 2027/2028
                     </a>
                     <a href="#profil" class="button button-outline">Kenali Sekolah</a>
                 </div>
@@ -940,7 +940,7 @@
                 rel="noopener noreferrer"
                 class="button button-gold"
                 >
-                Informasi & Pendaftaran ↗
+                Informasi & Pendaftaran
                 </a>
             </div>
         </div>
@@ -963,7 +963,7 @@
 <?php if ($schoolEmail !== ''): ?>
 <p><a href="mailto:<?= esc($schoolEmail, 'attr') ?>">Email: <?= esc($schoolEmail) ?></a></p>
 <?php endif; ?>
-<a class="site-footer-cta" href="<?= site_url('pps') ?>">Informasi PPS <span aria-hidden="true">↗</span></a></section>
+<a class="site-footer-cta" href="<?= site_url('pps') ?>">Informasi PPS</a></section>
 </div><div class="site-footer-bottom"><span>© <?= date('Y') ?> SMPIT Al Firdaus Purwodadi. Hak cipta dilindungi.</span><span>Ilmu · Akhlak · Prestasi</span></div></div></footer>
 
 <script>
