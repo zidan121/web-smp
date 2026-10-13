@@ -656,7 +656,9 @@
         .profile-photo:after{display:none}
         .profile-photo .profile-photo-caption{width:100%;max-width:none;padding:clamp(24px,3vw,38px);color:#fff}
         /* Make the YouTube player fill the entire profile frame with no inner letterboxing */
-        .profile-photo:has(.profile-video-wrap){padding:0!important;min-height:0!important;aspect-ratio:16/9;display:block;background:#102b4e}
+        .profile-photo:has(.profile-video-wrap){padding:0!important;min-height:0!important;height:auto!important;aspect-ratio:16/9;display:block;background:#102b4e;max-width:none!important}
+        .profile-photo:has(.profile-video-wrap) .profile-video-wrap{max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;left:0!important;right:0!important;top:0!important;bottom:0!important}
+        .profile-photo:has(.profile-video-wrap) .profile-video{max-width:none!important;max-height:none!important}
         .profile-video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;border-radius:0;background:#102b4e}
         .profile-video-wrap{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;border-radius:inherit;background:#102b4e}
         /* Video YouTube tampil bersih tanpa overlay teks agar kontrol player terlihat */
