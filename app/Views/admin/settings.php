@@ -47,9 +47,10 @@
                 <div class="field wide">
                     <label for="hero_image">Gambar utama halaman depan</label>
                     <?php if (! empty($profile['hero_image'])): ?>
-                        <img id="heroImagePreview" src="<?= base_url('assets/images/' . $profile['hero_image']) ?>" alt="Gambar utama saat ini" style="display:block;width:min(100%,520px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:8px 0;border:1px solid #d6e0ee">
+                        <img id="heroImagePreview" src="<?= base_url('assets/images/' . $profile['hero_image']) ?>" alt="Gambar utama saat ini" style="display:block;width:min(100%,520px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:8px 0;border:1px solid #d6e0ee" onerror="this.style.display='none'">
                     <?php else: ?>
-                        <img id="heroImagePreview" src="<?= base_url('assets/images/hero-sekolah.jpg') ?>" alt="Gambar utama halaman depan" onerror="this.hidden=true" style="display:block;width:min(100%,520px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:8px 0;border:1px solid #d6e0ee">
+                        <div id="heroImagePlaceholder" class="hint" style="padding:18px;border:1px dashed #cbd6e5;border-radius:10px;margin:8px 0">Belum ada gambar utama yang diunggah. Pilih gambar di bawah untuk menambahkannya.</div>
+                        <img id="heroImagePreview" alt="Pratinjau gambar utama" hidden style="display:block;width:min(100%,520px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:8px 0;border:1px solid #d6e0ee">
                     <?php endif; ?>
                     <input id="hero_image" name="hero_image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
                     <span class="hint">JPG, PNG, atau WebP maksimal 5 MB.</span>
@@ -98,6 +99,8 @@ document.getElementById('hero_image')?.addEventListener('change', function () {
     const preview = document.getElementById('heroImagePreview');
     preview.src = URL.createObjectURL(file);
     preview.hidden = false;
+    const placeholder = document.getElementById('heroImagePlaceholder');
+    if (placeholder) placeholder.style.display = 'none';
 });
 </script>
 </body>
