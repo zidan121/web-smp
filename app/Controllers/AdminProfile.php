@@ -40,6 +40,7 @@ class AdminProfile extends BaseController
             'school_name' => 'required|max_length[200]',
             'tagline'     => 'permit_empty|max_length[255]',
             'email'       => 'permit_empty|valid_email|max_length[150]',
+            'profile_video_url' => 'permit_empty|max_length[500]',
             'phone'       => 'permit_empty|max_length[30]',
         ];
 
@@ -61,6 +62,7 @@ class AdminProfile extends BaseController
             'address'     => trim((string) $this->request->getPost('address')),
             'phone'       => trim((string) $this->request->getPost('phone')),
             'email'       => trim((string) $this->request->getPost('email')),
+            'profile_video_url' => trim((string) $this->request->getPost('profile_video_url')),
         ];
 
         $image = $this->request->getFile('profile_image');
