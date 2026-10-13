@@ -834,6 +834,7 @@
                     <p>Informasi program unggulan akan segera tersedia.</p>
                 <?php endif; ?>
             </div>
+        <p class="hero-note">SMPIT Al Firdaus Purwodadi</p>
         </div>
     </section>
 
@@ -890,7 +891,6 @@
                 <div class="vision-list" id="keunggulan">
                     <div class="vision-item"><span>✦</span><div><strong>Visi pendidikan:</strong> <?= nl2br(esc($schoolVision)) ?></div></div>
                     <div class="vision-item"><span>✦</span><div><strong>Misi sekolah:</strong> <?= nl2br(esc($schoolMission)) ?></div></div>
-                    <div class="vision-item"><span>✦</span><div><strong><?= esc($schoolName) ?></strong></div></div>
                 </div>
                 <a href="<?= site_url('profil') ?>" class="button button-primary">Selengkapnya tentang sekolah →</a>
             </div>
