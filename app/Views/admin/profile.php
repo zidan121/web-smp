@@ -96,10 +96,6 @@
             <label for="mission">Misi sekolah</label>
             <textarea id="mission" name="mission"><?= esc(old('mission', $p['mission'] ?? '')) ?></textarea>
 
-<label for="phone">Nomor telepon/WhatsApp</label>
-            <input id="phone" name="phone" maxlength="30"
-                   value="<?= esc(old('phone', $p['phone'] ?? '')) ?>">
-
 <button type="submit">Simpan Profil</button>
         </form>
     </section>
