@@ -6,6 +6,15 @@ use App\Models\AchievementModel;
 
 class Prestasi extends BaseController
 {
+    private function publicSettings(): array
+    {
+        $settings = [];
+        foreach ((new \\App\\Models\\SiteSettingModel())->findAll() as $setting) {
+            $settings[$setting['setting_key']] = $setting['setting_value'] ?? '';
+        }
+        return $settings;
+    }
+
     public function index(): string
     {
         $model = new AchievementModel();
@@ -17,6 +26,7 @@ class Prestasi extends BaseController
 
         return view('prestasi/index', [
             'achievements' => $achievements,
+            'settings' => $this->publicSettings(),
         ]);
     }
 }
