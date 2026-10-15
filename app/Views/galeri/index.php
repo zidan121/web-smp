@@ -134,18 +134,7 @@ $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['descriptio
 <div class="empty" id="no-results" hidden><strong>Belum ada kegiatan yang cocok</strong>Coba kata kunci atau kategori yang berbeda.</div>
 </div>
 </div></main>
-<footer class="site-footer" id="kontak">
-  <div class="site-footer-inner">
-    <div class="site-footer-grid">
-      <section class="site-footer-about"><h2>SMPIT Al Firdaus Purwodadi</h2><p>Pendidikan Islam terpadu untuk generasi yang bertakwa, berprestasi, dan berwawasan global.</p></section>
-      <nav class="site-footer-nav" aria-label="Navigasi footer"><h2>Navigasi</h2>
-        <a href="<?= site_url('profil') ?>">Profil sekolah</a><a href="<?= site_url('program') ?>">Program unggulan</a><a href="<?= site_url('berita') ?>">Berita &amp; pengumuman</a><a href="<?= site_url('galeri') ?>">Galeri kegiatan</a><a href="<?= site_url('prestasi') ?>">Prestasi siswa</a><a href="<?= site_url('pps') ?>">PPS 2027/2028</a>
-      </nav>
-      <section class="site-footer-contact"><h2>Kontak Sekolah</h2><p>Jl. Soponyono V, Jetis Barat, Purwodadi, Grobogan, Jawa Tengah.</p><p>Informasi pendaftaran dan kontak resmi sekolah dapat diperoleh melalui halaman PPS.</p><a class="site-footer-cta" href="<?= site_url('pps') ?>">Informasi PPS </a></section>
-    </div>
-    <div class="site-footer-bottom"><span>© <?= date('Y') ?> SMPIT Al Firdaus Purwodadi. Hak cipta dilindungi.</span><span>Ilmu · Akhlak · Prestasi</span></div>
-  </div>
-</footer>
+<?= view('partials/public_footer', ['settings' => $settings ?? []]) ?>
 <script>
 (function(){
  const cards=[...document.querySelectorAll('.gallery-card')];
