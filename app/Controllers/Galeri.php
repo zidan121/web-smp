@@ -6,6 +6,15 @@ use App\Models\GalleryModel;
 
 class Galeri extends BaseController
 {
+    private function publicSettings(): array
+    {
+        $settings = [];
+        foreach ((new \\App\\Models\\SiteSettingModel())->findAll() as $setting) {
+            $settings[$setting['setting_key']] = $setting['setting_value'] ?? '';
+        }
+        return $settings;
+    }
+
     public function index(): string
     {
         $model = new GalleryModel();
@@ -18,6 +27,7 @@ class Galeri extends BaseController
 
         return view('galeri/index', [
             'galleries' => $galleries,
+            'settings' => $this->publicSettings(),
         ]);
     }
 }
