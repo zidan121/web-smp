@@ -9,7 +9,7 @@ class Prestasi extends BaseController
     private function publicSettings(): array
     {
         $settings = [];
-        foreach ((new \\App\\Models\\SiteSettingModel())->findAll() as $setting) {
+        foreach ((new \App\Models\SiteSettingModel())->findAll() as $setting) {
             $settings[$setting['setting_key']] = $setting['setting_value'] ?? '';
         }
         return $settings;
