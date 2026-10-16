@@ -16,8 +16,17 @@ $socialLinks = [
 ?>
 <style>
 .shared-site-footer{background:linear-gradient(115deg,#06325c 0%,#073968 52%,#062c52 100%);color:#d8eaff;padding:22px 24px 0;margin-top:0;font-family:Inter,Arial,sans-serif;font-size:12px;line-height:1.55}
-.shared-footer-inner{width:min(1380px,94%);margin:0 auto}\n.shared-site-footer,.shared-site-footer *{box-sizing:border-box}\n.shared-site-footer section,.shared-site-footer nav{display:block;padding:0!important;margin:0!important;min-width:0;float:none;position:static}\n.shared-site-footer h2{font-family:Inter,Arial,sans-serif;line-height:1.35}\n.shared-site-footer a{line-height:1.55}\n.shared-site-footer .shared-footer-grid{display:grid!important;align-items:start!important;grid-template-columns:minmax(0,1.2fr) minmax(120px,.65fr) minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,3vw,48px);padding:0 0 22px!important}\n.shared-site-footer .shared-footer-about{align-self:start!important}\n.shared-site-footer .shared-footer-nav{display:flex!important;flex-direction:column;align-items:flex-start}\n.shared-site-footer .shared-footer-contact,.shared-site-footer .shared-footer-location{align-self:start!important}\n.shared-site-footer .shared-footer-bottom{margin:0!important;clear:both}
-.shared-footer-grid{display:grid;grid-template-columns:1.18fr .72fr 1.02fr 1.02fr;gap:clamp(20px,4vw,64px);align-items:start;padding:0 0 22px}
+.shared-footer-inner{width:min(1380px,94%);margin:0 auto}
+.shared-site-footer,.shared-site-footer *{box-sizing:border-box}
+.shared-site-footer section,.shared-site-footer nav{display:block;padding:0!important;margin:0!important;min-width:0;float:none;position:static}
+.shared-site-footer h2{font-family:Inter,Arial,sans-serif;line-height:1.35}
+.shared-site-footer a{line-height:1.55}
+.shared-site-footer .shared-footer-grid{display:grid!important;align-items:start!important;grid-template-columns:minmax(0,1.2fr) minmax(120px,.65fr) minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,3vw,48px);padding:0 0 22px!important}
+.shared-site-footer .shared-footer-about{align-self:start!important}
+.shared-site-footer .shared-footer-nav{display:flex!important;flex-direction:column;align-items:flex-start}
+.shared-site-footer .shared-footer-contact,.shared-site-footer .shared-footer-location{align-self:start!important}
+.shared-site-footer .shared-footer-bottom{margin:0!important;clear:both}
+.shared-footer-grid{display:grid!important;grid-template-columns:minmax(0,1.25fr) minmax(140px,.7fr) minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,2.8vw,42px);align-items:start!important;padding:0 0 22px!important}
 .shared-footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:8px;min-width:0}
 .shared-footer-logo,.shared-footer-logo-fallback{width:42px;height:42px;flex:0 0 42px;border-radius:50%;border:1px solid #91b7df}
 .shared-footer-logo{object-fit:contain;background:#fff;padding:2px}
@@ -41,8 +50,8 @@ $socialLinks = [
 .shared-footer-map-link:hover{background:#1472b7;text-decoration:none!important}
 .shared-footer-bottom{border-top:1px solid #ffffff24;padding:10px 0;display:flex;justify-content:center;align-items:center;gap:16px;color:#9dc7ee;font-size:10px;text-align:center;position:relative}
 .shared-footer-bottom .footer-tagline{position:absolute;right:0}
-@media(max-width:760px){.shared-site-footer{padding:28px 18px 0}.shared-footer-inner{width:100%}.shared-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 20px;padding-bottom:22px}.shared-footer-bottom{justify-content:flex-start;flex-direction:column;gap:3px;padding:12px 0}.shared-footer-bottom .footer-tagline{position:static}}
-@media(max-width:480px){.shared-footer-grid{grid-template-columns:1fr;gap:22px}.shared-footer-map{height:110px}.shared-footer-brand strong{font-size:14px}}
+@media(max-width:760px){.shared-site-footer{padding:28px 18px 0}.shared-footer-inner{width:100%}.shared-site-footer .shared-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 20px;padding-bottom:22px!important}.shared-footer-bottom{justify-content:flex-start;flex-direction:column;gap:3px;padding:12px 0}.shared-footer-bottom .footer-tagline{position:static}}
+@media(max-width:480px){.shared-site-footer .shared-footer-grid{grid-template-columns:1fr;gap:22px}.shared-footer-map{height:110px}.shared-footer-brand strong{font-size:14px}}
 </style>
 <footer class="shared-site-footer" id="kontak">
  <div class="shared-footer-inner">
