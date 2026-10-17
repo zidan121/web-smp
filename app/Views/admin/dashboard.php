@@ -12,7 +12,7 @@
         .layout{display:flex;min-height:100vh}
         .sidebar{width:260px;flex:0 0 260px;background:linear-gradient(180deg,#0b2142,#0b1933);color:#fff;padding:22px 14px;display:flex;flex-direction:column}
         .brand{display:flex;align-items:center;gap:12px;padding:3px 9px 24px;border-bottom:1px solid #ffffff1c;margin-bottom:18px}
-        .brand-icon{height:48px;width:48px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(135deg,#fff,#dbeafe);color:#123d76;font-size:17px;font-weight:900;box-shadow:0 7px 20px #0002}
+        .brand-icon{height:48px;width:48px;flex:0 0 48px;display:grid;place-items:center;overflow:hidden;border-radius:15px;background:linear-gradient(135deg,#fff,#dbeafe);color:#123d76;font-size:17px;font-weight:900;box-shadow:0 7px 20px #0002}.brand-logo{width:100%;height:100%;object-fit:contain;background:#fff;padding:4px;border-radius:15px}
         .brand strong{display:block;font-size:13px;letter-spacing:.2px}.brand small{display:block;color:#b8c9e4;margin-top:4px;font-size:12px}
         .menu-label{margin:19px 12px 8px;color:#91a9ca;font-size:10px;font-weight:800;letter-spacing:1.4px}
         .menu a{display:flex;align-items:center;gap:12px;padding:11px 12px;margin:4px 0;border-radius:11px;color:#dce8fa;text-decoration:none;font-size:13px;transition:background .18s,transform .18s}
@@ -73,8 +73,9 @@
 <div class="layout">
     <aside class="sidebar">
         <div class="brand">
-            <div class="brand-icon">AF</div>
-            <div><strong>SMPIT AL FIRDAUS</strong><small>Purwodadi</small></div>
+            <?php $adminSiteLogo = trim((string) ($settings['site_logo'] ?? '')); ?>
+            <div class="brand-icon"><?php if ($adminSiteLogo !== ''): ?><img class="brand-logo" src="<?= base_url('assets/images/' . ltrim($adminSiteLogo, '/')) ?>" alt="Logo sekolah" onerror="this.style.display='none';this.parentElement.textContent='AF'"><?php else: ?>AF<?php endif; ?></div>
+            <div><strong><?= esc($settings['site_name'] ?? 'SMPIT AL FIRDAUS') ?></strong><small>Purwodadi</small></div>
         </div>
         <nav class="menu">
             <a class="active" href="<?= site_url('admin/dashboard') ?>"><span class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span>Dashboard</span></a>
