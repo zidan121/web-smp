@@ -394,33 +394,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 82px;
-            height: 82px;
-            margin: 12px auto 18px;
-            border: 1px solid rgba(255,255,255,.95);
-            border-radius: 25px;
-            color: #fff;
-            background: linear-gradient(145deg, #3478b8 0%, #173e6b 72%, #102b4e 100%);
-            box-shadow: 0 12px 24px rgba(16,43,78,.24), inset 1px 1px 2px rgba(255,255,255,.35);
+            width: 76px;
+            height: 76px;
+            margin: 12px auto 16px;
+            border-radius: 22px;
+            background: rgba(235, 243, 255, .94);
+            box-shadow: 0 8px 22px rgba(28, 67, 115, .12);
             font-size: 34px;
-        }
-
-        .program-card .program-icon svg {
-            display: block;
-            width: 43px;
-            height: 43px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 1.8;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .program-card .program-icon img {
-            width: 46px !important;
-            height: 46px !important;
-            object-fit: contain;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,.08));
         }
 
         .program-card h3 {
@@ -783,39 +763,32 @@
                                     >
                                 <?php elseif ($cmsIcon && $cmsIcon['icon_type'] === 'builtin') : ?>
                                     <?php
-                                    $iconKey = (string) ($cmsIcon['icon_value'] ?? '');
-                                    $iconSvg = [
-                                        'book-open' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3H12v18H5.5A2.5 2.5 0 0 0 3 23z"/><path d="M21 5.5A2.5 2.5 0 0 0 18.5 3H12v18h6.5A2.5 2.5 0 0 1 21 23z"/></svg>',
-                                        'globe' => '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>',
-                                        'laptop' => '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="12" rx="1.5"/><path d="M2 20h20l-2-4H4z"/></svg>',
-                                        'graduation-cap' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11v5c3.5 3 8.5 3 12 0v-5M22 9v6"/></svg>',
-                                        'microscope' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 3 5 5M7 5l5-3 3 3-3 5-5-5zM12 10l4 4M6 21h14M8 17h8M10 13l-3 3a5 5 0 0 0 5 5"/></svg>',
-                                        'code' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></svg>',
-                                        'heart' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8z"/></svg>',
-                                        'star' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/></svg>',
+                                    $builtinEmoji = [
+                                        'book-open'      => '📖',
+                                        'globe'          => '🌐',
+                                        'laptop'         => '💻',
+                                        'graduation-cap' => '🎓',
+                                        'microscope'     => '🔬',
+                                        'code'           => '💻',
+                                        'heart'          => '❤️',
+                                        'star'           => '⭐',
                                     ];
-                                    echo $iconSvg[$iconKey] ?? $iconSvg['graduation-cap'];
+
+                                    echo esc($builtinEmoji[$cmsIcon['icon_value']] ?? '🎓');
                                     ?>
                                 <?php else : ?>
                                     <?php
                                     $programName = strtoupper($program['name']);
-                                    if (str_contains($programName, 'TCP')) {
-                                        $fallbackIcon = 'book-open';
-                                    } elseif (str_contains($programName, 'ICT')) {
-                                        $fallbackIcon = 'laptop';
-                                    } elseif (str_contains($programName, 'ICP')) {
-                                        $fallbackIcon = 'globe';
-                                    } else {
-                                        $fallbackIcon = 'graduation-cap';
-                                    }
 
-                                    $fallbackSvg = [
-                                        'book-open' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3H12v18H5.5A2.5 2.5 0 0 0 3 23z"/><path d="M21 5.5A2.5 2.5 0 0 0 18.5 3H12v18h6.5A2.5 2.5 0 0 1 21 23z"/></svg>',
-                                        'globe' => '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0-18"/></svg>',
-                                        'laptop' => '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="12" rx="1.5"/><path d="M2 20h20l-2-4H4z"/></svg>',
-                                        'graduation-cap' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11v5c3.5 3 8.5 3 12 0v-5M22 9v6"/></svg>',
-                                    ];
-                                    echo $fallbackSvg[$fallbackIcon] ?? $fallbackSvg['graduation-cap'];
+                                    if (str_contains($programName, 'TCP')) {
+                                        echo '📖';
+                                    } elseif (str_contains($programName, 'ICT')) {
+                                        echo '💻';
+                                    } elseif (str_contains($programName, 'ICP')) {
+                                        echo '🌐';
+                                    } else {
+                                        echo '🎓';
+                                    }
                                     ?>
                                 <?php endif; ?>
                             </div>
