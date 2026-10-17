@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\AdminModel;
+use App\Models\SiteSettingModel;
 
 class Admin extends BaseController
 {
@@ -61,7 +62,12 @@ class Admin extends BaseController
                 ->with('error', 'Silakan login terlebih dahulu.');
         }
 
-        return view('admin/dashboard');
+        $settings = [];
+        foreach ((new SiteSettingModel())->findAll() as $setting) {
+            $settings[$setting['setting_key']] = $setting['setting_value'] ?? '';
+        }
+
+        return view('admin/dashboard', ['settings' => $settings]);
     }
 
     public function logout()
