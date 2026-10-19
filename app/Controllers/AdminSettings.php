@@ -161,9 +161,15 @@ class AdminSettings extends BaseController
                 'message' => $e->getMessage(),
             ]);
 
+            // Tampilkan pesan validasi yang aman untuk admin agar penyebab kegagalan lebih mudah diketahui.
+            $safeMessage = $e->getMessage();
+            if (stripos($safeMessage, 'database') !== false || stripos($safeMessage, 'SQL') !== false || stripos($safeMessage, 'constraint') !== false) {
+                $safeMessage = 'Penyimpanan database gagal. Periksa kolom dan struktur tabel site_settings serta school_profile.';
+            }
+
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'Pengaturan gagal disimpan. Periksa log aplikasi.');
+                ->with('error', 'Pengaturan gagal disimpan: ' . $safeMessage);
         }
 
         return redirect()->to(site_url('admin/settings'))
