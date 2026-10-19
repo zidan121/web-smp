@@ -100,13 +100,13 @@ $galleryHeroSecond = ! empty($galleryHeroImages[1]['image'])
 </div></div></section>
 <main><div class="wrap">
 <div class="toolbar">
-    <div class="filters" role="group" aria-label="Navigasi kategori galeri">
-      <button class="filter active" type="button" data-category="all" aria-pressed="true">▦ &nbsp; Semua</button>
-      <button class="filter" type="button" data-category="berita" aria-pressed="false">▤ &nbsp; Berita</button>
-      <button class="filter" type="button" data-category="kegiatan" aria-pressed="false">▦ &nbsp; Kegiatan</button>
-      <button class="filter" type="button" data-category="pengumuman" aria-pressed="false">⚑ &nbsp; Pengumuman</button>
-      <button class="filter" type="button" data-category="prestasi" aria-pressed="false">🏆 &nbsp; Prestasi</button>
-      <a class="filter" href="<?= site_url('galeri') ?>">▧ &nbsp; Galeri Kegiatan</a>
+    <div class="filters" role="tablist" aria-label="Tab navigasi kategori galeri">
+      <button class="filter active" role="tab" type="button" data-category="all" aria-selected="true">Semua</button>
+      <button class="filter" role="tab" type="button" data-category="berita" aria-selected="false">Berita</button>
+      <button class="filter" role="tab" type="button" data-category="kegiatan" aria-selected="false">Kegiatan</button>
+      <button class="filter" role="tab" type="button" data-category="pengumuman" aria-selected="false">Pengumuman</button>
+      <button class="filter" role="tab" type="button" data-category="prestasi" aria-selected="false">Prestasi</button>
+      <a class="filter" href="<?= site_url('galeri') ?>">Galeri Kegiatan</a>
     </div>
     <form class="search" id="gallery-search" role="search">
       <input id="gallery-query" type="search" placeholder="⌕  Cari kegiatan..." aria-label="Cari kegiatan">
@@ -183,7 +183,7 @@ $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['descriptio
   filters.forEach(item=>{
    const selected=item===button;
    item.classList.toggle('active',selected);
-   item.setAttribute('aria-pressed',selected?'true':'false');
+   item.setAttribute('aria-selected',selected?'true':'false');
   });
   document.querySelector('.gallery-current')?.classList.remove('active');
   render();
