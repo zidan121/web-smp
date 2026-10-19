@@ -3,7 +3,17 @@
  * Shared public navigation. Include this partial on all public pages.
  * The subtitle is synchronized with Admin → Profil Sekolah → Tagline.
  */
-if (! isset($profile) || ! is_array($profile)) {
+// Selalu ambil pengaturan global dari database agar semua halaman memakai identitas yang sama.
+$sharedSettings = [];
+try {
+    foreach ((new \App\Models\SiteSettingModel())->findAll() as $setting) {
+        $sharedSettings[$setting['setting_key']] = $setting['setting_value'] ?? '';
+    }
+} catch (\Throwable $e) {
+    $sharedSettings = [];
+}
+$settings = array_merge($sharedSettings, isset($settings) && is_array($settings) ? $settings : []);
+if (! isset($profile) || ! is_array($profile) || $profile === []) {
     $profile = (new \App\Models\SchoolProfileModel())->first() ?? [];
 }
 $headerTagline = trim((string) ($profile['tagline'] ?? ''));
