@@ -256,6 +256,10 @@
             border-radius: 22px;
             background: #dce7f5;
         }
+        .hero-photo-stack{position:relative;min-height:390px;padding:0 18px 18px 0}
+        .hero-photo-main{position:relative;z-index:2;width:88%;height:390px;object-fit:cover;border-radius:24px;display:block;background:#dce7f5;box-shadow:22px 25px 55px #18385d30,-8px -8px 25px #ffffffc9}
+        .hero-photo-secondary{position:absolute;z-index:3;right:0;bottom:0;width:43%;height:160px;object-fit:cover;border:7px solid #fff;border-radius:22px;display:block;background:#dce7f5;box-shadow:0 16px 35px #102b4e30;transform:rotate(3deg)}
+
 
         .floating-card {
             position: absolute;
@@ -577,6 +581,7 @@
             .nav-links { gap: 13px; font-size: 11px; }
             .hero-grid { gap: 35px; }
             .hero-photo { height: 330px; }
+            .hero-photo-stack{min-height:330px}.hero-photo-main{height:330px}
             .float-one { left: -15px; }
             .float-two { right: -10px; }
             .profile-grid { gap: 30px; }
@@ -591,6 +596,7 @@
             .hero-grid { gap: 45px; }
             .hero h1 { font-size: 39px; }
             .hero-photo { height: 290px; }
+            .hero-photo-stack{min-height:290px}.hero-photo-main{height:290px}.hero-photo-secondary{height:120px;width:45%;border-width:5px}
             .program-grid { grid-template-columns: 1fr; }
             section { padding: 65px 0; }
             .profile-visual { min-height: 240px; }
@@ -709,12 +715,17 @@
             </div>
 
             <div class="hero-visual reveal">
-                <div class="photo-frame">
+                <div class="hero-photo-stack">
                     <img
-                        class="hero-photo"
+                        class="hero-photo-main"
                         src="<?= base_url('assets/images/' . (! empty($profile['hero_image']) ? $profile['hero_image'] : 'hero-sekolah.jpg')) ?>"
-                        alt="Kegiatan siswa SMPIT Al Firdaus Purwodadi"
+                        alt="Foto utama gedung SMPIT Al Firdaus Purwodadi"
                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1100&q=85'">
+                    <img
+                        class="hero-photo-secondary"
+                        src="<?= base_url('assets/images/' . (! empty($profile['profile_image']) ? $profile['profile_image'] : 'profil-sekolah.jpg')) ?>"
+                        alt="Foto kegiatan siswa SMPIT Al Firdaus Purwodadi"
+                        onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=700&q=85'">
                 </div>
                 <div class="floating-card float-one">
                     <strong>
