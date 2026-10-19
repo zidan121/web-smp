@@ -49,6 +49,8 @@ class AdminSettings extends BaseController
             'instagram' => 'permit_empty|max_length[255]',
             'facebook' => 'permit_empty|max_length[255]',
             'youtube' => 'permit_empty|max_length[255]',
+            'prestasi_hero_position_x' => 'required|in_list[0,25,50,75,100]',
+            'prestasi_hero_position_y' => 'required|in_list[0,25,50,75,100]',
         ];
 
         if (! $this->validate($rules)) {
