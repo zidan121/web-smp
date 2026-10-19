@@ -68,4 +68,4 @@ $bannerPhotos = array_slice($bannerPhotos, 0, 5);
 .program-gallery-title{margin:24px 0 0;color:var(--navy);font-size:20px}
 </style>
 <main class="wrap content"><article class="panel"><h2>✦ Tentang Program</h2><?php if ($programGallery !== []): ?><h3 class="program-gallery-title">Galeri Foto Program</h3><div class="program-gallery"><?php foreach (array_slice($programGallery, 0, 5) as $galleryPhoto): ?><img src="<?= base_url('assets/images/programs/' . rawurlencode(basename($galleryPhoto))) ?>" alt="Foto <?= esc($program['name'], 'attr') ?>" loading="lazy"><?php endforeach; ?></div><?php endif; ?><p><?= esc($program['description'] ?: 'Informasi lebih lengkap mengenai program ini dapat diperoleh melalui pihak sekolah.') ?></p><div class="actions"><a class="btn" href="<?= site_url('pps') ?>">Informasi PPS 2027/2028 →</a><a class="btn secondary" href="<?= site_url('program') ?>">← Semua program</a></div></article></main>
-<footer><div class="wrap">© <?= date('Y') ?> SMPIT Al Firdaus Purwodadi</div></footer></body></html>
+<?= view('partials/public_footer', ['settings' => $settings ?? []]) ?></body></html>
