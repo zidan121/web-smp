@@ -327,17 +327,17 @@
         </div>
 
         <div class="field">
-            <label for="gallery_images">Tambahkan hingga 5 Foto Program</label>
+            <label for="gallery_images">Upload 5 Foto Banner Sekaligus</label>
             <?php if (! empty($program['gallery_images'])): $currentGallery = json_decode((string) $program['gallery_images'], true) ?: []; ?>
                 <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0">
                 <?php foreach ($currentGallery as $galleryPhoto): ?>
                     <img src="<?= base_url('assets/images/programs/' . rawurlencode(basename($galleryPhoto))) ?>" alt="Foto program tersimpan" style="width:110px;height:75px;object-fit:cover;border-radius:8px;border:1px solid #dbe4f0">
                 <?php endforeach; ?>
                 </div>
-                <small class="hint">Foto baru akan ditambahkan ke daftar foto yang sudah tersimpan hingga maksimal 5 foto.</small>
+                <small class="hint">Pilih sampai 5 foto dalam satu kali upload. Foto baru akan ditambahkan ke daftar yang tersimpan hingga total 5 foto banner.</small>
             <?php endif; ?>
             <input id="gallery_images" type="file" name="gallery_images[]" accept="image/jpeg,image/png,image/webp" multiple>
-            <small class="hint">Pilih maksimal 5 foto tambahan sekaligus. JPG, PNG, atau WebP maksimal 2 MB per foto.</small>
+            <small class="hint">Klik tombol pilih file, lalu pilih hingga 5 foto sekaligus (tahan Ctrl saat memilih). Format JPG, PNG, atau WebP, maksimal 2 MB per foto. Foto-foto ini akan tampil langsung di banner TCP, ICT, atau ICP.</small>
             <div id="gallery-image-previews" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px"></div>
         </div>
 
