@@ -67,6 +67,17 @@
                     <span class="hint">JPG, PNG, atau WebP maksimal 5 MB.</span>
                 </div>
                 <div class="field wide">
+                    <label for="prestasi_hero_image">Gambar latar halaman Prestasi</label>
+                    <?php if (! empty($settings['prestasi_hero_image'])): ?>
+                        <img id="prestasiHeroPreview" src="<?= base_url('assets/images/' . $settings['prestasi_hero_image']) ?>" alt="Gambar latar Prestasi saat ini" style="display:block;width:min(100%,520px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:8px 0;border:1px solid #d6e0ee" onerror="this.style.display='none'">
+                    <?php else: ?>
+                        <div id="prestasiHeroPlaceholder" class="hint" style="padding:18px;border:1px dashed #cbd6e5;border-radius:10px;margin:8px 0">Belum ada gambar khusus. Banner Prestasi menggunakan gambar bawaan website.</div>
+                        <img id="prestasiHeroPreview" alt="Pratinjau gambar latar Prestasi" hidden style="width:min(100%,520px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:8px 0;border:1px solid #d6e0ee">
+                    <?php endif; ?>
+                    <input id="prestasi_hero_image" name="prestasi_hero_image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                    <span class="hint">JPG, PNG, atau WebP maksimal 5 MB. Kosongkan jika ingin tetap menggunakan gambar yang sekarang.</span>
+                </div>
+                <div class="field wide">
                     <label for="address">Alamat sekolah</label>
                     <textarea id="address" name="address"><?= esc(old('address', $profile['address'] ?? $settings['address'] ?? '')) ?></textarea>
                 </div>
@@ -112,6 +123,16 @@ document.getElementById('site_logo')?.addEventListener('change', function () {
     preview.hidden = false;
     preview.style.display = 'block';
     const placeholder = document.getElementById('siteLogoPlaceholder');
+    if (placeholder) placeholder.style.display = 'none';
+});
+document.getElementById('prestasi_hero_image')?.addEventListener('change', function () {
+    const file = this.files && this.files[0];
+    if (!file) return;
+    const preview = document.getElementById('prestasiHeroPreview');
+    preview.src = URL.createObjectURL(file);
+    preview.hidden = false;
+    preview.style.display = 'block';
+    const placeholder = document.getElementById('prestasiHeroPlaceholder');
     if (placeholder) placeholder.style.display = 'none';
 });
 document.getElementById('hero_image')?.addEventListener('change', function () {
