@@ -1,7 +1,15 @@
 <?php
 /**
  * Shared public navigation. Include this partial on all public pages.
+ * The subtitle is synchronized with Admin → Profil Sekolah → Tagline.
  */
+if (! isset($profile) || ! is_array($profile)) {
+    $profile = (new \App\Models\SchoolProfileModel())->first() ?? [];
+}
+$headerTagline = trim((string) ($profile['tagline'] ?? ''));
+if ($headerTagline === '') {
+    $headerTagline = 'PURWODADI · SEKOLAH ISLAM TERPADU';
+}
 ?>
 <style>
 .shared-site-header{height:78px;min-height:78px;width:100%;position:sticky;top:0;z-index:1000;display:flex;align-items:center;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid #e4ebf4;box-sizing:border-box}
@@ -27,7 +35,7 @@
       <?php else: ?>
         <span class="shared-brand-mark">AF</span>
       <?php endif; ?>
-      <span class="shared-brand-copy"><strong><?= esc($settings['site_name'] ?? 'SMPIT AL FIRDAUS') ?></strong><small>PURWODADI · SEKOLAH ISLAM TERPADU</small></span>
+      <span class="shared-brand-copy"><strong><?= esc($settings['site_name'] ?? ($profile['school_name'] ?? 'SMPIT AL FIRDAUS')) ?></strong><small><?= esc($headerTagline) ?></small></span>
     </a>
     <button class="shared-menu-toggle" type="button" aria-label="Buka menu" aria-expanded="false" onclick="const nav=this.nextElementSibling;nav.classList.toggle('is-open');this.setAttribute('aria-expanded',nav.classList.contains('is-open'))">☰</button>
     <nav class="shared-nav-links" aria-label="Navigasi utama">
