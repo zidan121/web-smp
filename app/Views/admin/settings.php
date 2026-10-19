@@ -67,6 +67,17 @@
                     <span class="hint">JPG, PNG, atau WebP maksimal 5 MB.</span>
                 </div>
                 <div class="field wide">
+                    <label for="profile_image">Foto kedua halaman depan</label>
+                    <?php if (! empty($profile['profile_image'])): ?>
+                        <img id="profileImagePreview" src="<?= base_url('assets/images/' . $profile['profile_image']) ?>" alt="Foto kedua halaman depan saat ini" style="display:block;width:min(100%,520px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:8px 0;border:1px solid #d6e0ee" onerror="this.style.display='none'">
+                    <?php else: ?>
+                        <div id="profileImagePlaceholder" class="hint" style="padding:18px;border:1px dashed #cbd6e5;border-radius:10px;margin:8px 0">Belum ada foto kedua. Foto ini akan tampil bertumpuk di atas foto utama pada banner Beranda.</div>
+                        <img id="profileImagePreview" alt="Pratinjau foto kedua" hidden style="width:min(100%,520px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:8px 0;border:1px solid #d6e0ee">
+                    <?php endif; ?>
+                    <input id="profile_image" name="profile_image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                    <span class="hint">JPG, PNG, atau WebP maksimal 5 MB. Foto ini tampil sebagai gambar kecil bertumpuk pada banner halaman depan.</span>
+                </div>
+                <div class="field wide">
                     <label for="prestasi_hero_image">Gambar latar halaman Prestasi</label>
                     <?php if (! empty($settings['prestasi_hero_image'])): ?>
                         <img id="prestasiHeroPreview" src="<?= base_url('assets/images/' . $settings['prestasi_hero_image']) ?>" alt="Gambar latar Prestasi saat ini" style="display:block;width:min(100%,520px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:8px 0;border:1px solid #d6e0ee" onerror="this.style.display='none'">
@@ -179,6 +190,16 @@ document.getElementById('prestasi_hero_image')?.addEventListener('change', funct
     preview.hidden = false;
     preview.style.display = 'block';
     const placeholder = document.getElementById('prestasiHeroPlaceholder');
+    if (placeholder) placeholder.style.display = 'none';
+});
+document.getElementById('profile_image')?.addEventListener('change', function () {
+    const file = this.files && this.files[0];
+    if (!file) return;
+    const preview = document.getElementById('profileImagePreview');
+    preview.src = URL.createObjectURL(file);
+    preview.hidden = false;
+    preview.style.display = 'block';
+    const placeholder = document.getElementById('profileImagePlaceholder');
     if (placeholder) placeholder.style.display = 'none';
 });
 document.getElementById('hero_image')?.addEventListener('change', function () {
