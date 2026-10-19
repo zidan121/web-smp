@@ -66,8 +66,6 @@
       <button class="filter" type="button" data-category="berita">▤ &nbsp; Berita</button>
       <button class="filter" type="button" data-category="kegiatan">▦ &nbsp; Kegiatan</button>
       <button class="filter" type="button" data-category="pengumuman">⚑ &nbsp; Pengumuman</button>
-      <button class="filter" type="button" data-category="prestasi">🏆 &nbsp; Prestasi</button>
-      <a class="filter" href="<?= site_url('galeri') ?>">▧ &nbsp; Galeri Kegiatan</a>
     </div>
     <form class="search" id="news-search" role="search">
       <input id="search-input" type="search" placeholder="⌕  Cari berita..." aria-label="Cari berita">
@@ -121,7 +119,6 @@
           <a href="#" class="category-row" data-side-category="berita"><span>▤ &nbsp; Berita</span><span class="count" data-count="berita">0</span></a>
           <a href="#" class="category-row" data-side-category="kegiatan"><span>▦ &nbsp; Kegiatan</span><span class="count" data-count="kegiatan">0</span></a>
           <a href="#" class="category-row" data-side-category="pengumuman"><span>⚑ &nbsp; Pengumuman</span><span class="count" data-count="pengumuman">0</span></a>
-          <a href="#" class="category-row" data-side-category="prestasi"><span>🏆 &nbsp; Prestasi</span><span class="count" data-count="prestasi">0</span></a>
         </div>
       </section>
       <section class="side-box">
