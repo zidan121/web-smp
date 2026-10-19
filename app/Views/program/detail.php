@@ -7,7 +7,7 @@
 
 
 
-/* Lima foto banner: satu foto utama dan empat foto pendamping, seluruhnya terlihat */
+/* Banner lima foto untuk TCP, ICT, dan ICP: satu foto utama + empat foto pendamping */
 .hero-art{min-height:300px}
 .hero-image-frame{position:relative;z-index:1;width:74%;height:270px;margin-left:-8%;transform:rotate(-3deg)}
 .hero-photo-grid{position:absolute;z-index:3;right:-2%;top:14px;left:auto;bottom:auto;width:48%;height:245px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:9px}
