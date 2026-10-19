@@ -1,5 +1,14 @@
 <?php
-$publicSettings = $settings ?? [];
+// Gunakan pengaturan database yang sama meskipun controller halaman tidak mengirim $settings.
+$sharedSettings = [];
+try {
+    foreach ((new \App\Models\SiteSettingModel())->findAll() as $setting) {
+        $sharedSettings[$setting['setting_key']] = $setting['setting_value'] ?? '';
+    }
+} catch (\Throwable $e) {
+    $sharedSettings = [];
+}
+$publicSettings = array_merge($sharedSettings, isset($settings) && is_array($settings) ? $settings : []);
 $publicAddress = trim((string) ($publicSettings['address'] ?? ''));
 $publicPhoneRaw = trim((string) ($publicSettings['phone'] ?? ''));
 $publicPhone = preg_replace('/\\D+/', '', $publicPhoneRaw);
