@@ -327,6 +327,21 @@
         </div>
 
         <div class="field">
+            <label for="gallery_images">Tambahkan hingga 5 Foto Program</label>
+            <?php if (! empty($program['gallery_images'])): $currentGallery = json_decode((string) $program['gallery_images'], true) ?: []; ?>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0">
+                <?php foreach ($currentGallery as $galleryPhoto): ?>
+                    <img src="<?= base_url('assets/images/programs/' . rawurlencode(basename($galleryPhoto))) ?>" alt="Foto program tersimpan" style="width:110px;height:75px;object-fit:cover;border-radius:8px;border:1px solid #dbe4f0">
+                <?php endforeach; ?>
+                </div>
+                <small class="hint">Foto baru akan ditambahkan ke daftar foto yang sudah tersimpan hingga maksimal 5 foto.</small>
+            <?php endif; ?>
+            <input id="gallery_images" type="file" name="gallery_images[]" accept="image/jpeg,image/png,image/webp" multiple>
+            <small class="hint">Pilih maksimal 5 foto tambahan sekaligus. JPG, PNG, atau WebP maksimal 2 MB per foto.</small>
+            <div id="gallery-image-previews" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px"></div>
+        </div>
+
+        <div class="field">
             <label for="sort_order">Urutan Tampilan</label>
             <input
                 id="sort_order"
@@ -440,6 +455,30 @@
 </section>
 
 <script>
+const galleryInput = document.getElementById('gallery_images');
+const galleryPreviews = document.getElementById('gallery-image-previews');
+galleryInput?.addEventListener('change', function () {
+    galleryPreviews.innerHTML = '';
+    const files = Array.from(this.files || []);
+    if (files.length > 5) {
+        alert('Pilih maksimal 5 foto tambahan.');
+        this.value = '';
+        return;
+    }
+    files.forEach(file => {
+        if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 2 * 1024 * 1024) {
+            alert('Setiap foto harus JPG, PNG, atau WebP maksimal 2 MB.');
+            this.value = '';
+            galleryPreviews.innerHTML = '';
+            return;
+        }
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.alt = 'Pratinjau foto tambahan';
+        img.style.cssText = 'width:110px;height:75px;object-fit:cover;border-radius:8px;border:1px solid #dbe4f0';
+        galleryPreviews.appendChild(img);
+    });
+});
 const imageInput = document.getElementById('image');
 const imagePreview = document.getElementById('image-preview');
 const currentImageInfo = document.getElementById('current-image-info');
