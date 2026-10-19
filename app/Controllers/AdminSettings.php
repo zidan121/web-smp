@@ -49,8 +49,8 @@ class AdminSettings extends BaseController
             'instagram' => 'permit_empty|max_length[255]',
             'facebook' => 'permit_empty|max_length[255]',
             'youtube' => 'permit_empty|max_length[255]',
-            'prestasi_hero_position_x' => 'required|in_list[0,25,50,75,100]',
-            'prestasi_hero_position_y' => 'required|in_list[0,25,50,75,100]',
+            'prestasi_hero_position_x' => 'required|integer|greater_than_equal_to[0]|less_than_equal_to[100]',
+            'prestasi_hero_position_y' => 'required|integer|greater_than_equal_to[0]|less_than_equal_to[100]',
             'prestasi_hero_zoom' => 'required|in_list[100,110,120,130,140,150,160,170,180,190,200]',
         ];
 
