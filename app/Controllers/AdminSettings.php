@@ -51,6 +51,7 @@ class AdminSettings extends BaseController
             'youtube' => 'permit_empty|max_length[255]',
             'prestasi_hero_position_x' => 'required|in_list[0,25,50,75,100]',
             'prestasi_hero_position_y' => 'required|in_list[0,25,50,75,100]',
+            'prestasi_hero_zoom' => 'required|in_list[100,110,120,130,140,150,160,170,180,190,200]',
         ];
 
         if (! $this->validate($rules)) {
