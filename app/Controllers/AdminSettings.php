@@ -129,15 +129,15 @@ class AdminSettings extends BaseController
             $profileImage = $this->request->getFile('profile_image');
             if ($profileImage && $profileImage->isValid() && ! $profileImage->hasMoved()) {
                 if (! in_array($profileImage->getMimeType(), ['image/jpeg', 'image/png', 'image/webp'], true) || $profileImage->getSizeByUnit('mb') > 5) {
-                    throw new \\RuntimeException('Foto kedua halaman depan harus JPG, PNG, atau WebP maksimal 5 MB.');
+                    throw new \RuntimeException('Foto kedua halaman depan harus JPG, PNG, atau WebP maksimal 5 MB.');
                 }
                 $uploadPath = FCPATH . 'assets/images/';
                 if (! is_dir($uploadPath) && ! mkdir($uploadPath, 0755, true) && ! is_dir($uploadPath)) {
-                    throw new \\RuntimeException('Folder gambar tidak dapat dibuat.');
+                    throw new \RuntimeException('Folder gambar tidak dapat dibuat.');
                 }
                 $newName = 'home-secondary-' . $profileImage->getRandomName();
                 if (! $profileImage->move($uploadPath, $newName)) {
-                    throw new \\RuntimeException('Foto kedua halaman depan gagal diunggah.');
+                    throw new \RuntimeException('Foto kedua halaman depan gagal diunggah.');
                 }
                 $profileData['profile_image'] = $newName;
             }
