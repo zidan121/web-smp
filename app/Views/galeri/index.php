@@ -83,10 +83,19 @@ main{padding:24px 0 65px}.controls{display:flex;align-items:center;justify-conte
 <div class="stat"><span class="stat-icon">🏆</span><div><strong>Prestasi</strong><small>Terus Berkembang</small></div></div>
 </div>
 </div>
+<?php
+$galleryHeroImages = array_values(array_filter($galleries ?? [], static fn($item) => ! empty($item['image'])));
+$galleryHeroMain = ! empty($galleryHeroImages[0]['image'])
+    ? base_url('assets/images/galleries/' . rawurlencode(basename($galleryHeroImages[0]['image'])))
+    : 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&q=85';
+$galleryHeroSecond = ! empty($galleryHeroImages[1]['image'])
+    ? base_url('assets/images/galleries/' . rawurlencode(basename($galleryHeroImages[1]['image'])))
+    : 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=80';
+?>
 <div class="hero-art" aria-label="Cuplikan kegiatan sekolah">
 <span class="decor">〝</span>
-<div class="hero-frame"><img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&q=85" alt="Suasana lingkungan sekolah" loading="lazy"></div>
-<div class="float-frame"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=80" alt="Kegiatan pembelajaran siswa" loading="lazy"></div>
+<div class="hero-frame"><img src="<?= esc($galleryHeroMain, 'attr') ?>" alt="<?= esc($galleryHeroImages[0]['title'] ?? 'Suasana kegiatan sekolah', 'attr') ?>" loading="lazy"></div>
+<div class="float-frame"><img src="<?= esc($galleryHeroSecond, 'attr') ?>" alt="<?= esc($galleryHeroImages[1]['title'] ?? 'Kegiatan pembelajaran siswa', 'attr') ?>" loading="lazy"></div>
 </div>
 </div></div></section>
 <main><div class="wrap">
