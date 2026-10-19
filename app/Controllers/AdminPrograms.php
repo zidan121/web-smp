@@ -60,6 +60,17 @@ class AdminPrograms extends BaseController
                 . 'max_size[image,2048]';
         }
 
+        $galleryFiles = $this->request->getFileMultiple('gallery_images') ?? [];
+        $validGalleryFiles = array_values(array_filter($galleryFiles, static fn($upload) => $upload && $upload->getError() !== UPLOAD_ERR_NO_FILE));
+        if (count($validGalleryFiles) > 5) {
+            return redirect()->back()->withInput()->with('error', 'Maksimal 5 foto tambahan untuk setiap program.');
+        }
+        foreach ($validGalleryFiles as $index => $galleryFile) {
+            if (! $galleryFile->isValid() || ! in_array($galleryFile->getMimeType(), ['image/jpeg', 'image/png', 'image/webp'], true) || $galleryFile->getSizeByUnit('kb') > 2048) {
+                return redirect()->back()->withInput()->with('error', 'Setiap foto tambahan harus JPG, PNG, atau WebP maksimal 2 MB.');
+            }
+        }
+
         if (! $this->validate($rules)) {
             return redirect()->back()
                 ->withInput()
@@ -134,6 +145,31 @@ class AdminPrograms extends BaseController
         ];
 
         $uploadDirectory = FCPATH . 'assets/images/programs/';
+        $existingGallery = [];
+        if (! empty($program['gallery_images'])) {
+            $decodedGallery = json_decode((string) $program['gallery_images'], true);
+            $existingGallery = is_array($decodedGallery) ? array_values(array_filter($decodedGallery, 'is_string')) : [];
+        }
+        $newGalleryFiles = [];
+
+        if ($validGalleryFiles !== []) {
+            if (! is_dir($uploadDirectory) && ! mkdir($uploadDirectory, 0755, true) && ! is_dir($uploadDirectory)) {
+                return redirect()->back()->withInput()->with('error', 'Folder penyimpanan foto gagal dibuat.');
+            }
+            foreach ($validGalleryFiles as $galleryFile) {
+                $galleryName = $galleryFile->getRandomName();
+                if (! $galleryFile->move($uploadDirectory, $galleryName)) {
+                    foreach ($newGalleryFiles as $uploadedName) {
+                        if (is_file($uploadDirectory . $uploadedName)) unlink($uploadDirectory . $uploadedName);
+                    }
+                    return redirect()->back()->withInput()->with('error', 'Salah satu foto tambahan gagal disimpan.');
+                }
+                $newGalleryFiles[] = $galleryName;
+            }
+            $data['gallery_images'] = json_encode(array_slice(array_merge($existingGallery, $newGalleryFiles), 0, 5), JSON_UNESCAPED_SLASHES);
+        } elseif ($id === 0) {
+            $data['gallery_images'] = json_encode([], JSON_UNESCAPED_SLASHES);
+        }
 
         if ($hasNewImage) {
             if (! $file->isValid()) {
