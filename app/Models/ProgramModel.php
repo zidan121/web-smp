@@ -18,6 +18,7 @@ class ProgramModel extends Model
         'slug',
         'description',
         'image',
+        'gallery_images',
         'icon',
         'program_icon_id',
         'sort_order',
