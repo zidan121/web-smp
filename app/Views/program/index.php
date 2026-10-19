@@ -15,6 +15,36 @@ footer{background:#102b4e;color:#dce8f7;padding:25px 0;font-size:12px}
 @media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{gap:12px}}@media(max-width:560px){.nav{padding:14px 0;align-items:flex-start}.navlinks{display:none}.grid{grid-template-columns:1fr}.hero{padding:40px 0}}
 
 
+
+/* Penyegaran halaman program: kartu lebih rapi dan responsif */
+.wrap{width:min(1180px,92%)}
+.hero{position:relative;overflow:hidden;padding:68px 0 72px;background:radial-gradient(circle at 88% 15%,rgba(94,164,232,.34),transparent 28%),linear-gradient(120deg,#0b2344 0%,#174879 58%,#2867a2 100%)}
+.hero:after{content:"";position:absolute;right:-90px;bottom:-210px;width:430px;height:430px;border:1px solid #ffffff20;border-radius:50%;box-shadow:0 0 0 35px #ffffff08,0 0 0 70px #ffffff05;pointer-events:none}
+.hero .wrap{position:relative;z-index:1}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 13px;border:1px solid #ffffff30;border-radius:999px;background:#ffffff12;color:#ffdc83}
+.hero h1{max-width:850px;font-size:clamp(34px,5vw,56px);letter-spacing:-1.2px;line-height:1.08;margin:18px 0 16px}
+.hero p{font-size:clamp(15px,1.6vw,17px);max-width:690px;line-height:1.85;color:#e1ebf8}
+main.wrap{padding-top:38px;padding-bottom:76px}
+.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch}
+.card{position:relative;min-width:0;border:1px solid #e1eaf5;border-radius:22px;box-shadow:0 14px 36px rgba(16,43,78,.08);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-7px);border-color:#c5d8ef;box-shadow:0 22px 48px rgba(16,43,78,.15)}
+.image{position:relative;height:clamp(180px,20vw,230px);background:linear-gradient(135deg,#e5eef9,#f7faff);display:flex;align-items:center;justify-content:center;padding:12px}
+.image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 65%,rgba(9,32,61,.12));pointer-events:none}
+.image img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;border-radius:13px;transition:transform .35s ease}
+.card:hover .image img{transform:scale(1.035)}
+.card:first-child .image img{object-fit:contain;padding:10px;background:#fff}
+.body{padding:24px;min-height:275px}
+.body h2{display:flex;align-items:center;gap:10px;font-size:24px;letter-spacing:-.3px;margin:0 0 12px}
+.body h2:before{content:"";display:block;width:5px;height:25px;border-radius:6px;background:linear-gradient(#e9bd61,#d79b2d)}
+.body p{font-size:14px;line-height:1.85;margin-bottom:24px;display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden}
+.learn{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #edf1f7;padding-top:16px;margin-top:auto;color:#174f8c;transition:gap .2s}
+.learn:after{content:"↗";display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#edf4fc;font-size:17px}
+.card:hover .learn{gap:17px}
+.empty{border:1px dashed #c7d6e8;text-align:center}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.body{padding:21px;min-height:260px}.image{height:205px}}
+@media(max-width:600px){.hero{padding:46px 0 50px}.hero h1{font-size:clamp(32px,9vw,42px)}main.wrap{padding-top:22px;padding-bottom:48px}.grid{grid-template-columns:minmax(0,1fr);gap:18px}.card{border-radius:19px}.image{height:220px}.body{padding:22px;min-height:0}.body p{-webkit-line-clamp:unset}.learn{padding-top:14px}}
+@media(prefers-reduced-motion:reduce){.card,.image img,.learn{transition:none}}
+
 </style>
 </head><body>
 <?= view('partials/public_navbar', ['settings' => $settings ?? []]) ?>
