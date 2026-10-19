@@ -306,7 +306,7 @@
             }
             </script>
             <div class="field">
-            <label for="image">Foto Latar Program</label>
+            <label for="image">Foto Banner Halaman Detail Program (TCP / ICT / ICP)</label>
             <input
                 id="image"
                 type="file"
@@ -315,7 +315,7 @@
             >
             <small class="hint">
                 Format JPG, PNG, atau WebP. Maksimal 2 MB.
-                Kosongkan jika tidak ingin mengganti foto.
+                Foto ini tampil pada banner besar di sisi kanan halaman detail program. Kosongkan jika tidak ingin mengganti foto.
             </small>
 
             <img
