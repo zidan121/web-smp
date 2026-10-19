@@ -77,6 +77,20 @@
                     <input id="prestasi_hero_image" name="prestasi_hero_image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
                     <span class="hint">JPG, PNG, atau WebP maksimal 5 MB. Kosongkan jika ingin tetap menggunakan gambar yang sekarang.</span>
                 </div>
+                    <div class="field">
+                        <label for="prestasi_hero_position_x">Posisi gambar — kiri / kanan</label>
+                        <input id="prestasi_hero_position_x" name="prestasi_hero_position_x" type="range" min="0" max="100" step="25" value="<?= esc(old('prestasi_hero_position_x', $settings['prestasi_hero_position_x'] ?? '50')) ?>">
+                        <span class="hint">Geser untuk memilih bagian gambar yang terlihat secara horizontal: kiri hingga kanan.</span>
+                    </div>
+                    <div class="field">
+                        <label for="prestasi_hero_position_y">Posisi gambar — atas / bawah</label>
+                        <input id="prestasi_hero_position_y" name="prestasi_hero_position_y" type="range" min="0" max="100" step="25" value="<?= esc(old('prestasi_hero_position_y', $settings['prestasi_hero_position_y'] ?? '50')) ?>">
+                        <span class="hint">Geser untuk memilih bagian gambar yang terlihat secara vertikal: atas hingga bawah.</span>
+                    </div>
+                    <div class="field wide">
+                        <div id="prestasiPositionLabel" class="hint">Posisi gambar: <?= esc(old('prestasi_hero_position_x', $settings['prestasi_hero_position_x'] ?? '50')) ?>% horizontal, <?= esc(old('prestasi_hero_position_y', $settings['prestasi_hero_position_y'] ?? '50')) ?>% vertikal.</div>
+                    </div>
+
                 <div class="field wide">
                     <label for="address">Alamat sekolah</label>
                     <textarea id="address" name="address"><?= esc(old('address', $profile['address'] ?? $settings['address'] ?? '')) ?></textarea>
@@ -125,6 +139,14 @@ document.getElementById('site_logo')?.addEventListener('change', function () {
     const placeholder = document.getElementById('siteLogoPlaceholder');
     if (placeholder) placeholder.style.display = 'none';
 });
+function updatePrestasiPosition() {
+    const x = document.getElementById('prestasi_hero_position_x')?.value || '50';
+    const y = document.getElementById('prestasi_hero_position_y')?.value || '50';
+    const label = document.getElementById('prestasiPositionLabel');
+    if (label) label.textContent = 'Posisi gambar: ' + x + '% horizontal, ' + y + '% vertikal.';
+}
+document.getElementById('prestasi_hero_position_x')?.addEventListener('input', updatePrestasiPosition);
+document.getElementById('prestasi_hero_position_y')?.addEventListener('input', updatePrestasiPosition);
 document.getElementById('prestasi_hero_image')?.addEventListener('change', function () {
     const file = this.files && this.files[0];
     if (!file) return;
