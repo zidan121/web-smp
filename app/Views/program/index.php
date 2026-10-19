@@ -56,5 +56,5 @@ main.wrap{padding-top:38px;padding-bottom:76px}
 <div class="body"><h2><?= esc($program['name']) ?></h2><p><?= esc($program['description'] ?: 'Informasi program unggulan sekolah.') ?></p><a class="learn" href="<?= site_url('program/' . $program['slug']) ?>">Pelajari program →</a></div>
 </article>
 <?php endforeach; else: ?><div class="empty">Informasi program unggulan belum tersedia. Silakan kembali lagi nanti.</div><?php endif; ?>
-</div></main><footer><div class="wrap">© <?= date('Y') ?> SMPIT Al Firdaus Purwodadi · <a href="<?= site_url('/') ?>">Kembali ke halaman utama</a></div></footer>
+</div></main><?= view('partials/public_footer', ['settings' => $settings ?? []]) ?>
 </body></html>
