@@ -62,7 +62,7 @@ main{padding:24px 0 65px}.controls{display:flex;align-items:center;justify-conte
 .search input:focus{border-color:#79a7e2;box-shadow:0 0 0 3px #0b4b9b12}
 .search button{min-height:44px;border:0;border-radius:12px;padding:0 20px;background:var(--blue);color:#fff;font-weight:750;cursor:pointer}
 @media(max-width:960px){.toolbar{align-items:stretch;flex-direction:column}.search{max-width:100%;min-width:0;width:100%}}
-@media(max-width:650px){.filters{gap:7px}.filter{padding:10px 12px;font-size:12px}}
+@media(max-width:650px){.toolbar{margin-bottom:22px}}
 
 
 
@@ -100,14 +100,6 @@ $galleryHeroSecond = ! empty($galleryHeroImages[1]['image'])
 </div></div></section>
 <main><div class="wrap">
 <div class="toolbar">
-    <div class="filters" role="tablist" aria-label="Tab navigasi kategori galeri">
-      <button class="filter active" role="tab" type="button" data-category="all" aria-selected="true">Semua</button>
-      <button class="filter" role="tab" type="button" data-category="berita" aria-selected="false">Berita</button>
-      <button class="filter" role="tab" type="button" data-category="kegiatan" aria-selected="false">Kegiatan</button>
-      <button class="filter" role="tab" type="button" data-category="pengumuman" aria-selected="false">Pengumuman</button>
-      <button class="filter" role="tab" type="button" data-category="prestasi" aria-selected="false">Prestasi</button>
-      <a class="filter" href="<?= site_url('galeri') ?>">Galeri Kegiatan</a>
-    </div>
     <form class="search" id="gallery-search" role="search">
       <input id="gallery-query" type="search" placeholder="⌕  Cari kegiatan..." aria-label="Cari kegiatan">
       <button type="submit">Cari</button>
@@ -147,7 +139,6 @@ $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['descriptio
 <script>
 (function(){
  const cards=[...document.querySelectorAll('.gallery-card')];
- const filters=[...document.querySelectorAll('button.filter[data-category]')];
  const query=document.getElementById('gallery-query');
  const form=document.getElementById('gallery-search');
  const count=document.getElementById('result-count');
@@ -170,7 +161,7 @@ $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['descriptio
   let visible=0;
   cards.forEach(card=>{
    const text=(card.dataset.search||'').toLocaleLowerCase('id');
-   const show=categoryMatches(card,active)&&(!term||text.includes(term));
+   const show=!term||text.includes(term);
    card.hidden=!show;
    if(show) visible++;
   });
@@ -178,16 +169,6 @@ $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['descriptio
   noResults.hidden=visible!==0;
  }
 
- filters.forEach(button=>button.addEventListener('click',()=>{
-  active=button.dataset.category||'all';
-  filters.forEach(item=>{
-   const selected=item===button;
-   item.classList.toggle('active',selected);
-   item.setAttribute('aria-selected',selected?'true':'false');
-  });
-  document.querySelector('.gallery-current')?.classList.remove('active');
-  render();
- }));
  form.addEventListener('submit',event=>{event.preventDefault();render()});
  query.addEventListener('input',render);
  render();
