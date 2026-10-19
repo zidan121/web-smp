@@ -263,6 +263,7 @@
 
         .floating-card {
             position: absolute;
+            z-index: 5;
             padding: 17px 19px;
             border: 1px solid #ffffffd9;
             border-radius: 17px;
@@ -285,8 +286,8 @@
             font-size: 11px;
         }
 
-        .float-one { left: -40px; bottom: 45px; }
-        .float-two { right: -20px; top: 35px; animation-delay: -2s; }
+        .float-one { left: -24px; bottom: 45px; }
+        .float-two { right: -12px; top: 35px; animation-delay: -2s; }
 
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(-1deg); }
