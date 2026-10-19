@@ -78,27 +78,10 @@
                     <span class="hint">JPG, PNG, atau WebP maksimal 5 MB. Kosongkan jika ingin tetap menggunakan gambar yang sekarang.</span>
                 </div>
                     <div class="field wide">
-                        <label>Atur potongan gambar seperti edit foto profil WhatsApp</label>
-                        <div id="prestasiCropFrame" style="position:relative;width:min(100%,720px);aspect-ratio:16/5;overflow:hidden;border-radius:14px;background:#102b50;touch-action:none;cursor:grab;border:1px solid #cbd6e5">
-                            <img id="prestasiCropImage" src="<?= base_url('assets/images/' . rawurlencode($settings['prestasi_hero_image'] ?? 'program-ict.jpg')) ?>" alt="Pratinjau potongan banner Prestasi" draggable="false" style="position:absolute;width:100%;height:100%;object-fit:cover;user-select:none;pointer-events:none;left:0;top:0">
-                            <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(10,31,62,.70),rgba(18,57,99,.25));display:flex;align-items:center;padding:6%;color:#fff">
-                                <div><div style="font-size:clamp(9px,1.3vw,13px);letter-spacing:2px;font-weight:800;color:#ffd77b">BANGGA DENGAN PENCAPAIAN SISWA</div><div style="font-size:clamp(20px,4vw,42px);font-weight:800;line-height:1.1;margin:8px 0">Prestasi &amp; Apresiasi</div><div style="font-size:clamp(9px,1.5vw,15px)">Pratinjau tampilan banner</div></div>
-                            </div>
+                        <div class="hint" style="padding:14px 16px;border:1px solid #dbe7f5;border-radius:12px;background:#f5f8fd;line-height:1.7">
+                            <strong style="display:block;color:#203653;margin-bottom:4px">Banner Prestasi otomatis</strong>
+                            Foto utama dan foto kecil pada banner diambil otomatis dari dua data prestasi terbaru yang memiliki foto. Gambar latar yang diunggah di atas hanya menjadi gambar cadangan jika belum ada foto prestasi. Untuk mengganti foto banner utama, tambahkan atau perbarui foto melalui menu <strong>Kelola Prestasi</strong>.
                         </div>
-                        <span class="hint">Geser gambar langsung di area pratinjau, seperti saat mengatur foto profil WhatsApp.</span>
-                    </div>
-                    <div class="field">
-                        <label for="prestasi_hero_position_x">Posisi horizontal</label>
-                        <input id="prestasi_hero_position_x" name="prestasi_hero_position_x" type="range" min="0" max="100" step="1" value="<?= esc(old('prestasi_hero_position_x', $settings['prestasi_hero_position_x'] ?? '50')) ?>">
-                    </div>
-                    <div class="field">
-                        <label for="prestasi_hero_position_y">Posisi vertikal</label>
-                        <input id="prestasi_hero_position_y" name="prestasi_hero_position_y" type="range" min="0" max="100" step="1" value="<?= esc(old('prestasi_hero_position_y', $settings['prestasi_hero_position_y'] ?? '50')) ?>">
-                    </div>
-                    <div class="field wide">
-                        <label for="prestasi_hero_zoom">Perbesar / perkecil gambar</label>
-                        <input id="prestasi_hero_zoom" name="prestasi_hero_zoom" type="range" min="100" max="200" step="10" value="<?= esc(old('prestasi_hero_zoom', $settings['prestasi_hero_zoom'] ?? '100')) ?>">
-                        <div id="prestasiPositionLabel" class="hint">Posisi gambar: <?= esc(old('prestasi_hero_position_x', $settings['prestasi_hero_position_x'] ?? '50')) ?>% horizontal, <?= esc(old('prestasi_hero_position_y', $settings['prestasi_hero_position_y'] ?? '50')) ?>% vertikal; zoom <?= esc(old('prestasi_hero_zoom', $settings['prestasi_hero_zoom'] ?? '100')) ?>%.</div>
                     </div>
 
                 <div class="field wide">
