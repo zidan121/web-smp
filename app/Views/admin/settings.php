@@ -77,18 +77,28 @@
                     <input id="prestasi_hero_image" name="prestasi_hero_image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
                     <span class="hint">JPG, PNG, atau WebP maksimal 5 MB. Kosongkan jika ingin tetap menggunakan gambar yang sekarang.</span>
                 </div>
-                    <div class="field">
-                        <label for="prestasi_hero_position_x">Posisi gambar — kiri / kanan</label>
-                        <input id="prestasi_hero_position_x" name="prestasi_hero_position_x" type="range" min="0" max="100" step="25" value="<?= esc(old('prestasi_hero_position_x', $settings['prestasi_hero_position_x'] ?? '50')) ?>">
-                        <span class="hint">Geser untuk memilih bagian gambar yang terlihat secara horizontal: kiri hingga kanan.</span>
+                    <div class="field wide">
+                        <label>Atur potongan gambar seperti edit foto profil WhatsApp</label>
+                        <div id="prestasiCropFrame" style="position:relative;width:min(100%,720px);aspect-ratio:16/5;overflow:hidden;border-radius:14px;background:#102b50;touch-action:none;cursor:grab;border:1px solid #cbd6e5">
+                            <img id="prestasiCropImage" src="<?= base_url('assets/images/' . rawurlencode($settings['prestasi_hero_image'] ?? 'program-ict.jpg')) ?>" alt="Pratinjau potongan banner Prestasi" draggable="false" style="position:absolute;width:100%;height:100%;object-fit:cover;user-select:none;pointer-events:none;left:0;top:0">
+                            <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(10,31,62,.70),rgba(18,57,99,.25));display:flex;align-items:center;padding:6%;color:#fff">
+                                <div><div style="font-size:clamp(9px,1.3vw,13px);letter-spacing:2px;font-weight:800;color:#ffd77b">BANGGA DENGAN PENCAPAIAN SISWA</div><div style="font-size:clamp(20px,4vw,42px);font-weight:800;line-height:1.1;margin:8px 0">Prestasi &amp; Apresiasi</div><div style="font-size:clamp(9px,1.5vw,15px)">Pratinjau tampilan banner</div></div>
+                            </div>
+                        </div>
+                        <span class="hint">Geser gambar langsung di area pratinjau, seperti saat mengatur foto profil WhatsApp.</span>
                     </div>
                     <div class="field">
-                        <label for="prestasi_hero_position_y">Posisi gambar — atas / bawah</label>
-                        <input id="prestasi_hero_position_y" name="prestasi_hero_position_y" type="range" min="0" max="100" step="25" value="<?= esc(old('prestasi_hero_position_y', $settings['prestasi_hero_position_y'] ?? '50')) ?>">
-                        <span class="hint">Geser untuk memilih bagian gambar yang terlihat secara vertikal: atas hingga bawah.</span>
+                        <label for="prestasi_hero_position_x">Posisi horizontal</label>
+                        <input id="prestasi_hero_position_x" name="prestasi_hero_position_x" type="range" min="0" max="100" step="1" value="<?= esc(old('prestasi_hero_position_x', $settings['prestasi_hero_position_x'] ?? '50')) ?>">
+                    </div>
+                    <div class="field">
+                        <label for="prestasi_hero_position_y">Posisi vertikal</label>
+                        <input id="prestasi_hero_position_y" name="prestasi_hero_position_y" type="range" min="0" max="100" step="1" value="<?= esc(old('prestasi_hero_position_y', $settings['prestasi_hero_position_y'] ?? '50')) ?>">
                     </div>
                     <div class="field wide">
-                        <div id="prestasiPositionLabel" class="hint">Posisi gambar: <?= esc(old('prestasi_hero_position_x', $settings['prestasi_hero_position_x'] ?? '50')) ?>% horizontal, <?= esc(old('prestasi_hero_position_y', $settings['prestasi_hero_position_y'] ?? '50')) ?>% vertikal.</div>
+                        <label for="prestasi_hero_zoom">Perbesar / perkecil gambar</label>
+                        <input id="prestasi_hero_zoom" name="prestasi_hero_zoom" type="range" min="100" max="200" step="10" value="<?= esc(old('prestasi_hero_zoom', $settings['prestasi_hero_zoom'] ?? '100')) ?>">
+                        <div id="prestasiPositionLabel" class="hint">Posisi gambar: <?= esc(old('prestasi_hero_position_x', $settings['prestasi_hero_position_x'] ?? '50')) ?>% horizontal, <?= esc(old('prestasi_hero_position_y', $settings['prestasi_hero_position_y'] ?? '50')) ?>% vertikal; zoom <?= esc(old('prestasi_hero_zoom', $settings['prestasi_hero_zoom'] ?? '100')) ?>%.</div>
                     </div>
 
                 <div class="field wide">
@@ -139,14 +149,45 @@ document.getElementById('site_logo')?.addEventListener('change', function () {
     const placeholder = document.getElementById('siteLogoPlaceholder');
     if (placeholder) placeholder.style.display = 'none';
 });
-function updatePrestasiPosition() {
-    const x = document.getElementById('prestasi_hero_position_x')?.value || '50';
-    const y = document.getElementById('prestasi_hero_position_y')?.value || '50';
+const cropFrame = document.getElementById('prestasiCropFrame');
+const cropImage = document.getElementById('prestasiCropImage');
+const cropX = document.getElementById('prestasi_hero_position_x');
+const cropY = document.getElementById('prestasi_hero_position_y');
+const cropZoom = document.getElementById('prestasi_hero_zoom');
+function updatePrestasiCrop() {
+    const x = Number(cropX.value || 50), y = Number(cropY.value || 50), zoom = Number(cropZoom.value || 100);
+    cropImage.style.width = zoom + '%';
+    cropImage.style.height = zoom + '%';
+    cropImage.style.left = ((100 - zoom) * x / 100) + '%';
+    cropImage.style.top = ((100 - zoom) * y / 100) + '%';
     const label = document.getElementById('prestasiPositionLabel');
-    if (label) label.textContent = 'Posisi gambar: ' + x + '% horizontal, ' + y + '% vertikal.';
+    if (label) label.textContent = 'Posisi: ' + x + '% horizontal, ' + y + '% vertikal · Zoom ' + zoom + '%.';
 }
-document.getElementById('prestasi_hero_position_x')?.addEventListener('input', updatePrestasiPosition);
-document.getElementById('prestasi_hero_position_y')?.addEventListener('input', updatePrestasiPosition);
+[cropX,cropY,cropZoom].forEach(control => control?.addEventListener('input', updatePrestasiCrop));
+let cropDrag = null;
+cropFrame?.addEventListener('pointerdown', event => {
+    cropDrag = {x:event.clientX,y:event.clientY,left:Number(cropX.value),top:Number(cropY.value)};
+    cropFrame.setPointerCapture(event.pointerId);
+    cropFrame.style.cursor = 'grabbing';
+});
+cropFrame?.addEventListener('pointermove', event => {
+    if (!cropDrag) return;
+    const zoom = Math.max(1, Number(cropZoom.value) - 100);
+    const scale = zoom || 1;
+    cropX.value = String(Math.max(0,Math.min(100,Math.round(cropDrag.left - (event.clientX-cropDrag.x)/cropFrame.clientWidth*100/scale*100))));
+    cropY.value = String(Math.max(0,Math.min(100,Math.round(cropDrag.top - (event.clientY-cropDrag.y)/cropFrame.clientHeight*100/scale*100))));
+    updatePrestasiCrop();
+});
+function endPrestasiCrop(){cropDrag=null;if(cropFrame)cropFrame.style.cursor='grab'}
+cropFrame?.addEventListener('pointerup',endPrestasiCrop);
+cropFrame?.addEventListener('pointercancel',endPrestasiCrop);
+document.getElementById('prestasi_hero_image')?.addEventListener('change', function () {
+    const file = this.files && this.files[0];
+    if (!file) return;
+    cropImage.src = URL.createObjectURL(file);
+    updatePrestasiCrop();
+});
+updatePrestasiCrop();
 document.getElementById('prestasi_hero_image')?.addEventListener('change', function () {
     const file = this.files && this.files[0];
     if (!file) return;
