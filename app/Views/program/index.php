@@ -22,7 +22,7 @@ footer{background:#102b4e;color:#dce8f7;padding:25px 0;font-size:12px}
 <main class="wrap"><div class="grid">
 <?php if (! empty($programs)): foreach ($programs as $program): ?>
 <article class="card">
-<div class="image"><?php if (! empty($program['image'])): ?><img src="<?= base_url('assets/images/' . esc($program['image'], 'attr')) ?>" alt="<?= esc($program['name'], 'attr') ?>" loading="lazy"><?php endif; ?></div>
+<div class="image"><?php if (! empty($program['image'])): ?><img src="<?= base_url('assets/images/programs/' . rawurlencode(basename($program['image']))) ?>" alt="<?= esc($program['name'], 'attr') ?>" loading="lazy"><?php endif; ?></div>
 <div class="body"><h2><?= esc($program['name']) ?></h2><p><?= esc($program['description'] ?: 'Informasi program unggulan sekolah.') ?></p><a class="learn" href="<?= site_url('program/' . $program['slug']) ?>">Pelajari program →</a></div>
 </article>
 <?php endforeach; else: ?><div class="empty">Informasi program unggulan belum tersedia. Silakan kembali lagi nanti.</div><?php endif; ?>
