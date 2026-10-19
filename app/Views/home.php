@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMPIT Al Firdaus Purwodadi</title>
-    <meta name="description" content="SMPIT Al Firdaus Purwodadi — Berprestasi, Bertakwa, Berwawasan Global.">
+    <meta name="description" content="<?= esc(trim((string) ($profile['tagline'] ?? '')) ?: 'SMPIT Al Firdaus Purwodadi') ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 
@@ -870,7 +870,7 @@
                 <div class="vision-list" id="keunggulan">
                     <div class="vision-item"><span>✦</span><div><strong>Visi pendidikan:</strong> <?= nl2br(esc($schoolVision)) ?></div></div>
                     <div class="vision-item"><span>✦</span><div><strong>Misi sekolah:</strong> <?= nl2br(esc($schoolMission)) ?></div></div>
-                    <div class="vision-item"><span>✦</span><div><strong>✦ Berprestasi ✦ Bertakwa ✦ Berwawasan Global</strong></div></div>
+                    <div class="vision-item"><span>✦</span><div><strong><?= esc($schoolTagline) ?></strong></div></div>
                 </div>
                 <a href="<?= site_url('profil') ?>" class="button button-primary">Selengkapnya tentang sekolah →</a>
             </div>
