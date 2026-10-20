@@ -18,6 +18,14 @@ class Admin extends BaseController
 
     public function authenticate()
     {
+        // Batasi percobaan login untuk memperlambat brute-force password.
+        $clientIp = (string) $this->request->getIPAddress();
+        $throttler = service('throttler');
+        if (! $throttler->check('admin-login-' . sha1($clientIp), 5, 60)) {
+            return redirect()->back()
+                ->with('error', 'Terlalu banyak percobaan login. Tunggu satu menit lalu coba kembali.');
+        }
+
         $rules = [
             'username' => 'required|max_length[100]',
             'password' => 'required',
