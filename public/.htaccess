@@ -1,6 +1,23 @@
 # Disable directory browsing
 Options -Indexes
 
+# Block access to hidden files and common sensitive project files.
+<IfModule mod_rewrite.c>
+    RewriteRule "(^|/)\\.(?!well-known/)" - [F,L]
+</IfModule>
+
+<FilesMatch "(?i)^(\\.env|env|composer\\.(json|lock)|phpunit\\.xml(\\.dist)?|spark|artisan|.*\\.(sql|log|bak|old|ini|yml|yaml|dist|md))$">
+    Require all denied
+</FilesMatch>
+
+# Security headers (also applied by the framework where supported).
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
 # ----------------------------------------------------------------------
 # Rewrite engine
 # ----------------------------------------------------------------------
