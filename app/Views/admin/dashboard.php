@@ -35,6 +35,8 @@
         h1{font-size:26px;letter-spacing:-.5px;margin:0 0 6px;color:#102b4d}.breadcrumb{font-size:12px;color:#8a9ab0}
         .logout{display:inline-flex;align-items:center;justify-content:center;padding:10px 15px;border:1px solid var(--line);border-radius:10px;background:#fff;text-decoration:none;color:#34516f;font-size:12px;font-weight:700}
         .logout:hover{border-color:#b7cff0;background:#f8fbff}
+        .logout-form{margin:0}.logout-button{font:inherit;cursor:pointer}
+        .menu-logout{display:block}.menu-logout button{width:100%;display:flex;align-items:center;gap:12px;padding:12px 13px;border:0;border-radius:10px;background:transparent;color:var(--muted);font:inherit;font-weight:600;text-align:left;cursor:pointer}.menu-logout button:hover{background:#edf4ff;color:var(--primary)}
         .welcome-banner{position:relative;overflow:hidden;border-radius:18px;padding:27px 30px;margin-bottom:20px;background:linear-gradient(110deg,#0d3265 0%,#1559a5 55%,#2586ed 100%);color:#fff;box-shadow:0 12px 30px #174b841c}
         .welcome-banner:before,.welcome-banner:after{content:"";position:absolute;border-radius:50%;border:1px solid #ffffff22;pointer-events:none}
         .welcome-banner:before{width:300px;height:300px;right:7%;top:-190px}.welcome-banner:after{width:230px;height:230px;right:2%;bottom:-180px}
@@ -64,7 +66,7 @@
         .notice{padding:13px 14px;border-radius:12px;background:#f3f8ff;color:#59718e;font-size:12px;line-height:1.65;border:1px solid #e3efff}
         .footer-note{text-align:center;font-size:11px;color:#9aa7b8;padding:4px 0 0}
         @media(max-width:1250px){.quick-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-columns{grid-template-columns:1fr}.cms-menu{grid-template-columns:repeat(3,minmax(0,1fr))}}
-        @media(max-width:850px){.sidebar{width:76px;flex-basis:76px;padding:18px 8px}.brand{justify-content:center;padding:0 0 20px}.brand>div:last-child,.menu-label,.menu a span:last-child,.admin-chip>div:last-child{display:none}.menu a{justify-content:center;padding:13px 4px}.menu-icon{width:24px}.admin-chip{justify-content:center;padding:8px}.content{padding:22px 18px}.topbar{padding:0 18px}.banner-tag{display:none}}
+        @media(max-width:850px){.sidebar{width:76px;flex-basis:76px;padding:18px 8px}.brand{justify-content:center;padding:0 0 20px}.brand>div:last-child,.menu-label,.menu a span:last-child,.admin-chip>div:last-child{display:none}.menu a{justify-content:center;padding:13px 4px}.menu-logout button{justify-content:center;padding:13px 4px}.menu-icon{width:24px}.admin-chip{justify-content:center;padding:8px}.content{padding:22px 18px}.topbar{padding:0 18px}.banner-tag{display:none}}
         @media(max-width:600px){.topbar{height:60px;padding:0 12px;gap:10px}.topbar-right>div:last-child{display:none}.content{padding:18px 12px}.page-heading{align-items:flex-start}h1{font-size:23px}.welcome-banner{padding:22px 20px}.welcome-banner h2{font-size:23px}.quick-stats{grid-template-columns:1fr 1fr;gap:9px}.stat-card{padding:12px;gap:9px}.stat-icon{width:37px;height:37px;flex-basis:37px;border-radius:11px}.stat-card strong{font-size:14px}.stat-card span{font-size:10px}.panel{padding:16px}.cms-menu{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.cms-menu a{display:grid;grid-template-columns:36px minmax(0,1fr);min-height:145px;padding:12px;column-gap:9px}.tile-icon{width:36px;height:36px;grid-column:1;grid-row:1 / span 2;margin:0}.cms-menu strong,.cms-menu span.desc{grid-column:2}.search input{font-size:11px}.logout{padding:8px 10px}}
         @media(max-width:390px){.quick-stats,.cms-menu{grid-template-columns:1fr}.stat-card{padding:15px}.cms-menu a{min-height:0}}
     </style>
@@ -89,7 +91,7 @@
             <a href="<?= site_url('admin/settings') ?>"><span class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 13.5a7 7 0 0 0 0-3l2-1.5-2-3.5-2.4 1a7 7 0 0 0-2.6-1L13.5 3h-4L9 5.5a7 7 0 0 0-2.6 1L4 5.5 2 9l2 1.5a7 7 0 0 0 0 3L2 15l2 3.5 2.4-1a7 7 0 0 0 2.6 1l.5 2.5h4l.5-2.5a7 7 0 0 0 2.6-1l2.4 1 2-3.5z"/></svg></span><span>Pengaturan Website</span></a>
             <a href="<?= site_url('admin/program-icons') ?>"><span class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></span><span>Pustaka Ikon Program</span></a>
             <div class="menu-label">AKUN</div>
-            <a href="<?= site_url('admin/logout') ?>"><span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg></span><span>Keluar</span></a>
+            <form class="menu-logout" action="<?= site_url('admin/logout') ?>" method="post"><?= csrf_field() ?><button type="submit"><span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg></span><span>Keluar</span></button></form>
         </nav>
         <div class="sidebar-bottom"><div class="admin-chip"><div class="admin-avatar">AF</div><div><strong><?= esc(session()->get('admin_full_name') ?: 'Administrator') ?></strong><small>SMPIT Al Firdaus</small></div></div></div>
     </aside>
@@ -102,7 +104,7 @@
         <main class="content">
             <div class="page-heading">
                 <div><h1>Dashboard</h1><div class="breadcrumb">Beranda &nbsp;›&nbsp; Dashboard</div></div>
-                <a class="logout" href="<?= site_url('admin/logout') ?>">Keluar ↗</a>
+                <form class="logout-form" action="<?= site_url('admin/logout') ?>" method="post"><?= csrf_field() ?><button class="logout logout-button" type="submit">Keluar ↗</button></form>
             </div>
             <section class="welcome-banner">
                 <div class="eyebrow">Panel pengelolaan sekolah</div>
