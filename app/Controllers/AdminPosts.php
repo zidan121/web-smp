@@ -160,8 +160,12 @@ class AdminPosts extends BaseController
                 throw new \RuntimeException('Model save returned false.');
             }
         } catch (\Throwable $e) {
+            foreach ($newGalleryFiles as $uploadedName) {
+                $uploadedPath = $uploadDirectory . basename($uploadedName);
+                if (is_file($uploadedPath)) { unlink($uploadedPath); }
+            }
             if ($hasNewImage && isset($newFileName) && is_file($uploadDirectory . $newFileName)) {
-                unlink($uploadDirectory . $newFileName);
+                unlink($uploadDirectory . basename($newFileName));
             }
             log_message('error', 'Gagal menyimpan artikel: {message}', ['message' => $e->getMessage()]);
             return redirect()->back()->withInput()->with('error', 'Artikel gagal disimpan. Periksa log aplikasi.');
