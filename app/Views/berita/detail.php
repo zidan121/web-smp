@@ -40,6 +40,11 @@
         .share-btn{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;background:#fff;color:var(--blue);cursor:pointer;font-weight:800;font-size:13px}
         .share-btn:hover{background:var(--sky)}
         .cover{display:block;width:100%;max-height:460px;aspect-ratio:16/8.5;object-fit:cover;border-radius:14px;margin:0 0 25px;background:#e7eef7}
+        .article-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:-8px 0 25px}
+        .article-gallery img{display:block;width:100%;height:clamp(150px,22vw,270px);object-fit:cover;border-radius:12px;background:#e7eef7;border:1px solid var(--line)}
+        .article-gallery img:first-child{grid-column:1/-1;height:clamp(220px,38vw,420px)}
+        @media(max-width:560px){.article-gallery{grid-template-columns:1fr;gap:9px}.article-gallery img,.article-gallery img:first-child{grid-column:auto;height:auto;max-height:340px;aspect-ratio:16/10}}
+
         .no-cover{min-height:210px;border-radius:14px;margin-bottom:25px;background:linear-gradient(135deg,#e6f1ff,#f7faff);display:grid;place-items:center;color:#7b9cc5;font-size:52px}
         .excerpt{margin:0 0 24px;padding:18px 20px;background:linear-gradient(110deg,#edf5ff,#f7faff);border:1px solid #dceaff;border-left:4px solid #3983d7;border-radius:0 12px 12px 0;font-size:16px;line-height:1.75;font-weight:650;color:#21476f}
         .article-body{font-size:16px;line-height:1.95;color:#354d68;overflow-wrap:anywhere}
@@ -126,8 +131,21 @@
             <button class="share-btn" type="button" aria-label="Salin tautan artikel" onclick="copyArticleLink()">↗</button>
         </div>
 
-        <?php if (!empty($post['image'])): ?>
-            <img class="cover" src="<?= base_url('assets/images/posts/' . rawurlencode($post['image'])) ?>" alt="<?= esc($post['title']) ?>">
+        <?php
+            $articleImages = ! empty($post['gallery_images']) ? json_decode((string) $post['gallery_images'], true) : [];
+            if (! is_array($articleImages)) { $articleImages = []; }
+            if (empty($articleImages) && ! empty($post['image'])) { $articleImages = [$post['image']]; }
+            $articleImages = array_values(array_slice(array_filter($articleImages, 'is_string'), 0, 5));
+        ?>
+        <?php if (!empty($articleImages)): ?>
+            <img class="cover" src="<?= base_url('assets/images/posts/' . rawurlencode($articleImages[0])) ?>" alt="<?= esc($post['title']) ?>">
+            <?php if (count($articleImages) > 1): ?>
+                <div class="article-gallery" aria-label="Galeri foto artikel">
+                    <?php foreach (array_slice($articleImages, 1, 4) as $articleImage): ?>
+                        <img src="<?= base_url('assets/images/posts/' . rawurlencode($articleImage)) ?>" alt="Foto dokumentasi <?= esc($post['title']) ?>" loading="lazy">
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         <?php else: ?>
             <div class="no-cover" aria-label="Gambar berita belum tersedia">✦</div>
         <?php endif; ?>
