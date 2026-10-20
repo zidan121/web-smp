@@ -43,11 +43,23 @@ class AdminPosts extends BaseController
             'status' => 'required|in_list[draft,published]',
         ];
 
+        $files = array_values(array_filter(
+            $this->request->getFileMultiple('gallery_images') ?? [],
+            static fn ($file) => $file && $file->getError() !== UPLOAD_ERR_NO_FILE
+        ));
+        if (count($files) > 5) {
+            return redirect()->back()->withInput()->with('error', 'Maksimal 5 foto untuk satu artikel.');
+        }
+        foreach ($files as $index => $file) {
+            $rules['gallery_images.' . $index] = 'uploaded[gallery_images.' . $index . ']|is_image[gallery_images.' . $index . ']|mime_in[gallery_images.' . $index . ',image/jpeg,image/png,image/webp]|max_size[gallery_images.' . $index . ',3072]';
+        }
+        // Tetap mendukung gambar utama lama untuk kompatibilitas artikel sebelumnya.
         $file = $this->request->getFile('image');
         $hasNewImage = $file && $file->getError() !== UPLOAD_ERR_NO_FILE;
         if ($hasNewImage) {
             $rules['image'] = 'uploaded[image]|is_image[image]|mime_in[image,image/jpeg,image/png,image/webp]|max_size[image,3072]';
         }
+        $hasNewGallery = count($files) > 0;
 
         if (! $this->validate($rules)) {
             return redirect()->back()->withInput()
@@ -94,18 +106,41 @@ class AdminPosts extends BaseController
         ];
 
         $uploadDirectory = FCPATH . 'assets/images/posts/';
-        if ($hasNewImage) {
-            if (! $file->isValid()) {
-                return redirect()->back()->withInput()->with('error', 'Gambar tidak valid.');
-            }
+        $newGalleryFiles = [];
+        if ($hasNewImage || $hasNewGallery) {
             if (! is_dir($uploadDirectory) && ! mkdir($uploadDirectory, 0755, true) && ! is_dir($uploadDirectory)) {
                 return redirect()->back()->withInput()->with('error', 'Folder gambar gagal dibuat.');
+            }
+        }
+
+        if ($hasNewGallery) {
+            foreach ($files as $galleryFile) {
+                if (! $galleryFile->isValid()) {
+                    return redirect()->back()->withInput()->with('error', 'Salah satu foto tidak valid.');
+                }
+                $newFileName = $galleryFile->getRandomName();
+                if (! $galleryFile->move($uploadDirectory, $newFileName)) {
+                    foreach ($newGalleryFiles as $uploadedName) {
+                        if (is_file($uploadDirectory . $uploadedName)) { unlink($uploadDirectory . $uploadedName); }
+                    }
+                    return redirect()->back()->withInput()->with('error', 'Salah satu foto gagal diunggah.');
+                }
+                $newGalleryFiles[] = $newFileName;
+            }
+            // Upload foto baru menggantikan galeri sebelumnya, maksimal lima foto.
+            $data['gallery_images'] = json_encode(array_slice($newGalleryFiles, 0, 5), JSON_UNESCAPED_SLASHES);
+            $data['image'] = $newGalleryFiles[0] ?? null;
+        } elseif ($hasNewImage) {
+            if (! $file->isValid()) {
+                return redirect()->back()->withInput()->with('error', 'Gambar tidak valid.');
             }
             $newFileName = $file->getRandomName();
             if (! $file->move($uploadDirectory, $newFileName)) {
                 return redirect()->back()->withInput()->with('error', 'Gambar gagal diunggah.');
             }
             $data['image'] = $newFileName;
+            $data['gallery_images'] = json_encode([$newFileName], JSON_UNESCAPED_SLASHES);
+            $newGalleryFiles[] = $newFileName;
         }
 
         try {
@@ -121,10 +156,17 @@ class AdminPosts extends BaseController
             return redirect()->back()->withInput()->with('error', 'Artikel gagal disimpan. Periksa log aplikasi.');
         }
 
-        if ($id > 0 && $hasNewImage && ! empty($existing['image'])) {
-            $oldPath = $uploadDirectory . basename($existing['image']);
-            if (is_file($oldPath)) {
-                unlink($oldPath);
+        if ($id > 0 && ($hasNewImage || $hasNewGallery)) {
+            $oldNames = [];
+            if (! empty($existing['gallery_images'])) {
+                $decoded = json_decode((string) $existing['gallery_images'], true);
+                if (is_array($decoded)) { $oldNames = array_merge($oldNames, $decoded); }
+            }
+            if (! empty($existing['image'])) { $oldNames[] = $existing['image']; }
+            foreach (array_unique($oldNames) as $oldName) {
+                if (! is_string($oldName) || $oldName === '' || in_array($oldName, $newGalleryFiles, true)) { continue; }
+                $oldPath = $uploadDirectory . basename($oldName);
+                if (is_file($oldPath)) { unlink($oldPath); }
             }
         }
 
@@ -146,11 +188,16 @@ class AdminPosts extends BaseController
             return redirect()->to(site_url('admin/posts'))->with('error', 'Artikel gagal dihapus.');
         }
 
-        if (! empty($post['image'])) {
-            $path = FCPATH . 'assets/images/posts/' . basename($post['image']);
-            if (is_file($path)) {
-                unlink($path);
-            }
+        $imageNames = [];
+        if (! empty($post['gallery_images'])) {
+            $decoded = json_decode((string) $post['gallery_images'], true);
+            if (is_array($decoded)) { $imageNames = array_merge($imageNames, $decoded); }
+        }
+        if (! empty($post['image'])) { $imageNames[] = $post['image']; }
+        foreach (array_unique($imageNames) as $imageName) {
+            if (! is_string($imageName) || $imageName === '') { continue; }
+            $path = FCPATH . 'assets/images/posts/' . basename($imageName);
+            if (is_file($path)) { unlink($path); }
         }
 
         return redirect()->to(site_url('admin/posts'))->with('success', 'Artikel berhasil dihapus.');
