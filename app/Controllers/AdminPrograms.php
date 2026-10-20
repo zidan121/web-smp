@@ -166,7 +166,9 @@ class AdminPrograms extends BaseController
                 }
                 $newGalleryFiles[] = $galleryName;
             }
-            $data['gallery_images'] = json_encode(array_slice(array_merge($existingGallery, $newGalleryFiles), 0, 5), JSON_UNESCAPED_SLASHES);
+            // Jika admin mengunggah foto baru, jadikan pilihan baru sebagai banner aktif.
+            // Jangan menambahkan di belakang foto lama karena foto lama bisa memenuhi batas 5.
+            $data['gallery_images'] = json_encode(array_slice($newGalleryFiles, 0, 5), JSON_UNESCAPED_SLASHES);
         } elseif ($id === 0) {
             $data['gallery_images'] = json_encode([], JSON_UNESCAPED_SLASHES);
         }
@@ -233,6 +235,22 @@ class AdminPrograms extends BaseController
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Program gagal disimpan.');
+        }
+
+        // Hapus foto galeri lama setelah database berhasil menyimpan foto pengganti.
+        if ($id > 0 && $newGalleryFiles !== [] && ! empty($program['gallery_images'])) {
+            $oldGallery = json_decode((string) $program['gallery_images'], true);
+            if (is_array($oldGallery)) {
+                foreach ($oldGallery as $oldGalleryName) {
+                    if (! is_string($oldGalleryName) || $oldGalleryName === '' || in_array($oldGalleryName, $newGalleryFiles, true)) {
+                        continue;
+                    }
+                    $oldGalleryPath = $uploadDirectory . basename($oldGalleryName);
+                    if (is_file($oldGalleryPath)) {
+                        unlink($oldGalleryPath);
+                    }
+                }
+            }
         }
 
         // Hapus foto lama hanya setelah data berhasil diperbarui.
