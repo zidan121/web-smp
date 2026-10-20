@@ -50,9 +50,6 @@ class AdminPosts extends BaseController
         if (count($files) > 5) {
             return redirect()->back()->withInput()->with('error', 'Maksimal 5 foto untuk satu artikel.');
         }
-        foreach ($files as $index => $file) {
-            $rules['gallery_images.' . $index] = 'uploaded[gallery_images.' . $index . ']|is_image[gallery_images.' . $index . ']|mime_in[gallery_images.' . $index . ',image/jpeg,image/png,image/webp]|max_size[gallery_images.' . $index . ',3072]';
-        }
         // Tetap mendukung gambar utama lama untuk kompatibilitas artikel sebelumnya.
         $file = $this->request->getFile('image');
         $hasNewImage = $file && $file->getError() !== UPLOAD_ERR_NO_FILE;
@@ -64,6 +61,20 @@ class AdminPosts extends BaseController
         if (! $this->validate($rules)) {
             return redirect()->back()->withInput()
                 ->with('error', implode(' ', $this->validator->getErrors()));
+        }
+
+        $allowedImageMimes = ['image/jpeg', 'image/png', 'image/webp'];
+        foreach ($files as $galleryFile) {
+            $tempName = $galleryFile->getTempName();
+            if (
+                ! $galleryFile->isValid()
+                || ! in_array($galleryFile->getMimeType(), $allowedImageMimes, true)
+                || $galleryFile->getSizeByUnit('kb') > 3072
+                || ! is_file($tempName)
+                || @getimagesize($tempName) === false
+            ) {
+                return redirect()->back()->withInput()->with('error', 'Setiap foto harus JPG, PNG, atau WebP dan maksimal 3 MB.');
+            }
         }
 
         $model = new PostModel();
