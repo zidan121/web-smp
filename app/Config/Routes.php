@@ -26,7 +26,7 @@ $routes->post('admin/settings/simpan', 'AdminSettings::save');
 $routes->get('admin/posts', 'AdminPosts::index');
 $routes->post('admin/posts/simpan', 'AdminPosts::save');
 $routes->post('admin/posts/hapus/(:num)', 'AdminPosts::delete/$1');
-$routes->get('admin/logout', 'Admin::logout');
+$routes->post('admin/logout', 'Admin::logout');
 $routes->get('admin/profil', 'AdminProfile::index');
 $routes->post('admin/profil/simpan', 'AdminProfile::save');
 $routes->get('admin/programs', 'AdminPrograms::index');
