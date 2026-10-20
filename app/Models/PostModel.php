@@ -21,6 +21,7 @@ class PostModel extends Model
         'excerpt',
         'content',
         'image',
+        'gallery_images',
         'author',
         'status',
         'published_at',
