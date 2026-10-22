@@ -84,4 +84,11 @@ $paths = new Paths();
 // LOAD THE FRAMEWORK BOOTSTRAP FILE
 require $paths->systemDirectory . '/Boot.php';
 
+// Define the same BASE constant used by Config\\App for CLI commands too.
+$scheme = 'http://';
+$host = 'localhost';
+$scriptDirectory = '';
+$base = $scheme . $host . ($scriptDirectory === '' ? '/' : '/' . $scriptDirectory . '/');
+defined('BASE') || define('BASE', $base);
+
 exit(Boot::bootSpark($paths));
