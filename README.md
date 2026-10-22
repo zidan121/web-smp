@@ -1,69 +1,49 @@
-# CodeIgniter 4 Application Starter
+# Website SMPIT Al Firdaus Purwodadi
 
-## What is CodeIgniter?
+Website sekolah berbasis CodeIgniter 4 dengan panel admin untuk mengelola profil, program, berita, galeri, dan prestasi.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Persyaratan
+- PHP 8.2 atau lebih baru
+- Composer
+- MySQL/MariaDB
+- Extension PHP: `intl`, `mbstring`, `mysqli`, `json`, `curl`, dan `xml`
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## Persiapan lokal dengan XAMPP (Windows)
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+1. Tarik source code terbaru dan pasang dependensi:
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+```powershell
+git checkout main
+git pull origin main
+composer install
+```
 
-## Installation & updates
+2. Buat file konfigurasi lokal dari template:
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+```powershell
+Copy-Item env.example .env
+```
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+3. Periksa nilai di `.env`:
+   - `app.baseURL = 'http://localhost:8000/'`
+   - `database.default.database = smpit_alfirdaus`
+   - `database.default.username = root`
+   - `database.default.password =` (kosong jika MySQL lokal tidak memakai password)
+   - `database.default.port = 3307` (ganti menjadi `3306` bila itu port MySQL Anda)
 
-## Setup
+Sesuaikan nilainya dengan database yang benar-benar ada di phpMyAdmin. Jangan impor ulang backup atau menjalankan migration/seeder sebelum memastikan status database.
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+4. Jalankan server pengembangan:
 
-## Important Change with index.php
+```powershell
+php spark serve --port 8000
+```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+Kemudian buka `http://localhost:8000`.
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
-
-**Please** read the user guide for a better explanation of how CI4 works!
-
-## Repository Management
-
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
-
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
-
-## Server Requirements
-
-PHP version 8.2 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+## Keamanan dan deployment
+- Jangan commit `.env`, password database, token, atau encryption key asli.
+- Di production, atur `CI_ENVIRONMENT = production`, gunakan HTTPS, dan kredensial database khusus dengan hak akses minimum.
+- Biarkan `app.forceGlobalSecureRequests = false` untuk HTTP lokal. Ubah ke `true` hanya setelah HTTPS production berjalan.
+- Arahkan document root Apache/Nginx ke folder `public/`, bukan ke root repository.
+- Filter CSRF dan secure headers yang dikonfigurasi di aplikasi harus tetap aktif.
