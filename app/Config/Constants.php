@@ -77,3 +77,13 @@ defined('EXIT_USER_INPUT')     || define('EXIT_USER_INPUT', 7);     // invalid u
 defined('EXIT_DATABASE')       || define('EXIT_DATABASE', 8);       // database error
 defined('EXIT__AUTO_MIN')      || define('EXIT__AUTO_MIN', 9);      // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125);    // highest automatically-assigned error code
+
+// Base URL derived from the request, following the reference repository's pattern.
+// In CLI contexts, fall back to localhost because HTTP_HOST and SCRIPT_NAME are absent.
+$scheme = (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/');
+$scriptDirectory = trim(dirname($scriptName), '/.');
+$base = $scheme . $host . ($scriptDirectory === '' ? '/' : '/' . $scriptDirectory . '/');
+
+defined('BASE') || define('BASE', $base);
