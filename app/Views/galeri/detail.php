@@ -32,13 +32,16 @@ h1{font-size:clamp(28px,4.5vw,44px);line-height:1.2;letter-spacing:-.8px;color:v
     $localImagePath = FCPATH . trim($imageDirectory, '/\\\\') . DIRECTORY_SEPARATOR . $localImage;
     $videoUrl = trim((string) ($gallery['video_url'] ?? ''));
     $instagramEmbed = '';
-    if ($videoUrl !== '' && preg_match('#^https://(www\\.)?instagram\\.com/(reel|p|tv)/([A-Za-z0-9_-]+)#i', $videoUrl, $videoMatch)) {
-        $instagramEmbed = 'https://www.instagram.com/' . strtolower($videoMatch[2]) . '/' . $videoMatch[3] . '/embed';
+    $isDirectVideo = $videoUrl !== '' && preg_match('#^https?://[^\s]+\.(mp4|webm|ogg)(?:[?#].*)?$#i', $videoUrl) === 1;
+    if ($videoUrl !== '' && ! $isDirectVideo && preg_match('#^https?://(www\\.)?instagram\\.com/(reel|p|tv)/([A-Za-z0-9_-]+)#i', $videoUrl, $videoMatch)) {
+        $instagramEmbed = 'https://www.instagram.com/' . strtolower($videoMatch[2]) . '/' . $videoMatch[3] . '/embed/';
     }
     ?>
     <div class="detail-photo">
-      <?php if ($instagramEmbed !== ''): ?>
-        <iframe src="<?= esc($instagramEmbed, 'attr') ?>" title="Video Instagram: <?= esc($gallery['title'], 'attr') ?>" loading="lazy" allowfullscreen style="width:100%;height:100%;min-height:480px;border:0;background:#fff" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <?php if ($isDirectVideo): ?>
+        <video controls playsinline preload="metadata" title="Video: <?= esc($gallery['title'], 'attr') ?>" style="width:100%;height:100%;min-height:320px;max-height:560px;object-fit:contain;background:#101820"><source src="<?= esc($videoUrl, 'attr') ?>">Browser Anda tidak mendukung pemutar video.</video>
+      <?php elseif ($instagramEmbed !== ''): ?>
+        <iframe src="<?= esc($instagramEmbed, 'attr') ?>" title="Video Instagram: <?= esc($gallery['title'], 'attr') ?>" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen style="width:100%;height:100%;min-height:480px;border:0;background:#fff" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       <?php elseif ($isRemoteImage): ?>
         <img src="<?= esc($imageValue, 'attr') ?>" alt="<?= esc($gallery['title'], 'attr') ?>">
       <?php elseif ($localImage !== '' && is_file($localImagePath)): ?>
