@@ -18,6 +18,7 @@ class GalleryModel extends Model
         'title',
         'description',
         'image',
+        'video_url',
         'category',
         'sort_order',
         'is_active',
