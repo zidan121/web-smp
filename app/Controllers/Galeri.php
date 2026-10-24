@@ -31,6 +31,7 @@ class Galeri extends BaseController
             $gallery['source_id'] = (int) $gallery['id'];
             $gallery['media_id'] = 'gallery-' . (int) $gallery['id'];
             $gallery['image_path'] = 'assets/images/galleries/';
+            $gallery['media_type'] = ! empty($gallery['video_url']) ? 'video' : 'image';
             $items[] = $gallery;
         }
 
@@ -67,6 +68,25 @@ class Galeri extends BaseController
                     'is_active' => 1,
                 ];
             }
+
+            if (! empty($post['video_url'])) {
+                $items[] = [
+                    'id' => 'post-video-' . (int) $post['id'],
+                    'media_id' => 'post-video-' . (int) $post['id'],
+                    'source_type' => 'post',
+                    'source_id' => (int) $post['id'],
+                    'title' => (string) $post['title'] . ' — Video',
+                    'description' => trim((string) ($post['excerpt'] ?? '')) ?: mb_substr(strip_tags((string) ($post['content'] ?? '')), 0, 220),
+                    'image' => '',
+                    'image_path' => 'assets/images/posts/',
+                    'video_url' => (string) $post['video_url'],
+                    'media_type' => 'video',
+                    'category' => 'Video Berita',
+                    'created_at' => $post['published_at'] ?? $post['created_at'] ?? null,
+                    'sort_order' => 0,
+                    'is_active' => 1,
+                ];
+            }
         }
 
         $achievements = (new AchievementModel())
@@ -75,7 +95,7 @@ class Galeri extends BaseController
             ->findAll();
 
         foreach ($achievements as $achievement) {
-            if (empty($achievement['image'])) {
+            if (empty($achievement['image']) && empty($achievement['video_url'])) {
                 continue;
             }
             $items[] = [
@@ -85,8 +105,10 @@ class Galeri extends BaseController
                 'source_id' => (int) $achievement['id'],
                 'title' => (string) $achievement['title'],
                 'description' => trim((string) ($achievement['description'] ?? '')) ?: trim((string) ($achievement['competition'] ?? 'Dokumentasi prestasi siswa')),
-                'image' => basename((string) $achievement['image']),
+                'image' => basename((string) ($achievement['image'] ?? '')),
                 'image_path' => 'assets/images/achievements/',
+                'video_url' => (string) ($achievement['video_url'] ?? ''),
+                'media_type' => ! empty($achievement['video_url']) ? 'video' : 'image',
                 'category' => 'Prestasi',
                 'created_at' => $achievement['achievement_date'] ?? $achievement['created_at'] ?? null,
                 'sort_order' => 0,
