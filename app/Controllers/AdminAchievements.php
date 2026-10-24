@@ -52,12 +52,18 @@ class AdminAchievements extends BaseController
             'achievement_date' => 'permit_empty|valid_date[Y-m-d]',
             'description' => 'permit_empty|max_length[10000]',
             'is_active' => 'required|in_list[0,1]',
+            'video_url' => 'permit_empty|max_length[500]',
         ];
 
         $file = $this->request->getFile('image');
         $hasNewImage = $file && $file->getError() !== UPLOAD_ERR_NO_FILE;
         if ($hasNewImage) {
             $rules['image'] = 'uploaded[image]|is_image[image]|mime_in[image,image/jpeg,image/png,image/webp]|max_size[image,4096]';
+        }
+
+        $videoUrl = trim((string) $this->request->getPost('video_url'));
+        if ($videoUrl !== '' && ! preg_match('#^https://(www\\.)?instagram\\.com/(reel|p|tv)/[A-Za-z0-9_-]+/?(?:\\?.*)?$#i', $videoUrl)) {
+            return redirect()->back()->withInput()->with('error', 'Tautan video harus berupa link Instagram Reel/Post yang valid.');
         }
 
         if (! $this->validate($rules)) {
@@ -72,6 +78,7 @@ class AdminAchievements extends BaseController
             'level' => trim((string) $this->request->getPost('level')),
             'achievement_date' => trim((string) $this->request->getPost('achievement_date')) ?: null,
             'description' => trim((string) $this->request->getPost('description')),
+            'video_url' => $videoUrl !== '' ? $videoUrl : null,
             'is_active' => (int) $this->request->getPost('is_active'),
         ];
 
