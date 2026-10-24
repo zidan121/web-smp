@@ -28,13 +28,14 @@ h1{font-size:clamp(28px,4.5vw,44px);line-height:1.2;letter-spacing:-.8px;color:v
     $imageValue = trim((string) ($gallery['image'] ?? ''));
     $isRemoteImage = preg_match('#^https://images\\.unsplash\\.com/[a-zA-Z0-9?&=._%-]+$#', $imageValue) === 1;
     $localImage = basename($imageValue);
-    $localImagePath = FCPATH . 'assets/images/galleries/' . $localImage;
+    $imageDirectory = (string) ($gallery['image_path'] ?? 'assets/images/galleries/');
+    $localImagePath = FCPATH . trim($imageDirectory, '/\\\\') . DIRECTORY_SEPARATOR . $localImage;
     ?>
     <div class="detail-photo">
       <?php if ($isRemoteImage): ?>
         <img src="<?= esc($imageValue, 'attr') ?>" alt="<?= esc($gallery['title'], 'attr') ?>">
       <?php elseif ($localImage !== '' && is_file($localImagePath)): ?>
-        <img src="<?= base_url('assets/images/galleries/' . rawurlencode($localImage)) ?>" alt="<?= esc($gallery['title'], 'attr') ?>">
+        <img src="<?= base_url(trim($imageDirectory, '/\\\\') . '/' . rawurlencode($localImage)) ?>" alt="<?= esc($gallery['title'], 'attr') ?>">
       <?php else: ?>
         <span aria-label="Foto belum tersedia">Dokumentasi Sekolah</span>
       <?php endif; ?>
