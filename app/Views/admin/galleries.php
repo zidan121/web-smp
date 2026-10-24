@@ -24,7 +24,8 @@
 <div class="field"><label for="title">Judul Foto *</label><input id="title" name="title" maxlength="200" required value="<?= esc(old('title','')) ?>" placeholder="Contoh: Kegiatan Belajar di Laboratorium"></div>
 <div class="field"><label for="description">Deskripsi</label><textarea id="description" name="description" maxlength="5000" placeholder="Ceritakan kegiatan pada foto"><?= esc(old('description','')) ?></textarea></div>
 <div class="field"><label for="category">Kategori</label><input id="category" name="category" maxlength="100" value="<?= esc(old('category','')) ?>" placeholder="Contoh: Kegiatan, Prestasi, Pembelajaran"></div>
-<div class="field"><label for="image">Foto <?= empty(old('id')) ? '*' : '(opsional jika tidak mengganti)' ?></label><input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp"><div class="hint">JPG, PNG, atau WebP. Maksimal 4 MB. Saat edit, kosongkan jika ingin memakai foto lama.</div><img id="image-preview" class="preview" alt="Pratinjau foto"><div id="image-info" class="hint"></div></div>
+<div class="field"><label for="video_url">Link Video Instagram (opsional)</label><input id="video_url" name="video_url" type="url" maxlength="500" value="<?= esc(old('video_url', '')) ?>" placeholder="https://www.instagram.com/reel/XXXXXXXX/"><div class="hint">Tempel link publik Instagram Reel/Post. Foto boleh dikosongkan jika hanya ingin menampilkan video.</div></div>
+<div class="field"><label for="image">Foto <?= empty(old('id')) ? '(opsional jika ada link video)' : '(opsional jika tidak mengganti)' ?></label><input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp"><div class="hint">JPG, PNG, atau WebP. Maksimal 4 MB. Saat edit, kosongkan jika ingin memakai foto lama.</div><img id="image-preview" class="preview" alt="Pratinjau foto"><div id="image-info" class="hint"></div></div>
 <div class="field"><label for="sort_order">Urutan Tampilan</label><input id="sort_order" name="sort_order" type="number" min="0" required value="<?= esc(old('sort_order','0')) ?>"></div>
 <div class="field"><label for="is_active">Status</label><select id="is_active" name="is_active"><option value="1" <?= old('is_active','1')==='1'?'selected':'' ?>>Aktif</option><option value="0" <?= old('is_active')==='0'?'selected':'' ?>>Nonaktif</option></select></div>
 <div class="actions"><button class="btn" type="submit">Simpan Galeri</button><button class="btn secondary" type="button" onclick="resetGalleryForm()">Batal / Reset</button></div>
@@ -74,6 +75,7 @@ function editGallery(button){
  document.getElementById('category').value=g.category||'';
  document.getElementById('sort_order').value=g.sort_order||0;
  document.getElementById('is_active').value=String(g.is_active);
+ document.getElementById('video_url').value=g.video_url||'';
  document.getElementById('form-title').textContent='Edit Foto Galeri';
  imageInput.value='';showGalleryImage(g.image||'');
  document.getElementById('form-panel').scrollIntoView({behavior:'smooth'});
@@ -81,6 +83,7 @@ function editGallery(button){
 function resetGalleryForm(){
  document.getElementById('gallery-form').reset();
  document.getElementById('gallery-id').value='';
+ document.getElementById('video_url').value='';
  document.getElementById('sort_order').value='0';
  document.getElementById('is_active').value='1';
  document.getElementById('form-title').textContent='Tambah Foto Galeri';
