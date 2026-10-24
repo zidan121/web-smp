@@ -74,14 +74,25 @@ class AdminGalleries extends BaseController
                 ->with('error', implode(' ', $this->validator->getErrors()));
         }
 
+        // Kompatibilitas untuk database lokal/hosting yang belum menjalankan SQL migrasi.
+        $hasVideoUrlColumn = $model->db->fieldExists('video_url', 'galleries');
+        if (! $hasVideoUrlColumn && $videoUrl !== '') {
+            return redirect()->back()->withInput()->with(
+                'error',
+                'Kolom video_url belum ada di database. Jalankan deployment/cpanel/instagram-video-links.sql melalui phpMyAdmin, lalu coba lagi.'
+            );
+        }
+
         $data = [
             'title' => trim((string) $this->request->getPost('title')),
             'description' => trim((string) $this->request->getPost('description')),
             'category' => trim((string) $this->request->getPost('category')),
-            'video_url' => $videoUrl !== '' ? $videoUrl : null,
             'sort_order' => (int) $this->request->getPost('sort_order'),
             'is_active' => (int) $this->request->getPost('is_active'),
         ];
+        if ($hasVideoUrlColumn) {
+            $data['video_url'] = $videoUrl !== '' ? $videoUrl : null;
+        }
 
         $directory = FCPATH . 'assets/images/galleries/';
         $newFileName = null;
