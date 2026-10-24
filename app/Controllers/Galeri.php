@@ -21,7 +21,7 @@ class Galeri extends BaseController
         $gallery = $model->where('is_active', 1)->find($id);
 
         if (! $gallery) {
-            throw \\CodeIgniter\\Exceptions\\PageNotFoundException::forPageNotFound('Dokumentasi galeri tidak ditemukan.');
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Dokumentasi galeri tidak ditemukan.');
         }
 
         return view('galeri/detail', [
