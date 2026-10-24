@@ -41,6 +41,7 @@ class AdminPosts extends BaseController
             'content' => 'required',
             'author' => 'permit_empty|max_length[100]',
             'status' => 'required|in_list[draft,published]',
+            'video_url' => 'permit_empty|max_length[500]',
         ];
 
         $files = array_values(array_filter(
@@ -57,6 +58,11 @@ class AdminPosts extends BaseController
             $rules['image'] = 'uploaded[image]|is_image[image]|mime_in[image,image/jpeg,image/png,image/webp]|max_size[image,3072]';
         }
         $hasNewGallery = count($files) > 0;
+
+        $videoUrl = trim((string) $this->request->getPost('video_url'));
+        if ($videoUrl !== '' && ! preg_match('#^https://(www\\.)?instagram\\.com/(reel|p|tv)/[A-Za-z0-9_-]+/?(?:\\?.*)?$#i', $videoUrl)) {
+            return redirect()->back()->withInput()->with('error', 'Tautan video harus berupa link Instagram Reel/Post yang valid.');
+        }
 
         if (! $this->validate($rules)) {
             return redirect()->back()->withInput()
@@ -109,6 +115,7 @@ class AdminPosts extends BaseController
             'category' => (string) $this->request->getPost('category'),
             'excerpt' => trim((string) $this->request->getPost('excerpt')),
             'content' => trim((string) $this->request->getPost('content')),
+            'video_url' => $videoUrl !== '' ? $videoUrl : null,
             'author' => trim((string) $this->request->getPost('author')) ?: (string) session()->get('admin_full_name'),
             'status' => $status,
             'published_at' => $status === 'published'
