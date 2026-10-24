@@ -2,7 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Models\AchievementModel;
 use App\Models\GalleryModel;
+use App\Models\PostModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Galeri extends BaseController
 {
@@ -15,33 +18,109 @@ class Galeri extends BaseController
         return $settings;
     }
 
-    public function detail(int $id)
+    /**
+     * Gabungkan dokumentasi manual, foto berita terbit, dan foto prestasi aktif.
+     * ID bertipe membuat item otomatis tidak perlu disimpan ulang di tabel galleries.
+     */
+    private function allGalleryItems(): array
     {
-        $model = new GalleryModel();
-        $gallery = $model->where('is_active', 1)->find($id);
+        $items = [];
 
-        if (! $gallery) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Dokumentasi galeri tidak ditemukan.');
+        foreach ((new GalleryModel())->where('is_active', 1)->findAll() as $gallery) {
+            $gallery['source_type'] = 'gallery';
+            $gallery['source_id'] = (int) $gallery['id'];
+            $gallery['media_id'] = 'gallery-' . (int) $gallery['id'];
+            $gallery['image_path'] = 'assets/images/galleries/';
+            $items[] = $gallery;
         }
 
-        return view('galeri/detail', [
-            'gallery' => $gallery,
-            'settings' => $this->publicSettings(),
-        ]);
+        $posts = (new PostModel())
+            ->where('status', 'published')
+            ->orderBy('published_at', 'DESC')
+            ->findAll();
+
+        foreach ($posts as $post) {
+            $images = [];
+            if (! empty($post['gallery_images'])) {
+                $decoded = json_decode((string) $post['gallery_images'], true);
+                if (is_array($decoded)) {
+                    $images = array_values(array_filter($decoded, 'is_string'));
+                }
+            }
+            if (empty($images) && ! empty($post['image'])) {
+                $images = [(string) $post['image']];
+            }
+            $images = array_values(array_unique(array_filter($images)));
+            foreach ($images as $index => $image) {
+                $items[] = [
+                    'id' => 'post-' . (int) $post['id'] . '-' . $index,
+                    'media_id' => 'post-' . (int) $post['id'] . '-' . $index,
+                    'source_type' => 'post',
+                    'source_id' => (int) $post['id'],
+                    'title' => (string) $post['title'],
+                    'description' => trim((string) ($post['excerpt'] ?? '')) ?: mb_substr(strip_tags((string) ($post['content'] ?? '')), 0, 220),
+                    'image' => basename($image),
+                    'image_path' => 'assets/images/posts/',
+                    'category' => 'Berita',
+                    'created_at' => $post['published_at'] ?? $post['created_at'] ?? null,
+                    'sort_order' => 0,
+                    'is_active' => 1,
+                ];
+            }
+        }
+
+        $achievements = (new AchievementModel())
+            ->where('is_active', 1)
+            ->orderBy('achievement_date', 'DESC')
+            ->findAll();
+
+        foreach ($achievements as $achievement) {
+            if (empty($achievement['image'])) {
+                continue;
+            }
+            $items[] = [
+                'id' => 'achievement-' . (int) $achievement['id'],
+                'media_id' => 'achievement-' . (int) $achievement['id'],
+                'source_type' => 'achievement',
+                'source_id' => (int) $achievement['id'],
+                'title' => (string) $achievement['title'],
+                'description' => trim((string) ($achievement['description'] ?? '')) ?: trim((string) ($achievement['competition'] ?? 'Dokumentasi prestasi siswa')),
+                'image' => basename((string) $achievement['image']),
+                'image_path' => 'assets/images/achievements/',
+                'category' => 'Prestasi',
+                'created_at' => $achievement['achievement_date'] ?? $achievement['created_at'] ?? null,
+                'sort_order' => 0,
+                'is_active' => 1,
+            ];
+        }
+
+        usort($items, static function (array $a, array $b): int {
+            $aDate = strtotime((string) ($a['created_at'] ?? '')) ?: 0;
+            $bDate = strtotime((string) ($b['created_at'] ?? '')) ?: 0;
+            return $bDate <=> $aDate;
+        });
+
+        return $items;
+    }
+
+    public function detail(string $id)
+    {
+        foreach ($this->allGalleryItems() as $item) {
+            if ((string) ($item['media_id'] ?? '') === $id || (string) ($item['id'] ?? '') === $id) {
+                return view('galeri/detail', [
+                    'gallery' => $item,
+                    'settings' => $this->publicSettings(),
+                ]);
+            }
+        }
+
+        throw PageNotFoundException::forPageNotFound('Dokumentasi galeri tidak ditemukan.');
     }
 
     public function index(): string
     {
-        $model = new GalleryModel();
-
-        $galleries = $model
-            ->where('is_active', 1)
-            ->orderBy('sort_order', 'ASC')
-            ->orderBy('created_at', 'DESC')
-            ->findAll();
-
         return view('galeri/index', [
-            'galleries' => $galleries,
+            'galleries' => $this->allGalleryItems(),
             'settings' => $this->publicSettings(),
         ]);
     }
