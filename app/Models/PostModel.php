@@ -22,6 +22,7 @@ class PostModel extends Model
         'content',
         'image',
         'gallery_images',
+        'video_url',
         'author',
         'status',
         'published_at',
