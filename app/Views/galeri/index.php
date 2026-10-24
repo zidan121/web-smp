@@ -111,7 +111,8 @@ $galleryHeroSecond = ! empty($galleryHeroImages[1]['image'])
 $imageValue = trim((string) ($gallery['image'] ?? ''));
 $isRemoteImage = preg_match('#^https://images\\.unsplash\\.com/[a-zA-Z0-9?&=._%-]+$#', $imageValue) === 1;
 $localImage = basename($imageValue);
-$localImagePath = FCPATH . 'assets/images/galleries/' . $localImage;
+$imageDirectory = (string) ($gallery['image_path'] ?? 'assets/images/galleries/');
+$localImagePath = FCPATH . trim($imageDirectory, '/\\\\') . DIRECTORY_SEPARATOR . $localImage;
 $category = (string) ($gallery['category'] ?? 'Kegiatan Sekolah');
 $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['description'] ?? '') . ' ' . $category);
 ?>
@@ -120,13 +121,13 @@ $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['descriptio
 <?php if ($isRemoteImage): ?>
 <img src="<?= esc($imageValue, 'attr') ?>" alt="<?= esc($gallery['title']) ?>" loading="lazy" referrerpolicy="no-referrer">
 <?php elseif ($localImage !== '' && is_file($localImagePath)): ?>
-<img src="<?= base_url('assets/images/galleries/' . rawurlencode($localImage)) ?>" alt="<?= esc($gallery['title']) ?>" loading="lazy">
+<img src="<?= base_url(trim($imageDirectory, '/\\\\') . '/' . rawurlencode($localImage)) ?>" alt="<?= esc($gallery['title']) ?>" loading="lazy">
 <?php else: ?><div class="photo-placeholder" aria-label="Foto belum tersedia">▧</div><?php endif; ?>
 <span class="badge"><?= esc($category) ?></span>
 </div>
 <div class="body"><h3><?= esc($gallery['title']) ?></h3>
 <p><?= esc($gallery['description'] ?: 'Dokumentasi kegiatan siswa SMPIT Al Firdaus Purwodadi.') ?></p>
-<div class="card-foot"><a class="read-more" href="<?= site_url('galeri/' . (int) $gallery['id']) ?>">Baca Selengkapnya <span class="arrow">›</span></a></div>
+<div class="card-foot"><a class="read-more" href="<?= site_url('galeri/' . rawurlencode((string) ($gallery['media_id'] ?? $gallery['id']))) ?>">Baca Selengkapnya <span class="arrow">›</span></a></div>
 </div></article>
 <?php endforeach; ?>
 <?php else: ?><div class="empty"><strong>Galeri segera hadir</strong>Dokumentasi kegiatan sekolah akan ditampilkan di sini setelah ditambahkan melalui panel admin.</div><?php endif; ?>
