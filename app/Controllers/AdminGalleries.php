@@ -56,7 +56,7 @@ class AdminGalleries extends BaseController
         $file = $this->request->getFile('image');
         $hasNewImage = $file && $file->getError() !== UPLOAD_ERR_NO_FILE;
 
-        if (! $existing && ! $hasNewImage) {
+        if (! $existing && ! $hasNewImage && trim((string) $this->request->getPost('video_url')) === '') {
             $rules['image'] = 'uploaded[image]';
         }
 
