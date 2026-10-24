@@ -82,7 +82,7 @@ defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125);    // highest a
 // In CLI contexts, fall back to localhost because HTTP_HOST and SCRIPT_NAME are absent.
 $scheme = (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
 $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-$scriptName = str_replace(['\\', '\\\\'], '/', $_SERVER['SCRIPT_NAME'] ?? '/');
+$scriptName = str_replace(chr(92), '/', $_SERVER['SCRIPT_NAME'] ?? '/');
 $scriptDirectory = trim(dirname($scriptName), '/.');
 $base = $scheme . $host . ($scriptDirectory === '' ? '/' : '/' . $scriptDirectory . '/');
 
