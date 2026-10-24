@@ -32,7 +32,8 @@ h1{font-size:clamp(28px,4.5vw,44px);line-height:1.2;letter-spacing:-.8px;color:v
     $localImagePath = FCPATH . trim($imageDirectory, '/\\\\') . DIRECTORY_SEPARATOR . $localImage;
     $videoUrl = trim((string) ($gallery['video_url'] ?? ''));
     $instagramEmbed = '';
-    $isDirectVideo = $videoUrl !== '' && preg_match('#^https?://[^\s]+\.(mp4|webm|ogg)(?:[?#].*)?$#i', $videoUrl) === 1;
+    $videoPath = (string) parse_url($videoUrl, PHP_URL_PATH);
+    $isDirectVideo = $videoUrl !== '' && preg_match('/\.(mp4|webm|ogg)$/i', $videoPath) === 1;
     if ($videoUrl !== '' && ! $isDirectVideo && preg_match('#^https?://(www\\.)?instagram\\.com/(reel|p|tv)/([A-Za-z0-9_-]+)#i', $videoUrl, $videoMatch)) {
         $instagramEmbed = 'https://www.instagram.com/' . strtolower($videoMatch[2]) . '/' . $videoMatch[3] . '/embed/';
     }
