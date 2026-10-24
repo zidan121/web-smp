@@ -15,7 +15,7 @@ $routes->get('profil', static function () {
 $routes->get('berita', 'Berita::index');
 $routes->get('berita/(:segment)', 'Berita::detail/$1');
 $routes->get('galeri', 'Galeri::index');
-$routes->get('galeri/(:num)', 'Galeri::detail/$1');
+$routes->get('galeri/(:segment)', 'Galeri::detail/$1');
 $routes->get('admin', static function () {
     return redirect()->to('/admin/dashboard');
 });
