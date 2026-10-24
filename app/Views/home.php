@@ -889,7 +889,7 @@
         </div>
     </section>
 
-    <section>
+    <section id="informasi-sekolah">
         <div class="container">
             <div class="section-heading reveal">
                 <div class="label">Informasi Sekolah</div>
