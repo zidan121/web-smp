@@ -117,7 +117,8 @@ $category = (string) ($gallery['category'] ?? 'Kegiatan Sekolah');
 $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['description'] ?? '') . ' ' . $category);
 $videoUrl = trim((string) ($gallery['video_url'] ?? ''));
 $instagramEmbed = '';
-$isDirectVideo = $videoUrl !== '' && preg_match('#^https?://[^\s]+\.(mp4|webm|ogg)(?:[?#].*)?$#i', $videoUrl) === 1;
+$videoPath = (string) parse_url($videoUrl, PHP_URL_PATH);
+$isDirectVideo = $videoUrl !== '' && preg_match('/\.(mp4|webm|ogg)$/i', $videoPath) === 1;
 if ($videoUrl !== '' && ! $isDirectVideo && preg_match('#^https?://(?:www\\.)?instagram\\.com/(reel|p|tv)/([A-Za-z0-9_-]+)#i', $videoUrl, $videoMatch)) {
     $instagramEmbed = 'https://www.instagram.com/' . strtolower($videoMatch[1]) . '/' . $videoMatch[2] . '/embed/';
 }
