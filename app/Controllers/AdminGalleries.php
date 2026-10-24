@@ -50,6 +50,7 @@ class AdminGalleries extends BaseController
             'category' => 'permit_empty|max_length[100]',
             'sort_order' => 'required|integer|greater_than_equal_to[0]',
             'is_active' => 'required|in_list[0,1]',
+            'video_url' => 'permit_empty|max_length[500]',
         ];
 
         $file = $this->request->getFile('image');
@@ -63,6 +64,11 @@ class AdminGalleries extends BaseController
             $rules['image'] = 'uploaded[image]|is_image[image]|mime_in[image,image/jpeg,image/png,image/webp]|max_size[image,4096]';
         }
 
+        $videoUrl = trim((string) $this->request->getPost('video_url'));
+        if ($videoUrl !== '' && ! preg_match('#^https://(www\\.)?instagram\\.com/(reel|p|tv)/[A-Za-z0-9_-]+/?(?:\\?.*)?$#i', $videoUrl)) {
+            return redirect()->back()->withInput()->with('error', 'Tautan video harus berupa link Instagram Reel/Post yang valid.');
+        }
+
         if (! $this->validate($rules)) {
             return redirect()->back()->withInput()
                 ->with('error', implode(' ', $this->validator->getErrors()));
@@ -72,6 +78,7 @@ class AdminGalleries extends BaseController
             'title' => trim((string) $this->request->getPost('title')),
             'description' => trim((string) $this->request->getPost('description')),
             'category' => trim((string) $this->request->getPost('category')),
+            'video_url' => $videoUrl !== '' ? $videoUrl : null,
             'sort_order' => (int) $this->request->getPost('sort_order'),
             'is_active' => (int) $this->request->getPost('is_active'),
         ];
