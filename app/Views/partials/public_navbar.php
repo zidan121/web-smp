@@ -51,7 +51,7 @@ if ($headerTagline === '') {
     <nav class="shared-nav-links" aria-label="Navigasi utama">
       <a href="<?= site_url('/') ?>#profil">Profil</a>
       <a href="<?= site_url('/') ?>#program">Program</a>
-      <a href="<?= site_url('/') ?>#keunggulan">Keunggulan</a>
+      <a href="<?= site_url('/') ?>#informasi-sekolah">Informasi Sekolah</a>
       <a href="<?= site_url('/') ?>#kontak">Kontak</a>
     </nav>
     <a class="shared-ppdb-button" href="https://smpit.alfirdauspurwodadi.sch.id/" target="_blank" rel="noopener noreferrer">Daftar PPS</a>
