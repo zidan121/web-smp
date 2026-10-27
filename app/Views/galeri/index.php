@@ -18,7 +18,7 @@ h1{font-size:clamp(38px,5vw,64px);letter-spacing:-1.8px;line-height:1.04;margin:
 .stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.stat{display:flex;align-items:center;gap:11px;padding:11px 14px;border-radius:14px;background:rgba(4,26,58,.26);border:1px solid rgba(255,255,255,.1)}.stat-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--gold);color:#16365f;font-size:18px}.stat strong{display:block;font-size:15px}.stat small{display:block;color:#d5e5f8;font-size:11px;margin-top:2px}
 .hero-art{position:relative;min-height:265px;display:flex;align-items:center;justify-content:center}.hero-frame{width:78%;height:260px;transform:rotate(-3deg);border:7px solid #fff;border-radius:24px;overflow:hidden;box-shadow:0 22px 50px #061b3b55;background:#214d78}.hero-frame img{width:100%;height:100%;object-fit:cover}.float-frame{position:absolute;right:0;bottom:0;width:37%;height:135px;border:6px solid white;border-radius:20px;overflow:hidden;transform:rotate(6deg);box-shadow:0 15px 32px #061b3b55;background:#dce8f5}.float-frame img{width:100%;height:100%;object-fit:cover}.decor{position:absolute;font-size:48px;color:var(--gold);font-weight:900;left:1%;top:8%;transform:rotate(-20deg)}
 main{padding:24px 0 65px}.controls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}.filters{display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex:1}.filter{display:inline-flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap;border:1px solid transparent;border-radius:30px;padding:12px 17px;background:#fff;color:#415673;font-size:13px;font-weight:700;cursor:pointer;transition:background .2s,color .2s,box-shadow .2s;text-decoration:none;box-shadow:0 4px 14px #19375b08}.filter:hover{background:#edf4ff;color:#0c4b9b}.filter.active{background:#0c4b9b;color:#fff;box-shadow:0 8px 18px #0b4b9b25}.search{display:flex;align-items:center;gap:8px;flex:0 1 360px;min-width:260px;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none}.search input{width:100%;min-width:0;border:1px solid #e7edf5;border-radius:13px;padding:13px 16px;background:#fff;font:inherit;font-size:13px;outline:none}.search input:focus{border-color:#79a7e2;box-shadow:0 0 0 3px #0b4b9b12}.search button{min-height:44px;border:0;border-radius:12px;padding:0 20px;background:#0c4b9b;color:#fff;font-weight:750;cursor:pointer}.search button:hover{background:#083d80}.section-heading{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:0 0 17px}.section-heading h2{font-size:23px;letter-spacing:-.5px;margin:0;color:var(--navy)}.section-heading p{font-size:12px;color:var(--muted);margin:5px 0 0}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.card{min-width:0;background:#fff;border:1px solid #e7edf5;border-radius:17px;overflow:hidden;box-shadow:0 9px 25px #193a610a;transition:transform .22s,box-shadow .22s}.card:hover{transform:translateY(-5px);box-shadow:0 18px 38px #193a6117}.photo{height:225px;position:relative;overflow:hidden;background:linear-gradient(135deg,#e2eaf5,#f7f9fc)}.photo img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .4s}.photo.video-photo{height:auto;min-height:390px;background:#fff}.instagram-card-embed{display:block;width:100%;height:480px;border:0;background:#fff}.photo video.instagram-card-embed{object-fit:contain}.video-fallback{height:390px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:linear-gradient(135deg,#142d4c,#375d86);color:#fff;text-align:center;padding:20px}.video-fallback a{color:#fff;text-decoration:underline;font-weight:800}.card:hover .photo img{transform:scale(1.045)}.photo:after{content:"";position:absolute;inset:50% 0 0;background:linear-gradient(transparent,rgba(8,24,48,.2));pointer-events:none}.badge{position:absolute;z-index:1;top:13px;left:13px;background:#fff;color:#234b7c;border-radius:30px;padding:7px 11px;font-size:11px;font-weight:800;box-shadow:0 4px 12px #102b5015}.photo-placeholder{height:100%;display:grid;place-items:center;color:#8ea5c0;font-size:40px}.video-placeholder{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#142d4c,#375d86);color:#fff;text-align:center}.video-play{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:#fff;color:#17365e;font-size:24px;box-shadow:0 5px 18px #0003}.video-placeholder small{font-size:12px;font-weight:700;letter-spacing:.3px}.body{padding:17px 19px 18px}.card h3{font-size:16px;line-height:1.45;margin:0 0 7px;color:var(--navy)}.card p{font-size:13px;line-height:1.65;color:var(--muted);margin:0 0 15px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.read-more{display:inline-flex;align-items:center;gap:7px;color:var(--blue);font-size:12px;font-weight:800}.read-more:hover{text-decoration:underline}.card-foot{margin-top:12px}.card-foot{display:flex;align-items:center;justify-content:space-between;color:var(--blue);font-size:12px;font-weight:800}.arrow{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#e8f0fb;font-size:18px}.empty{grid-column:1/-1;background:#fff;border:1px dashed #ccd8e8;border-radius:18px;text-align:center;padding:55px 20px;color:var(--muted)}.empty strong{display:block;color:var(--navy);font-size:18px;margin-bottom:8px}.footer{padding:24px 0;text-align:center;color:#7b8da5;border-top:1px solid var(--line);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.card{min-width:0;background:#fff;border:1px solid #e7edf5;border-radius:17px;overflow:hidden;box-shadow:0 9px 25px #193a610a;transition:transform .22s,box-shadow .22s}.card:hover{transform:translateY(-5px);box-shadow:0 18px 38px #193a6117}.photo{height:225px;position:relative;overflow:hidden;background:linear-gradient(135deg,#e2eaf5,#f7f9fc)}.photo img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .4s}.photo.video-photo{height:auto;min-height:390px;background:#101820}.gallery-card[data-media-type="video"] .photo{aspect-ratio:9/16;max-height:620px;min-height:0}.gallery-card[data-media-type="video"] .instagram-card-embed{width:100%;height:100%;min-height:0;aspect-ratio:9/16;object-fit:contain}.media-tabs{display:flex;gap:10px;margin:0 0 22px;padding:6px;background:#e8eef7;border-radius:15px;width:max-content;max-width:100%}.media-tab{border:0;border-radius:11px;padding:11px 22px;background:transparent;color:#425873;font-weight:700;font-size:14px;cursor:pointer}.media-tab.active{background:#fff;color:#0c4b9b;box-shadow:0 3px 12px #193a6112}.gallery-card[hidden]{display:none!important}.instagram-card-embed{display:block;width:100%;height:480px;border:0;background:#fff}.photo video.instagram-card-embed{object-fit:contain}.video-fallback{height:390px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:linear-gradient(135deg,#142d4c,#375d86);color:#fff;text-align:center;padding:20px}.video-fallback a{color:#fff;text-decoration:underline;font-weight:800}.card:hover .photo img{transform:scale(1.045)}.photo:after{content:"";position:absolute;inset:50% 0 0;background:linear-gradient(transparent,rgba(8,24,48,.2));pointer-events:none}.badge{position:absolute;z-index:1;top:13px;left:13px;background:#fff;color:#234b7c;border-radius:30px;padding:7px 11px;font-size:11px;font-weight:800;box-shadow:0 4px 12px #102b5015}.photo-placeholder{height:100%;display:grid;place-items:center;color:#8ea5c0;font-size:40px}.video-placeholder{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#142d4c,#375d86);color:#fff;text-align:center}.video-play{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:#fff;color:#17365e;font-size:24px;box-shadow:0 5px 18px #0003}.video-placeholder small{font-size:12px;font-weight:700;letter-spacing:.3px}.body{padding:17px 19px 18px}.card h3{font-size:16px;line-height:1.45;margin:0 0 7px;color:var(--navy)}.card p{font-size:13px;line-height:1.65;color:var(--muted);margin:0 0 15px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.read-more{display:inline-flex;align-items:center;gap:7px;color:var(--blue);font-size:12px;font-weight:800}.read-more:hover{text-decoration:underline}.card-foot{margin-top:12px}.card-foot{display:flex;align-items:center;justify-content:space-between;color:var(--blue);font-size:12px;font-weight:800}.arrow{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#e8f0fb;font-size:18px}.empty{grid-column:1/-1;background:#fff;border:1px dashed #ccd8e8;border-radius:18px;text-align:center;padding:55px 20px;color:var(--muted)}.empty strong{display:block;color:var(--navy);font-size:18px;margin-bottom:8px}.footer{padding:24px 0;text-align:center;color:#7b8da5;border-top:1px solid var(--line);font-size:12px}
 @media(max-width:960px){.hero-layout{grid-template-columns:1fr .8fr;gap:15px}.hero-art{min-height:230px}.hero-frame{height:220px}.float-frame{height:110px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.controls{align-items:stretch}.search{max-width:100%}}
 @media(max-width:650px){.wrap{width:calc(100% - 30px)}.hero{padding:22px 0 32px}.breadcrumb{margin-bottom:22px}.hero-layout{grid-template-columns:1fr}.hero-art{min-height:205px;margin-top:6px}.hero-frame{width:75%;height:200px}.float-frame{height:105px}.stats{gap:8px}.stat{flex:1;min-width:135px;padding:9px}.controls{margin-bottom:22px}.filters{gap:7px}.filter{padding:10px 12px}.search{width:100%}.grid{grid-template-columns:1fr;gap:16px}.photo{height:230px}.section-heading h2{font-size:20px}}
 
@@ -103,7 +103,8 @@ $galleryHeroSecond = ! empty($galleryHeroImages[1]['image'])
       <button type="submit">Cari</button>
     </form>
   </div>
-<div class="section-heading"><div><h2>Momen dari Sekolah</h2><p>Kenangan dan cerita dari kegiatan siswa</p></div><span id="result-count" class="count"><?= count($galleries ?? []) ?> dokumentasi</span></div>
+<div class="section-heading"><div><h2 id="media-heading">Foto Kegiatan</h2><p id="media-subheading">Kenangan dan cerita dari kegiatan siswa</p></div><span id="result-count" class="count"><?= count($galleries ?? []) ?> dokumentasi</span></div>
+<div class="media-tabs" role="tablist" aria-label="Pilih jenis dokumentasi"><button class="media-tab active" type="button" role="tab" aria-selected="true" data-media-filter="image">Foto</button><button class="media-tab" type="button" role="tab" aria-selected="false" data-media-filter="video">Video</button></div>
 <div class="grid" id="gallery-grid">
 <?php if (!empty($galleries)): ?>
 <?php foreach ($galleries as $gallery): ?>
@@ -120,7 +121,7 @@ $videoFilePath = FCPATH . 'assets/videos/galleries/' . $videoFileName;
 $isDirectVideo = $videoFileName !== '' && is_file($videoFilePath) && preg_match('/\.(mp4|webm|ogg)$/i', $videoFileName) === 1;
 $videoSource = $isDirectVideo ? base_url('assets/videos/galleries/' . rawurlencode($videoFileName)) : '';
 ?>
-<article class="card gallery-card" data-category="<?= esc(strtolower($category), 'attr') ?>" data-search="<?= esc($searchText, 'attr') ?>">
+<article class="card gallery-card" data-media-type="<?= $isDirectVideo ? 'video' : 'image' ?>" data-category="<?= esc(strtolower($category), 'attr') ?>" data-search="<?= esc($searchText, 'attr') ?>">
 <div class="photo <?= $isDirectVideo ? 'video-photo' : '' ?>">
 <?php if ($isDirectVideo): ?>
 <video class="instagram-card-embed" controls playsinline preload="metadata" title="Video: <?= esc($gallery['title'], 'attr') ?>"><source src="<?= esc($videoSource, 'attr') ?>">Browser Anda tidak mendukung pemutar video.</video>
@@ -148,32 +149,27 @@ $videoSource = $isDirectVideo ? base_url('assets/videos/galleries/' . rawurlenco
  const form=document.getElementById('gallery-search');
  const count=document.getElementById('result-count');
  const noResults=document.getElementById('no-results');
- let active='all';
-
- function categoryMatches(card, selected){
-  const category=(card.dataset.category||'').trim().toLocaleLowerCase('id');
-  const text=(card.dataset.search||'').toLocaleLowerCase('id');
-  if(selected==='all') return true;
-  if(selected==='berita') return category.includes('berita') || /berita|artikel|kabar/.test(text);
-  if(selected==='kegiatan') return !/prestasi|pengumuman/.test(category) && !/pengumuman resmi|jadwal pendaftaran/.test(text);
-  if(selected==='pengumuman') return category.includes('pengumuman') || /pengumuman|jadwal pendaftaran|informasi resmi/.test(text);
-  if(selected==='prestasi') return category.includes('prestasi') || text.includes('prestasi');
-  return true;
- }
-
+ const tabs=[...document.querySelectorAll('[data-media-filter]')];
+ const heading=document.getElementById('media-heading');
+ const subheading=document.getElementById('media-subheading');
+ let active='image';
  function render(){
   const term=query.value.trim().toLocaleLowerCase('id');
   let visible=0;
   cards.forEach(card=>{
    const text=(card.dataset.search||'').toLocaleLowerCase('id');
-   const show=!term||text.includes(term);
+   const show=card.dataset.mediaType===active&&(!term||text.includes(term));
    card.hidden=!show;
    if(show) visible++;
   });
-  count.textContent=visible+' dokumentasi';
+  heading.textContent=active==='video'?'Video Kegiatan':'Foto Kegiatan';
+  subheading.textContent=active==='video'?'Tonton dokumentasi video kegiatan sekolah':'Kenangan dan cerita dari kegiatan siswa';
+  count.textContent=visible+' '+(active==='video'?'video':'foto');
   noResults.hidden=visible!==0;
+  noResults.querySelector('strong').textContent=active==='video'?'Belum ada video':'Belum ada foto';
+  tabs.forEach(tab=>{const selected=tab.dataset.mediaFilter===active;tab.classList.toggle('active',selected);tab.setAttribute('aria-selected',String(selected));});
  }
-
+ tabs.forEach(tab=>tab.addEventListener('click',()=>{active=tab.dataset.mediaFilter;render()}));
  form.addEventListener('submit',event=>{event.preventDefault();render()});
  query.addEventListener('input',render);
  render();
