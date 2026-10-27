@@ -115,22 +115,15 @@ $imageDirectory = (string) ($gallery['image_path'] ?? 'assets/images/galleries/'
 $localImagePath = FCPATH . trim($imageDirectory, '/\\\\') . DIRECTORY_SEPARATOR . $localImage;
 $category = (string) ($gallery['category'] ?? 'Kegiatan Sekolah');
 $searchText = strtolower(($gallery['title'] ?? '') . ' ' . ($gallery['description'] ?? '') . ' ' . $category);
-$videoUrl = trim((string) ($gallery['video_url'] ?? ''));
-$instagramEmbed = '';
-$videoPath = (string) parse_url($videoUrl, PHP_URL_PATH);
-$isDirectVideo = $videoUrl !== '' && preg_match('/\.(mp4|webm|ogg)$/i', $videoPath) === 1;
-if ($videoUrl !== '' && ! $isDirectVideo && preg_match('#^https?://(?:www\\.)?instagram\\.com/(reel|p|tv)/([A-Za-z0-9_-]+)#i', $videoUrl, $videoMatch)) {
-    $instagramEmbed = 'https://www.instagram.com/' . strtolower($videoMatch[1]) . '/' . $videoMatch[2] . '/embed/';
-}
+$videoFileName = basename(trim((string) ($gallery['video_url'] ?? '')));
+$videoFilePath = FCPATH . 'assets/videos/galleries/' . $videoFileName;
+$isDirectVideo = $videoFileName !== '' && is_file($videoFilePath) && preg_match('/\.(mp4|webm|ogg)$/i', $videoFileName) === 1;
+$videoSource = $isDirectVideo ? base_url('assets/videos/galleries/' . rawurlencode($videoFileName)) : '';
 ?>
 <article class="card gallery-card" data-category="<?= esc(strtolower($category), 'attr') ?>" data-search="<?= esc($searchText, 'attr') ?>">
-<div class="photo <?= ($instagramEmbed !== '' || $isDirectVideo) ? 'video-photo' : '' ?>">
+<div class="photo <?= $isDirectVideo ? 'video-photo' : '' ?>">
 <?php if ($isDirectVideo): ?>
-<video class="instagram-card-embed" controls playsinline preload="metadata" title="Video: <?= esc($gallery['title'], 'attr') ?>"><source src="<?= esc($videoUrl, 'attr') ?>">Browser Anda tidak mendukung pemutar video.</video>
-<?php elseif ($instagramEmbed !== ''): ?>
-<iframe class="instagram-card-embed" src="<?= esc($instagramEmbed, 'attr') ?>" title="Video Instagram: <?= esc($gallery['title'], 'attr') ?>" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-<?php elseif ($videoUrl !== ''): ?>
-<div class="video-fallback"><span class="video-play">▶</span><small>VIDEO INSTAGRAM</small><a href="<?= esc($videoUrl, 'attr') ?>" target="_blank" rel="noopener noreferrer">Tonton di Instagram ↗</a></div>
+<video class="instagram-card-embed" controls playsinline preload="metadata" title="Video: <?= esc($gallery['title'], 'attr') ?>"><source src="<?= esc($videoSource, 'attr') ?>">Browser Anda tidak mendukung pemutar video.</video>
 <?php elseif ($isRemoteImage): ?>
 <img src="<?= esc($imageValue, 'attr') ?>" alt="<?= esc($gallery['title']) ?>" loading="lazy" referrerpolicy="no-referrer">
 <?php elseif ($localImage !== '' && is_file($localImagePath)): ?>
@@ -140,7 +133,7 @@ if ($videoUrl !== '' && ! $isDirectVideo && preg_match('#^https?://(?:www\\.)?in
 </div>
 <div class="body"><h3><?= esc($gallery['title']) ?></h3>
 <p><?= esc($gallery['description'] ?: 'Dokumentasi kegiatan siswa SMPIT Al Firdaus Purwodadi.') ?></p>
-<div class="card-foot"><a class="read-more" href="<?= site_url('galeri/' . rawurlencode((string) ($gallery['media_id'] ?? $gallery['id']))) ?>"><?= !empty($gallery['video_url']) ? 'Tonton Video' : 'Baca Selengkapnya' ?> <span class="arrow">›</span></a></div>
+<div class="card-foot"><a class="read-more" href="<?= site_url('galeri/' . rawurlencode((string) ($gallery['media_id'] ?? $gallery['id']))) ?>"><?= $isDirectVideo ? 'Putar Video' : 'Baca Selengkapnya' ?> <span class="arrow">›</span></a></div>
 </div></article>
 <?php endforeach; ?>
 <?php else: ?><div class="empty"><strong>Galeri segera hadir</strong>Dokumentasi kegiatan sekolah akan ditampilkan di sini setelah ditambahkan melalui panel admin.</div><?php endif; ?>
