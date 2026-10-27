@@ -817,7 +817,7 @@
                                 href="<?= site_url('program/' . $program['slug']) ?>"
                                 class="learn-more"
                             >
-                                Baca selengkapnya →
+                                Pelajari program →
                             </a>
                         </article>
                     <?php endforeach; ?>
