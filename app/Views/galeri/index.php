@@ -120,6 +120,7 @@ $videoFileName = basename(trim((string) ($gallery['video_url'] ?? '')));
 $videoFilePath = FCPATH . 'assets/videos/galleries/' . $videoFileName;
 $isDirectVideo = $videoFileName !== '' && is_file($videoFilePath) && preg_match('/\.(mp4|webm|ogg)$/i', $videoFileName) === 1;
 $videoSource = $isDirectVideo ? base_url('assets/videos/galleries/' . rawurlencode($videoFileName)) : '';
+$isImportedSource = in_array((string) ($gallery['source_type'] ?? ''), ['post', 'achievement'], true);
 ?>
 <article class="card gallery-card" data-media-type="<?= $isDirectVideo ? 'video' : 'image' ?>" data-category="<?= esc(strtolower($category), 'attr') ?>" data-search="<?= esc($searchText, 'attr') ?>">
 <div class="photo <?= $isDirectVideo ? 'video-photo' : '' ?>">
@@ -130,11 +131,13 @@ $videoSource = $isDirectVideo ? base_url('assets/videos/galleries/' . rawurlenco
 <?php elseif ($localImage !== '' && is_file($localImagePath)): ?>
 <img src="<?= base_url(trim($imageDirectory, '/\\\\') . '/' . rawurlencode($localImage)) ?>" alt="<?= esc($gallery['title']) ?>" loading="lazy">
 <?php else: ?><div class="photo-placeholder" aria-label="Foto belum tersedia">▧</div><?php endif; ?>
-<span class="badge"><?= esc($category) ?></span>
+<?php if (! $isImportedSource): ?><span class="badge"><?= esc($category) ?></span><?php endif; ?>
 </div>
 <div class="body"><h3><?= esc($gallery['title']) ?></h3>
+<?php if (! $isImportedSource): ?>
 <p><?= esc($gallery['description'] ?: 'Dokumentasi kegiatan siswa SMPIT Al Firdaus Purwodadi.') ?></p>
 <div class="card-foot"><a class="read-more" href="<?= site_url('galeri/' . rawurlencode((string) ($gallery['media_id'] ?? $gallery['id']))) ?>"><?= $isDirectVideo ? 'Putar Video' : 'Baca Selengkapnya' ?> <span class="arrow">›</span></a></div>
+<?php endif; ?>
 </div></article>
 <?php endforeach; ?>
 <?php else: ?><div class="empty"><strong>Galeri segera hadir</strong>Dokumentasi kegiatan sekolah akan ditampilkan di sini setelah ditambahkan melalui panel admin.</div><?php endif; ?>
