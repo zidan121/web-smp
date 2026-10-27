@@ -50,7 +50,7 @@ class AdminGalleries extends BaseController
             'category' => 'permit_empty|max_length[100]',
             'sort_order' => 'required|integer|greater_than_equal_to[0]',
             'is_active' => 'required|in_list[0,1]',
-            'video' => 'permit_empty|ext_in[video,mp4,webm,ogg]|mime_in[video,video/mp4,video/webm,video/ogg]|max_size[video,51200]',
+            'video' => 'permit_empty',
         ];
 
         $file = $this->request->getFile('image');
@@ -60,6 +60,10 @@ class AdminGalleries extends BaseController
         $hasNewVideo = $videoFile && $videoFile->getError() !== UPLOAD_ERR_NO_FILE;
         if (! $existing && ! $hasNewImage && ! $hasNewVideo) {
             $rules['image'] = 'uploaded[image]';
+        }
+
+        if ($hasNewVideo) {
+            $rules['video'] = 'uploaded[video]|ext_in[video,mp4,webm,ogg]|mime_in[video,video/mp4,video/webm,video/ogg]|max_size[video,51200]';
         }
 
         if ($hasNewImage) {
