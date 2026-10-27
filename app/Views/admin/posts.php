@@ -32,7 +32,6 @@ button{border:0;border-radius:7px;padding:10px 14px;cursor:pointer;font-weight:6
 <div class="field"><label for="category">Kategori *</label><select id="category" name="category" required><option value="berita">Berita</option><option value="pengumuman">Pengumuman</option><option value="kegiatan">Kegiatan</option></select></div>
 <div class="field"><label for="status">Status *</label><select id="status" name="status" required><option value="draft">Draft</option><option value="published">Publikasikan</option></select></div>
 <div class="field"><label for="author">Penulis</label><input id="author" name="author" maxlength="100" value="<?= esc(old('author','')) ?>" placeholder="Nama penulis"></div>
-<div class="field wide"><label for="video_url">Link Video Instagram (opsional)</label><input id="video_url" name="video_url" type="url" maxlength="500" placeholder="https://www.instagram.com/reel/XXXXXXXX/"><span class="hint">Tempel link publik Instagram Reel/Post. Video akan ditautkan dari galeri tanpa mengunggah file video ke hosting.</span></div>
 <div class="field"><label for="gallery-images">Foto Artikel (maksimal 5 foto)</label><input id="gallery-images" type="file" name="gallery_images[]" accept="image/jpeg,image/png,image/webp" multiple><span class="hint">Pilih hingga 5 foto JPG, PNG, atau WebP. Maksimal 3 MB per foto. Jika mengunggah foto baru saat edit, foto lama akan diganti.</span><div id="current-images" class="hint">Belum ada foto.</div><div id="image-preview" class="photo-preview"></div></div>
 <div class="field wide"><label for="excerpt">Ringkasan</label><textarea id="excerpt" name="excerpt" maxlength="5000" style="min-height:80px" placeholder="Ringkasan singkat untuk daftar berita"><?= esc(old('excerpt','')) ?></textarea></div>
 <div class="field wide"><label for="content">Isi Artikel *</label><textarea id="content" name="content" required placeholder="Tuliskan isi berita atau pengumuman"><?= esc(old('content','')) ?></textarea><span class="hint">Isi disimpan sebagai teks. Hindari menempelkan kode HTML yang tidak dipercaya.</span></div>
@@ -67,7 +66,6 @@ function editPost(button){
  document.getElementById('author').value=p.author||'';
  document.getElementById('excerpt').value=p.excerpt||'';
  document.getElementById('content').value=p.content||'';
- document.getElementById('video_url').value=p.video_url||'';
  document.getElementById('form-title').textContent='Edit Artikel';
  const images=Array.isArray(JSON.parse(p.gallery_images||'[]'))?JSON.parse(p.gallery_images||'[]'):[];
  const saved=images.length?images:(p.image?[p.image]:[]);
@@ -79,7 +77,6 @@ function editPost(button){
 function resetPostForm(){
  document.getElementById('post-form').reset();
  document.getElementById('post-id').value='';
- document.getElementById('video_url').value='';
  document.getElementById('form-title').textContent='Tambah Artikel';
  document.getElementById('current-images').textContent='Belum ada foto.';
  document.getElementById('gallery-images').value='';
