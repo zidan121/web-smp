@@ -22,7 +22,6 @@ class AchievementModel extends Model
         'achievement_date',
         'description',
         'image',
-        'video_url',
         'is_active',
     ];
 }
