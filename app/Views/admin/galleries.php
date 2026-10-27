@@ -12,20 +12,20 @@
 <a class="back" href="<?= site_url('admin/dashboard') ?>">← Kembali ke Dashboard</a>
 <section class="panel">
 <h1>Galeri Kegiatan</h1>
-<p>Tambah dan kelola dokumentasi kegiatan SMPIT Al Firdaus Purwodadi. Gambar disimpan di folder galeri website.</p>
+<p>Tambah dan kelola foto serta video kegiatan SMPIT Al Firdaus Purwodadi. File video diunggah ke server website.</p>
 <?php if (session()->getFlashdata('success')): ?><div class="notice success"><?= esc(session()->getFlashdata('success')) ?></div><?php endif; ?>
 <?php if (session()->getFlashdata('error')): ?><div class="notice error"><?= esc(session()->getFlashdata('error')) ?></div><?php endif; ?>
 </section>
 <section class="panel" id="form-panel">
-<h2 id="form-title">Tambah Foto Galeri</h2>
+<h2 id="form-title">Tambah Dokumentasi Galeri</h2>
 <form id="gallery-form" action="<?= site_url('admin/galleries/simpan') ?>" method="post" enctype="multipart/form-data">
 <?= csrf_field() ?>
 <input type="hidden" name="id" id="gallery-id" value="<?= esc(old('id','')) ?>">
-<div class="field"><label for="title">Judul Foto *</label><input id="title" name="title" maxlength="200" required value="<?= esc(old('title','')) ?>" placeholder="Contoh: Kegiatan Belajar di Laboratorium"></div>
+<div class="field"><label for="title">Judul Dokumentasi *</label><input id="title" name="title" maxlength="200" required value="<?= esc(old('title','')) ?>" placeholder="Contoh: Kegiatan Belajar di Laboratorium"></div>
 <div class="field"><label for="description">Deskripsi</label><textarea id="description" name="description" maxlength="5000" placeholder="Ceritakan kegiatan pada foto"><?= esc(old('description','')) ?></textarea></div>
 <div class="field"><label for="category">Kategori</label><input id="category" name="category" maxlength="100" value="<?= esc(old('category','')) ?>" placeholder="Contoh: Kegiatan, Prestasi, Pembelajaran"></div>
-<div class="field"><label for="video_url">Link Video Instagram (opsional)</label><input id="video_url" name="video_url" type="url" maxlength="500" value="<?= esc(old('video_url', '')) ?>" placeholder="https://www.instagram.com/reel/XXXXXXXX/"><div class="hint">Tempel link publik Instagram Reel/Post. Foto boleh dikosongkan jika hanya ingin menampilkan video.</div></div>
-<div class="field"><label for="image">Foto <?= empty(old('id')) ? '(opsional jika ada link video)' : '(opsional jika tidak mengganti)' ?></label><input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp"><div class="hint">JPG, PNG, atau WebP. Maksimal 4 MB. Saat edit, kosongkan jika ingin memakai foto lama.</div><img id="image-preview" class="preview" alt="Pratinjau foto"><div id="image-info" class="hint"></div></div>
+<div class="field"><label for="video">Upload Video (opsional)</label><input id="video" type="file" name="video" accept="video/mp4,video/webm,video/ogg"><div class="hint">Format MP4, WebM, atau OGG. Maksimal 50 MB. Saat edit, kosongkan jika ingin memakai video lama.</div><video id="video-preview" class="preview" controls playsinline></video><div id="video-info" class="hint"></div></div>
+<div class="field"><label for="image">Foto (opsional)</label><input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp"><div class="hint">JPG, PNG, atau WebP. Maksimal 4 MB. Saat edit, kosongkan jika ingin memakai foto lama.</div><img id="image-preview" class="preview" alt="Pratinjau foto"><div id="image-info" class="hint"></div></div>
 <div class="field"><label for="sort_order">Urutan Tampilan</label><input id="sort_order" name="sort_order" type="number" min="0" required value="<?= esc(old('sort_order','0')) ?>"></div>
 <div class="field"><label for="is_active">Status</label><select id="is_active" name="is_active"><option value="1" <?= old('is_active','1')==='1'?'selected':'' ?>>Aktif</option><option value="0" <?= old('is_active')==='0'?'selected':'' ?>>Nonaktif</option></select></div>
 <div class="actions"><button class="btn" type="submit">Simpan Galeri</button><button class="btn secondary" type="button" onclick="resetGalleryForm()">Batal / Reset</button></div>
@@ -49,6 +49,22 @@
 </section></main>
 <script>
 const imageInput=document.getElementById('image');
+const videoInput=document.getElementById('video');
+const videoPreview=document.getElementById('video-preview');
+const videoInfo=document.getElementById('video-info');
+let currentVideo='';
+let videoPreviewUrl=null;
+function showGalleryVideo(filename){
+ currentVideo=filename||'';
+ if(videoPreviewUrl){URL.revokeObjectURL(videoPreviewUrl);videoPreviewUrl=null;}
+ if(currentVideo && !/^https?:\/\//i.test(currentVideo)){
+  videoPreview.src="<?= base_url('assets/videos/galleries/') ?>"+encodeURIComponent(currentVideo);
+  videoPreview.style.display='block';videoInfo.textContent='Video tersimpan: '+currentVideo;
+ }else{
+  videoPreview.removeAttribute('src');videoPreview.load();videoPreview.style.display='none';
+  videoInfo.textContent=currentVideo?'Video lama berupa tautan eksternal; unggah file video baru untuk menggantinya.':'Belum ada video tersimpan.';
+ }
+}
 const imagePreview=document.getElementById('image-preview');
 const imageInfo=document.getElementById('image-info');
 let currentImage='';
@@ -67,6 +83,13 @@ imageInput.addEventListener('change',function(){
  if(file.size>4*1024*1024){alert('Ukuran maksimal 4 MB.');this.value='';showGalleryImage(currentImage);return;}
  previewUrl=URL.createObjectURL(file);imagePreview.src=previewUrl;imagePreview.style.display='block';imageInfo.textContent='Pratinjau foto baru: '+file.name;
 });
+videoInput.addEventListener('change',function(){
+ const file=this.files[0];if(videoPreviewUrl){URL.revokeObjectURL(videoPreviewUrl);videoPreviewUrl=null;}
+ if(!file){showGalleryVideo(currentVideo);return;}
+ if(!['video/mp4','video/webm','video/ogg'].includes(file.type)){alert('Pilih video MP4, WebM, atau OGG.');this.value='';showGalleryVideo(currentVideo);return;}
+ if(file.size>50*1024*1024){alert('Ukuran maksimal video 50 MB.');this.value='';showGalleryVideo(currentVideo);return;}
+ videoPreviewUrl=URL.createObjectURL(file);videoPreview.src=videoPreviewUrl;videoPreview.style.display='block';videoInfo.textContent='Pratinjau video baru: '+file.name;
+});
 function editGallery(button){
  const g=JSON.parse(button.dataset.gallery);
  document.getElementById('gallery-id').value=g.id;
@@ -75,7 +98,7 @@ function editGallery(button){
  document.getElementById('category').value=g.category||'';
  document.getElementById('sort_order').value=g.sort_order||0;
  document.getElementById('is_active').value=String(g.is_active);
- document.getElementById('video_url').value=g.video_url||'';
+ showGalleryVideo(g.video_url||'');
  document.getElementById('form-title').textContent='Edit Foto Galeri';
  imageInput.value='';showGalleryImage(g.image||'');
  document.getElementById('form-panel').scrollIntoView({behavior:'smooth'});
@@ -83,11 +106,11 @@ function editGallery(button){
 function resetGalleryForm(){
  document.getElementById('gallery-form').reset();
  document.getElementById('gallery-id').value='';
- document.getElementById('video_url').value='';
+ videoInput.value='';showGalleryVideo('');
  document.getElementById('sort_order').value='0';
  document.getElementById('is_active').value='1';
  document.getElementById('form-title').textContent='Tambah Foto Galeri';
  imageInput.value='';showGalleryImage('');
 }
-showGalleryImage('');
+showGalleryImage('');showGalleryVideo('');
 </script></body></html>
