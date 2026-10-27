@@ -11,12 +11,12 @@
 .wrap{width:min(900px,calc(100% - 32px));margin:0 auto}
 .detail-top{padding:26px 0 16px}.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-size:14px;font-weight:750}.back-link:hover{text-decoration:underline}
 .detail-card{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 12px 34px #193a6110;margin-bottom:48px}
-.detail-photo{width:100%;max-height:560px;aspect-ratio:16/9;background:#e5edf7;display:grid;place-items:center;overflow:hidden}.detail-photo img{display:block;width:100%;height:100%;object-fit:contain;background:#e5edf7}.detail-content{padding:clamp(22px,5vw,48px)}
+.detail-photo{width:100%;max-height: min(78vh, 820px);background:#e5edf7;display:flex;align-items:center;justify-content:center;overflow:hidden}.detail-photo img{display:block;width:100%;height:auto;max-height:min(78vh, 820px);object-fit:contain;background:#e5edf7}.detail-content{padding:clamp(22px,5vw,48px)}
 .category{display:inline-flex;padding:7px 12px;border-radius:30px;background:#eaf2ff;color:var(--blue);font-size:12px;font-weight:800}
 h1{font-size:clamp(28px,4.5vw,44px);line-height:1.2;letter-spacing:-.8px;color:var(--navy);margin:16px 0 12px}
 .meta{font-size:13px;color:var(--muted);margin-bottom:26px}.description{font-size:16px;line-height:1.9;color:#405673;overflow-wrap:anywhere}.description p{margin:0 0 1.15em}.description p:last-child{margin-bottom:0}
 .detail-bottom{margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
-@media(max-width:600px){.detail-top{padding-top:20px}.detail-card{border-radius:14px}.detail-photo{aspect-ratio:4/3}.description{font-size:15px;line-height:1.85}}
+@media(max-width:600px){.detail-top{padding-top:20px}.detail-card{border-radius:14px}.detail-photo{max-height:65vh}.detail-photo img{max-height:65vh}.description{font-size:15px;line-height:1.85}}
 </style>
 </head>
 <body>
@@ -37,7 +37,7 @@ h1{font-size:clamp(28px,4.5vw,44px);line-height:1.2;letter-spacing:-.8px;color:v
     ?>
     <div class="detail-photo">
       <?php if ($isDirectVideo): ?>
-        <video controls playsinline preload="metadata" title="Video: <?= esc($gallery['title'], 'attr') ?>" style="width:100%;height:100%;min-height:320px;max-height:560px;object-fit:contain;background:#101820"><source src="<?= esc($videoSource, 'attr') ?>">Browser Anda tidak mendukung pemutar video.</video>
+        <video controls playsinline preload="metadata" title="Video: <?= esc($gallery['title'], 'attr') ?>" style="width:100%;height:auto;max-height:min(78vh, 820px);object-fit:contain;background:#101820"><source src="<?= esc($videoSource, 'attr') ?>">Browser Anda tidak mendukung pemutar video.</video>
       <?php elseif ($isRemoteImage): ?>
         <img src="<?= esc($imageValue, 'attr') ?>" alt="<?= esc($gallery['title'], 'attr') ?>">
       <?php elseif ($localImage !== '' && is_file($localImagePath)): ?>
