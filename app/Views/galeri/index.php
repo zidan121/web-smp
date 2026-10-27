@@ -137,7 +137,7 @@ $isImportedSource = in_array((string) ($gallery['source_type'] ?? ''), ['post', 
 <?php if (! $isImportedSource): ?>
 <p><?= esc($gallery['description'] ?: 'Dokumentasi kegiatan siswa SMPIT Al Firdaus Purwodadi.') ?></p>
 <?php endif; ?>
-<div class="card-foot"><a class="read-more" href="<?= site_url('galeri/' . rawurlencode((string) ($gallery['media_id'] ?? $gallery['id']))) ?>"><?= $isDirectVideo ? 'Putar Video' : ($isImportedSource ? 'Lihat Foto' : 'Baca Selengkapnya') ?> <span class="arrow">›</span></a></div>
+<div class="card-foot"><?php if ($isImportedSource && ! $isDirectVideo): ?><button class="read-more view-photo-button" type="button" data-photo-src="<?= $isRemoteImage ? esc($imageValue, 'attr') : ($localImage !== '' && is_file($localImagePath) ? esc(base_url(trim($imageDirectory, '/\\\\') . '/' . rawurlencode($localImage)), 'attr') : '') ?>" data-photo-title="<?= esc($gallery['title'], 'attr') ?>" <?= ($isRemoteImage || ($localImage !== '' && is_file($localImagePath))) ? '' : 'disabled' ?>>Lihat Foto <span class="arrow">↗</span></button><?php else: ?><a class="read-more" href="<?= site_url('galeri/' . rawurlencode((string) ($gallery['media_id'] ?? $gallery['id']))) ?>"><?= $isDirectVideo ? 'Putar Video' : 'Baca Selengkapnya' ?> <span class="arrow">›</span></a><?php endif; ?></div>
 </div></article>
 <?php endforeach; ?>
 <?php else: ?><div class="empty"><strong>Galeri segera hadir</strong>Dokumentasi kegiatan sekolah akan ditampilkan di sini setelah ditambahkan melalui panel admin.</div><?php endif; ?>
@@ -177,5 +177,13 @@ $isImportedSource = in_array((string) ($gallery['source_type'] ?? ''), ['post', 
  query.addEventListener('input',render);
  render();
 })();
+</script>
+
+<div class="photo-lightbox" id="photo-lightbox" hidden role="dialog" aria-modal="true" aria-label="Lihat foto lebih jelas"><button class="lightbox-close" type="button" aria-label="Tutup foto">×</button><button class="lightbox-backdrop" type="button" aria-label="Tutup foto"></button><div class="lightbox-content"><img id="lightbox-image" alt=""><p id="lightbox-title"></p></div></div>
+<style>
+.view-photo-button{font:inherit;cursor:pointer;border:0;background:transparent;padding:0}.view-photo-button:disabled{opacity:.45;cursor:not-allowed}.photo-lightbox[hidden]{display:none}.photo-lightbox{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px}.lightbox-backdrop{position:absolute;inset:0;border:0;background:rgba(4,12,26,.92);cursor:zoom-out}.lightbox-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:12px;width:min(1100px,96vw);height:min(88vh,900px);pointer-events:none}.lightbox-content img{display:block;max-width:100%;max-height:calc(100% - 40px);width:auto;height:auto;object-fit:contain;border-radius:8px;box-shadow:0 16px 60px #0008;pointer-events:auto}.lightbox-content p{color:#fff;text-align:center;margin:0;font-weight:700}.lightbox-close{position:absolute;z-index:2;right:22px;top:14px;border:0;background:#fff;color:#102b50;width:44px;height:44px;border-radius:50%;font-size:30px;line-height:1;cursor:pointer}
+</style>
+<script>
+(()=>{const modal=document.getElementById('photo-lightbox');const image=document.getElementById('lightbox-image');const title=document.getElementById('lightbox-title');const close=()=>{modal.hidden=true;image.removeAttribute('src');document.body.style.overflow='';};document.querySelectorAll('.view-photo-button').forEach(button=>button.addEventListener('click',()=>{const src=button.dataset.photoSrc;if(!src)return;image.src=src;image.alt=button.dataset.photoTitle||'Foto galeri';title.textContent=button.dataset.photoTitle||'';modal.hidden=false;document.body.style.overflow='hidden';}));modal.querySelector('.lightbox-close').addEventListener('click',close);modal.querySelector('.lightbox-backdrop').addEventListener('click',close);document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!modal.hidden)close();});})();
 </script>
 </body></html>
