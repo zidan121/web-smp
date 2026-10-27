@@ -136,8 +136,8 @@ $isImportedSource = in_array((string) ($gallery['source_type'] ?? ''), ['post', 
 <div class="body"><h3><?= esc($gallery['title']) ?></h3>
 <?php if (! $isImportedSource): ?>
 <p><?= esc($gallery['description'] ?: 'Dokumentasi kegiatan siswa SMPIT Al Firdaus Purwodadi.') ?></p>
-<div class="card-foot"><a class="read-more" href="<?= site_url('galeri/' . rawurlencode((string) ($gallery['media_id'] ?? $gallery['id']))) ?>"><?= $isDirectVideo ? 'Putar Video' : 'Baca Selengkapnya' ?> <span class="arrow">›</span></a></div>
 <?php endif; ?>
+<div class="card-foot"><a class="read-more" href="<?= site_url('galeri/' . rawurlencode((string) ($gallery['media_id'] ?? $gallery['id']))) ?>"><?= $isDirectVideo ? 'Putar Video' : ($isImportedSource ? 'Lihat Foto' : 'Baca Selengkapnya') ?> <span class="arrow">›</span></a></div>
 </div></article>
 <?php endforeach; ?>
 <?php else: ?><div class="empty"><strong>Galeri segera hadir</strong>Dokumentasi kegiatan sekolah akan ditampilkan di sini setelah ditambahkan melalui panel admin.</div><?php endif; ?>
