@@ -30,19 +30,14 @@ h1{font-size:clamp(28px,4.5vw,44px);line-height:1.2;letter-spacing:-.8px;color:v
     $localImage = basename($imageValue);
     $imageDirectory = (string) ($gallery['image_path'] ?? 'assets/images/galleries/');
     $localImagePath = FCPATH . trim($imageDirectory, '/\\\\') . DIRECTORY_SEPARATOR . $localImage;
-    $videoUrl = trim((string) ($gallery['video_url'] ?? ''));
-    $instagramEmbed = '';
-    $videoPath = (string) parse_url($videoUrl, PHP_URL_PATH);
-    $isDirectVideo = $videoUrl !== '' && preg_match('/\.(mp4|webm|ogg)$/i', $videoPath) === 1;
-    if ($videoUrl !== '' && ! $isDirectVideo && preg_match('#^https?://(www\\.)?instagram\\.com/(reel|p|tv)/([A-Za-z0-9_-]+)#i', $videoUrl, $videoMatch)) {
-        $instagramEmbed = 'https://www.instagram.com/' . strtolower($videoMatch[2]) . '/' . $videoMatch[3] . '/embed/';
-    }
+    $videoFileName = basename(trim((string) ($gallery['video_url'] ?? '')));
+    $videoFilePath = FCPATH . 'assets/videos/galleries/' . $videoFileName;
+    $isDirectVideo = $videoFileName !== '' && is_file($videoFilePath) && preg_match('/\.(mp4|webm|ogg)$/i', $videoFileName) === 1;
+    $videoSource = $isDirectVideo ? base_url('assets/videos/galleries/' . rawurlencode($videoFileName)) : '';
     ?>
     <div class="detail-photo">
       <?php if ($isDirectVideo): ?>
-        <video controls playsinline preload="metadata" title="Video: <?= esc($gallery['title'], 'attr') ?>" style="width:100%;height:100%;min-height:320px;max-height:560px;object-fit:contain;background:#101820"><source src="<?= esc($videoUrl, 'attr') ?>">Browser Anda tidak mendukung pemutar video.</video>
-      <?php elseif ($instagramEmbed !== ''): ?>
-        <iframe src="<?= esc($instagramEmbed, 'attr') ?>" title="Video Instagram: <?= esc($gallery['title'], 'attr') ?>" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen style="width:100%;height:100%;min-height:480px;border:0;background:#fff" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <video controls playsinline preload="metadata" title="Video: <?= esc($gallery['title'], 'attr') ?>" style="width:100%;height:100%;min-height:320px;max-height:560px;object-fit:contain;background:#101820"><source src="<?= esc($videoSource, 'attr') ?>">Browser Anda tidak mendukung pemutar video.</video>
       <?php elseif ($isRemoteImage): ?>
         <img src="<?= esc($imageValue, 'attr') ?>" alt="<?= esc($gallery['title'], 'attr') ?>">
       <?php elseif ($localImage !== '' && is_file($localImagePath)): ?>
@@ -56,7 +51,7 @@ h1{font-size:clamp(28px,4.5vw,44px);line-height:1.2;letter-spacing:-.8px;color:v
       <h1><?= esc($gallery['title']) ?></h1>
       <div class="meta">SMPIT Al Firdaus Purwodadi<?php if (! empty($gallery['created_at'])): ?> · <?= esc(date('d F Y', strtotime($gallery['created_at']))) ?><?php endif; ?></div>
       <div class="description"><?= nl2br(esc(trim((string) ($gallery['description'] ?? '')) ?: 'Dokumentasi kegiatan siswa SMPIT Al Firdaus Purwodadi.')) ?></div>
-      <div class="detail-bottom"><?php if ($videoUrl !== ''): ?><p><a class="back-link" href="<?= esc($videoUrl, 'attr') ?>" target="_blank" rel="noopener noreferrer">▶ Buka video di Instagram ↗</a></p><?php endif; ?><a class="back-link" href="<?= site_url('galeri') ?>">← Lihat dokumentasi lainnya</a></div>
+      <div class="detail-bottom"><a class="back-link" href="<?= site_url('galeri') ?>">← Lihat dokumentasi lainnya</a></div>
     </div>
   </article>
 </main>
