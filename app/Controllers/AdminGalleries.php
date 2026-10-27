@@ -50,13 +50,15 @@ class AdminGalleries extends BaseController
             'category' => 'permit_empty|max_length[100]',
             'sort_order' => 'required|integer|greater_than_equal_to[0]',
             'is_active' => 'required|in_list[0,1]',
-            'video_url' => 'permit_empty|max_length[500]',
+            'video' => 'permit_empty|ext_in[video,mp4,webm,ogg]|mime_in[video,video/mp4,video/webm,video/ogg]|max_size[video,51200]',
         ];
 
         $file = $this->request->getFile('image');
         $hasNewImage = $file && $file->getError() !== UPLOAD_ERR_NO_FILE;
 
-        if (! $existing && ! $hasNewImage && trim((string) $this->request->getPost('video_url')) === '') {
+         $videoFile = $this->request->getFile('video');
+        $hasNewVideo = $videoFile && $videoFile->getError() !== UPLOAD_ERR_NO_FILE;
+        if (! $existing && ! $hasNewImage && ! $hasNewVideo) {
             $rules['image'] = 'uploaded[image]';
         }
 
@@ -64,24 +66,12 @@ class AdminGalleries extends BaseController
             $rules['image'] = 'uploaded[image]|is_image[image]|mime_in[image,image/jpeg,image/png,image/webp]|max_size[image,4096]';
         }
 
-        $videoUrl = trim((string) $this->request->getPost('video_url'));
-        if ($videoUrl !== '' && ! preg_match('#^https://(www\\.)?instagram\\.com/(reel|p|tv)/[A-Za-z0-9_-]+/?(?:\\?.*)?$#i', $videoUrl)) {
-            return redirect()->back()->withInput()->with('error', 'Tautan video harus berupa link Instagram Reel/Post yang valid.');
-        }
 
         if (! $this->validate($rules)) {
             return redirect()->back()->withInput()
                 ->with('error', implode(' ', $this->validator->getErrors()));
         }
 
-        // Kompatibilitas untuk database lokal/hosting yang belum menjalankan SQL migrasi.
-        $hasVideoUrlColumn = $model->db->fieldExists('video_url', 'galleries');
-        if (! $hasVideoUrlColumn && $videoUrl !== '') {
-            return redirect()->back()->withInput()->with(
-                'error',
-                'Kolom video_url belum ada di database. Jalankan deployment/cpanel/instagram-video-links.sql melalui phpMyAdmin, lalu coba lagi.'
-            );
-        }
 
         $data = [
             'title' => trim((string) $this->request->getPost('title')),
@@ -90,10 +80,6 @@ class AdminGalleries extends BaseController
             'sort_order' => (int) $this->request->getPost('sort_order'),
             'is_active' => (int) $this->request->getPost('is_active'),
         ];
-        if ($hasVideoUrlColumn) {
-            $data['video_url'] = $videoUrl !== '' ? $videoUrl : null;
-        }
-
         $directory = FCPATH . 'assets/images/galleries/';
         $newFileName = null;
 
@@ -118,11 +104,30 @@ class AdminGalleries extends BaseController
             $data['image'] = $newFileName;
         }
 
+        $videoDirectory = FCPATH . 'assets/videos/galleries/';
+        $newVideoName = null;
+        if ($hasNewVideo) {
+            if (! $videoFile->isValid()) {
+                return redirect()->back()->withInput()->with('error', 'File video tidak valid.');
+            }
+            if (! is_dir($videoDirectory) && ! mkdir($videoDirectory, 0755, true) && ! is_dir($videoDirectory)) {
+                return redirect()->back()->withInput()->with('error', 'Folder penyimpanan video gagal dibuat.');
+            }
+            $newVideoName = $videoFile->getRandomName();
+            if (! $videoFile->move($videoDirectory, $newVideoName)) {
+                return redirect()->back()->withInput()->with('error', 'Video gagal diunggah.');
+            }
+            $data['video_url'] = $newVideoName;
+        }
+
         try {
             $saved = $id > 0 ? $model->update($id, $data) : $model->insert($data);
         } catch (\Throwable $e) {
             if ($newFileName && is_file($directory . $newFileName)) {
                 unlink($directory . $newFileName);
+            }
+            if ($newVideoName && is_file($videoDirectory . $newVideoName)) {
+                unlink($videoDirectory . $newVideoName);
             }
             log_message('error', 'Gagal menyimpan galeri: {message}', ['message' => $e->getMessage()]);
             return redirect()->back()->withInput()
@@ -133,7 +138,17 @@ class AdminGalleries extends BaseController
             if ($newFileName && is_file($directory . $newFileName)) {
                 unlink($directory . $newFileName);
             }
+            if ($newVideoName && is_file($videoDirectory . $newVideoName)) {
+                unlink($videoDirectory . $newVideoName);
+            }
             return redirect()->back()->withInput()->with('error', 'Galeri gagal disimpan.');
+        }
+
+        if ($id > 0 && $newVideoName && ! empty($existing['video_url'])) {
+            $oldVideoPath = $videoDirectory . basename((string) $existing['video_url']);
+            if (is_file($oldVideoPath)) {
+                unlink($oldVideoPath);
+            }
         }
 
         if ($id > 0 && $newFileName && ! empty($existing['image'])) {
@@ -162,6 +177,11 @@ class AdminGalleries extends BaseController
 
         if (! $model->delete((int) $id)) {
             return redirect()->to(site_url('admin/galleries'))->with('error', 'Data galeri gagal dihapus.');
+        }
+
+        $videoPath = FCPATH . 'assets/videos/galleries/' . basename((string) ($gallery['video_url'] ?? ''));
+        if (! empty($gallery['video_url']) && is_file($videoPath)) {
+            unlink($videoPath);
         }
 
         $path = FCPATH . 'assets/images/galleries/' . basename((string) $gallery['image']);
