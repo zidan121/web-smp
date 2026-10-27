@@ -82,7 +82,7 @@ main{padding:24px 0 65px}.controls{display:flex;align-items:center;justify-conte
 </div>
 </div>
 <?php
-$galleryHeroImages = array_values(array_filter($galleries ?? [], static fn($item) => ! empty($item['image'])));
+$galleryHeroImages = array_values(array_filter($galleries ?? [], static fn($item) => ! empty($item['image']) && empty($item['video_url'])));
 $galleryHeroMain = ! empty($galleryHeroImages[0]['image'])
     ? base_url('assets/images/galleries/' . rawurlencode(basename($galleryHeroImages[0]['image'])))
     : 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&q=85';
