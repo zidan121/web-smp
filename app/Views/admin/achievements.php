@@ -28,7 +28,6 @@
 <div class="field"><label for="achievement_date">Tanggal Prestasi</label><input id="achievement_date" type="date" name="achievement_date" value="<?= esc(old('achievement_date','')) ?>"></div>
 <div class="field"><label for="description">Deskripsi</label><textarea id="description" name="description" maxlength="10000" placeholder="Keterangan singkat tentang pencapaian siswa"><?= esc(old('description','')) ?></textarea></div>
 <div class="field"><label for="image">Foto / Dokumentasi Prestasi</label><input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp"><div class="hint">JPG, PNG, WebP maksimal 4 MB. Saat mengedit, kosongkan jika tetap memakai foto lama.</div><img id="image-preview" class="preview" alt="Pratinjau foto"><div id="image-info" class="hint"></div></div>
-<div class="field"><label for="video_url">Link Video Instagram (opsional)</label><input id="video_url" name="video_url" type="url" maxlength="500" value="<?= esc(old('video_url', '')) ?>" placeholder="https://www.instagram.com/reel/XXXXXXXX/"><div class="hint">Gunakan link publik Instagram Reel/Post.</div></div>
 <div class="field"><label for="is_active">Status Tampilan</label><select id="is_active" name="is_active"><option value="1" <?= old('is_active','1')==='1'?'selected':'' ?>>Aktif — tampil di website</option><option value="0" <?= old('is_active')==='0'?'selected':'' ?>>Nonaktif — sembunyikan</option></select></div>
 <div class="actions"><button class="btn" type="submit">Simpan Prestasi</button><button class="btn secondary" type="button" onclick="resetAchievementForm()">Batal / Reset</button></div>
 </form>
@@ -54,7 +53,7 @@
 <script>
 const adminSearch=document.getElementById('admin-achievement-search'),adminLevel=document.getElementById('admin-achievement-level'),adminStatus=document.getElementById('admin-achievement-status'),achievementRows=[...document.querySelectorAll('.table-wrap tbody tr[data-search]')];function filterAdminAchievements(){const q=adminSearch.value.trim().toLocaleLowerCase('id'),level=adminLevel.value,status=adminStatus.value;let shown=0;achievementRows.forEach(row=>{const visible=row.dataset.search.includes(q)&&(!level||row.dataset.level===level)&&(!status||row.dataset.status===status);row.style.display=visible?'':'none';if(visible)shown++});document.getElementById('admin-filter-count').textContent='Menampilkan '+shown+' dari '+achievementRows.length+' data prestasi'}adminSearch.addEventListener('input',filterAdminAchievements);adminLevel.addEventListener('change',filterAdminAchievements);adminStatus.addEventListener('change',filterAdminAchievements);
 const achievementForm = document.getElementById('achievement-form');
-const achievementFields = ['id','title','student_name','competition','level','achievement_date','description','is_active','video_url'];
+const achievementFields = ['id','title','student_name','competition','level','achievement_date','description','is_active'];
 function editAchievement(button) {
  const item = JSON.parse(button.dataset.achievement);
  achievementFields.forEach((key) => { const field = document.getElementById(key === 'id' ? 'achievement-id' : key); if (field) field.value = item[key] ?? (key === 'is_active' ? '1' : ''); });
