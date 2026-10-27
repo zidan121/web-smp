@@ -431,28 +431,6 @@
             line-height: 1.7;
             margin: 10px 0 24px;
         }
-        .program-card p.program-description {
-            max-height: 10.2em;
-            overflow: hidden;
-            transition: max-height .3s ease;
-        }
-        .program-card p.program-description.is-expanded {
-            max-height: 1000px;
-        }
-        .program-card .read-more-toggle {
-            align-self: flex-start;
-            margin: -12px 0 22px;
-            padding: 0;
-            border: 0;
-            background: transparent;
-            color: #1762ad;
-            font: inherit;
-            font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-        .program-card .read-more-toggle:hover { text-decoration: underline; }
-
         .program-card .learn-more {
             margin-top: auto;
             color: #1762ad;
@@ -828,21 +806,18 @@
 
                             <h3><?= esc($program['name']) ?></h3>
 
-                            <p class="program-description">
+                            <p>
                                 <?= esc(
                                     $program['description']
                                     ?: 'Informasi program unggulan sekolah.'
                                 ) ?>
                             </p>
-                            <?php if (mb_strlen((string) ($program['description'] ?? '')) > 160): ?>
-                                <button class="read-more-toggle" type="button" aria-expanded="false" onclick="toggleProgramDescription(this)">Baca selengkapnya ↓</button>
-                            <?php endif; ?>
 
                             <a
                                 href="<?= site_url('program/' . $program['slug']) ?>"
                                 class="learn-more"
                             >
-                                Pelajari program →
+                                Baca selengkapnya →
                             </a>
                         </article>
                     <?php endforeach; ?>
@@ -966,13 +941,6 @@
 <?= view('partials/public_footer', ['settings' => $settings ?? []]) ?>
 
 <script>
-    function toggleProgramDescription(button) {
-        const description = button.previousElementSibling;
-        const expanded = description.classList.toggle('is-expanded');
-        button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-        button.textContent = expanded ? 'Baca lebih sedikit ↑' : 'Baca selengkapnya ↓';
-    }
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
